@@ -7041,6 +7041,11 @@ pkg-up@^3.1.0:
   dependencies:
     find-up "^3.0.0"
 
+plotly.js-dist@^2.27.1:
+  version "2.27.1"
+  resolved "https://registry.yarnpkg.com/plotly.js-dist/-/plotly.js-dist-2.27.1.tgz#aa4b36977284af17759f902d69e009db295cf8ab"
+  integrity sha512-0ANRbzVXbi4H01njmpOSPSUoo6NVTZC/gJJhn4J2lUx6Woc5j1Fye3A0+VwXYV2+UxCEU7WTkyaI2y8l4bCu4A==
+
 postcss-attribute-case-insensitive@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/postcss-attribute-case-insensitive/-/postcss-attribute-case-insensitive-5.0.2.tgz#03d761b24afc04c09e757e92ff53716ae8ea2741"
