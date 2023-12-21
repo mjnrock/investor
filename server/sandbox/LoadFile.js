@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
 
-export const LoadFile = async (symbols, { __dirname } = {}) => {
-	const directoryPath = path.join(__dirname, "./data/stocks");
+export const LoadFile = async (symbols, { base = "stocks", __dirname } = {}) => {
+	const directoryPath = path.join(__dirname, `./data/${ base }`);
 	let filesData = {};
 
 	for(const symbol of symbols) {
