@@ -17,15 +17,25 @@ export const DMA = (data, ranges = 200) => {
 				for(let j = i; j < i + range; j++) {
 					sum += parseFloat(timeSeries[ dateKeys[ j ] ][ "4. close" ]);
 				}
+
+				let dmaValue = sum / range,
+					mark = parseFloat(timeSeries[ dateKeys[ i ] ][ "4. close" ]),
+					delta = mark - dmaValue,
+					ratio = delta / dmaValue;
+
 				movingAverages.push({
 					date: dateKeys[ i ],
+					symbol,
 					type: "DMA",
-					range,
-					value: sum / range
+					range,				// The DMA window
+					value: dmaValue,	// The DMA value
+					mark,				// The closing price
+					delta,				// The difference between the closing price and the DMA value
+					ratio,				// The ratio of the difference to the DMA value
 				});
 			}
 
-			dmaResults[ symbol ] = movingAverages;
+			dmaResults[ symbol ][ +range ] = movingAverages;
 		});
 	}
 

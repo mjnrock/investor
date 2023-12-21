@@ -3,6 +3,11 @@ export function delay(ms) {
 }
 
 export async function processSymbols(symbols, symbolProcessor, delayMs, config = {}) {
+	if(!Array.isArray(symbols) && typeof symbols === "object") {
+		// assume it's a symbol-data map
+		symbols = Object.keys(symbols);
+	}
+
 	for(const symbol of symbols) {
 		try {
 			await symbolProcessor(symbol, config);
