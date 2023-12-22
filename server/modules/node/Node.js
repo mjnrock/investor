@@ -1,29 +1,3 @@
-const Schema = {
-	APIDataSource: {
-		$success: {
-			FileDestination: {
-				filePath: String,
-			},
-			Transformer_ToDataSet: {
-				fn: Function,
-				$success: {
-					FileDestination: {
-						filePath: String,
-					},
-					FunctionIterator_TechnicalIndicators: {
-						fns: [ ...Function ],
-						$success: {
-							FileDestination: {
-								filePath: String,
-							},
-						},
-					},
-				},
-			},
-		},
-	},
-};
-
 import EventEmitter from "events";
 
 export class Node extends EventEmitter {
@@ -36,6 +10,12 @@ export class Node extends EventEmitter {
 
 	constructor (fn) {
 		super();
+
+		if(typeof fn === "function" || (typeof fn === "object" && typeof fn.run === "function")) {
+			this.fn = fn;
+		} else {
+			throw new Error("Invalid argument: fn must be a function or an object with a run method.");
+		}
 
 		this.fn = fn;
 		this.successNodes = [];
@@ -50,7 +30,10 @@ export class Node extends EventEmitter {
 		this.emit(Node.EnumStatusType.RUNNING, this);
 
 		try {
-			const output = await this.fn(input, this.context);
+			const output = typeof this.fn === "function" ?
+				await this.fn(input, this.context) :
+				await this.fn.run(input, this.context);
+
 			this.status = Node.EnumStatusType.SUCCESS;
 			this.lastResult = output;
 			this.successNodes.forEach(node => node.run(output));
@@ -61,6 +44,8 @@ export class Node extends EventEmitter {
 			this.failureNodes.forEach(node => node.run(error));
 			this.emit(Node.EnumStatusType.FAILED, error);
 		}
+
+		return this.lastResult;
 	}
 
 	connectSuccess(node) {

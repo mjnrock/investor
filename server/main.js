@@ -9,6 +9,8 @@ import { fileURLToPath } from "url";
 
 import ModNode from "./modules/node/package.js";
 
+import APIHelper from "./modules/node/data-source/APIHelper.js";
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export async function setup() {
@@ -67,7 +69,29 @@ export async function setup() {
 export async function main() {
 	await setup();
 
-	console.log(ModNode)
+	// console.log(ModNode)
+
+	const circuit = new ModNode.Circuit();
+	const cryptoDataSet = new ModNode.Node(ModNode.DataSource.APIDataSource.Create({
+		state: {
+			endpoint: `https://buddha.com:${ process.env.PORT }/crypto`,
+		},
+		modeler: APIHelper.cryptoModeler,
+		analyzer: APIHelper.cryptoAnalyzer,
+	}));
+
+	const saveCryptoFile = new ModNode.Node(ModNode.DataDestination.FileDataDestination.Create({
+		state: {
+			path: "./data/cryptos",
+			file: `$TEST.json`,
+		},
+	}));
+
+	cryptoDataSet.connectSuccess(saveCryptoFile);
+	circuit.connectSuccess(cryptoDataSet);
+
+	const result = await circuit.run();
+	console.log(86, circuit.status);
 
 	/**
 	 * IDEA: NEXT STEPS

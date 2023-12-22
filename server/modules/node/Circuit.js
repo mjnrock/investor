@@ -1,7 +1,7 @@
 import { Node } from "./Node.js";
 
 export class Circuit extends Node {
-	constructor (fn) {
+	constructor (fn = Circuit.Run) {
 		super(fn);
 
 		this.nodes = new Map();
@@ -66,31 +66,31 @@ export class Circuit extends Node {
 		this.nodes.forEach(node => node.resetState());  // Reset the state of all nodes
 	}
 
-	async run(input = {}, context = {}) {
-		this.setContext(context);
-		this.status = Node.EnumStatusType.RUNNING;
-		this.emit(Node.EnumStatusType.RUNNING, this);
+	static async Run(self, input = {}, context = {}) {
+		self.setContext(context);
+		self.status = Node.EnumStatusType.RUNNING;
+		self.emit(Node.EnumStatusType.RUNNING, this);
 
 		try {
 			let currentInput = input; // Start with the initial input
 			let lastOutput;
 
 			// Iterate over successNodes and execute them in sequence
-			for(const node of this.successNodes) {
+			for(const node of self.successNodes) {
 				lastOutput = await node.run(currentInput);
 				currentInput = lastOutput; // Output of one node is the input to the next
 			}
 
 			// After successful execution of all success nodes
-			this.status = Node.EnumStatusType.SUCCESS;
-			this.lastResult = lastOutput; // Final output from the success node chain
-			this.emit(Node.EnumStatusType.SUCCESS, this.lastResult);
+			self.status = Node.EnumStatusType.SUCCESS;
+			self.lastResult = lastOutput; // Final output from the success node chain
+			self.emit(Node.EnumStatusType.SUCCESS, self.lastResult);
 		} catch(error) {
 			// In case of an error, execute the failure nodes
 			let currentError = error;
 			let lastErrorOutput;
 
-			for(const node of this.failureNodes) {
+			for(const node of self.failureNodes) {
 				try {
 					lastErrorOutput = await node.run(currentError);
 					currentError = lastErrorOutput; // Output of one failure node is the input to the next
@@ -100,10 +100,16 @@ export class Circuit extends Node {
 			}
 
 			// After executing failure nodes (regardless of whether they succeeded or failed)
-			this.status = Node.EnumStatusType.FAILED;
-			this.lastResult = currentError; // Final error or output from the failure node chain
-			this.emit(Node.EnumStatusType.FAILED, this.lastResult);
+			self.status = Node.EnumStatusType.FAILED;
+			self.lastResult = currentError; // Final error or output from the failure node chain
+			self.emit(Node.EnumStatusType.FAILED, self.lastResult);
 		}
+
+		return self.lastResult;
+	}
+
+	async run(input = {}, context = {}) {
+		return await Circuit.Run(this, input, context);
 	}
 }
 
