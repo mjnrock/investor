@@ -36,12 +36,16 @@ export class Node extends EventEmitter {
 
 			this.status = Node.EnumStatusType.SUCCESS;
 			this.lastResult = output;
-			this.successNodes.forEach(node => node.run(output));
+			for(const node of this.successNodes) {
+				await node.run(output);
+			}
 			this.emit(Node.EnumStatusType.SUCCESS, output);
 		} catch(error) {
 			this.status = Node.EnumStatusType.FAILED;
 			this.lastResult = error;
-			this.failureNodes.forEach(node => node.run(error));
+			for(const node of this.failureNodes) {
+				await node.run(error);
+			}
 			this.emit(Node.EnumStatusType.FAILED, error);
 		}
 

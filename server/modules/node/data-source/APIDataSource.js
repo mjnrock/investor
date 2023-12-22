@@ -22,7 +22,7 @@ export class APIDataSource extends DataSource {
 		};
 
 		this.config = {
-			trusted: true,
+			rawResponse: false,
 			...config,
 		};
 	}
@@ -46,6 +46,11 @@ export class APIDataSource extends DataSource {
 		try {
 			const urlWithParams = `${ this.state.endpoint }?${ queryString.stringify(this.state.params) }`;
 			const response = await axiosInstance.get(urlWithParams, this.config);
+
+			if(this.config.rawResponse) {
+				return response.data;
+			}
+
 			let nextData,
 				nextMeta;
 

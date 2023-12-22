@@ -42,6 +42,8 @@ export class FileDataDestination extends DataDestination {
 		const fileData = JSON.stringify(transformedData);
 
 		await fs.writeFile(filePath, fileData, this.state.encoding);
+
+		return transformedData;
 	}
 }
 

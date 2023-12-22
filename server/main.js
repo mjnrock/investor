@@ -72,26 +72,35 @@ export async function main() {
 	// console.log(ModNode)
 
 	const circuit = new ModNode.Circuit();
-	const cryptoDataSet = new ModNode.Node(ModNode.DataSource.APIDataSource.Create({
+	const apiCrypto = new ModNode.Node(ModNode.DataSource.APIDataSource.Create({
 		state: {
 			endpoint: `https://buddha.com:${ process.env.PORT }/crypto`,
 		},
-		modeler: APIHelper.cryptoModeler,
-		analyzer: APIHelper.cryptoAnalyzer,
+		config: {
+			rawResponse: true,
+		},
 	}));
-
-	const saveCryptoFile = new ModNode.Node(ModNode.DataDestination.FileDataDestination.Create({
+	const saveRawCryptoFile = new ModNode.Node(ModNode.DataDestination.FileDataDestination.Create({
+		state: {
+			path: "./data/cryptos",
+			file: `$TEST.raw.json`,
+		},
+	}));
+	const cryptoDataSet = new ModNode.Node(async input => ModNode.DataSet.DataSet.TransformToDataSet(input, APIHelper.cryptoModeler, APIHelper.cryptoAnalyzer));
+	const saveDataSetCryptoFile = new ModNode.Node(ModNode.DataDestination.FileDataDestination.Create({
 		state: {
 			path: "./data/cryptos",
 			file: `$TEST.json`,
 		},
 	}));
 
-	cryptoDataSet.connectSuccess(saveCryptoFile);
-	circuit.connectSuccess(cryptoDataSet);
+	cryptoDataSet.connectSuccess(saveDataSetCryptoFile);
+	saveRawCryptoFile.connectSuccess(cryptoDataSet);
+	apiCrypto.connectSuccess(saveRawCryptoFile);
+	circuit.connectSuccess(apiCrypto);
 
 	const result = await circuit.run();
-	console.log(86, circuit.status);
+	console.log(86, result);
 
 	/**
 	 * IDEA: NEXT STEPS

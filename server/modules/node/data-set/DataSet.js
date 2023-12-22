@@ -276,6 +276,20 @@ export class DataSet {
 
 		return result;
 	}
+
+	static TransformToDataSet(data, modeler, analyzer) {
+		if(!modeler || !analyzer) {
+			throw new Error("Modeler and analyzer functions are required");
+		}
+
+		const modeledData = modeler(data);
+		const analyzedMeta = analyzer(data);
+
+		return new DataSet({
+			meta: analyzedMeta,
+			data: modeledData,
+		});
+	}
 };
 
 export default DataSet;
