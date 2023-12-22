@@ -7,9 +7,7 @@ import https from "https";
 import path, { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
-import Sandbox from "./sandbox/sandbox.js";
-
-import NodeModules from "./modules/etl/node/package.js";
+import ETLModule from "./modules/etl/package.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -69,7 +67,7 @@ export async function setup() {
 export async function main() {
 	await setup();
 
-	console.log(NodeModules)
+	console.log(ETLModule)
 }
 
 main();

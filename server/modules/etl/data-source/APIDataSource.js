@@ -4,7 +4,7 @@ import queryString from "query-string";
 import deepcopy from "deepcopy";
 import https from "https";
 
-import { DataSource } from "../data-source/DataSource.js";
+import { DataSource } from "./DataSource.js";
 import { DataSet } from "../data-set/DataSet.js";
 
 export class APIDataSource extends DataSource {

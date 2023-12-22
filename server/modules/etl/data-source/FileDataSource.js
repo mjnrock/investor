@@ -1,9 +1,9 @@
 import fs from "fs/promises";
 import path from "path";
+import deepcopy from "deepcopy";
 
 import { DataSource } from "./DataSource.js";
-import { DataSet } from "./DataSet.js";
-import deepcopy from "deepcopy";
+import { DataSet } from "../data-set/DataSet.js";
 
 /**
  * This currently assumes that the file is a JSON file,
