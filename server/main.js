@@ -9,11 +9,7 @@ import { fileURLToPath } from "url";
 
 import Sandbox from "./sandbox/sandbox.js";
 
-import { FileDataSource } from "./lib/FileDataSource.js";
-import { mapper as apiDataMapper } from "./lib/transformAPIResponse.js";
-import DataSet from "./lib/DataSet.js";
-import APIDataSource from "./lib/APIDataSource.js";
-import APIHelper from "./lib/APIHelper.js";
+import NodeModules from "./modules/etl/node/package.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -72,6 +68,8 @@ export async function setup() {
 };
 export async function main() {
 	await setup();
+
+	console.log(NodeModules)
 }
 
 main();
