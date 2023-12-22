@@ -4,10 +4,14 @@ import expressWs from "express-ws";
 import cors from "cors";
 import fs from "fs/promises";
 import https from "https";
-import { dirname, join } from "path";
+import path, { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
 import Sandbox from "./sandbox/sandbox.js";
+
+import { FileDataSource } from "./lib/FileDataSource.js";
+import { mapper as apiDataMapper } from "./lib/transformAPIResponse.js";
+import DataSet from "./lib/DataSet.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -36,9 +40,20 @@ export async function setup() {
 	});
 };
 export async function main() {
-	await setup();
+	// await setup();
 
-	Sandbox(__dirname);
+	// Sandbox(__dirname);
+
+	const source = new FileDataSource({
+		state: {
+			path: path.join(__dirname, "data", "stocks"),
+			file: `RKT.json`,
+		},
+	});
+
+	const dataSet = await source.fetchData();
+
+	console.log(dataSet.getRows(true).slice(0, 10));
 }
 
 main();
