@@ -39,6 +39,14 @@ export async function setup() {
 				res.json(JSON.parse(file));
 			});
 	});
+	app.get("/cryptos", (req, res) => {
+		const filePath = path.join(__dirname, "./data/cryptos/BTC.json");
+
+		fs.readFile(filePath, "utf8")
+			.then(file => {
+				res.json(JSON.parse(file));
+			});
+	});
 	app.get("/stock", (req, res) => {
 		const filePath = path.join(__dirname, "./data/stocks/RKT.raw.json");
 
@@ -47,6 +55,15 @@ export async function setup() {
 				res.json(JSON.parse(file));
 			});
 	});
+	app.get("/stocks", (req, res) => {
+		const filePath = path.join(__dirname, "./data/stocks/RKT.json");
+
+		fs.readFile(filePath, "utf8")
+			.then(file => {
+				res.json(JSON.parse(file));
+			});
+	});
+	//STUB: END
 
 	const httpsServer = https.createServer(credentials, app);
 	httpsServer.listen(process.env.PORT, () => {
@@ -55,46 +72,6 @@ export async function setup() {
 };
 export async function main() {
 	await setup();
-
-	// const source = new APIDataSource({
-	// 	state: {
-	// 		// endpoint: "https://www.alphavantage.co/query",
-	// 		endpoint: `https://buddha.com:${ process.env.PORT }/stock`,
-	// 		params: {
-	// 			function: "TIME_SERIES_DAILY",
-	// 			symbol: "RKT",
-	// 			apikey: process.env.ALPHA_VANTAGE_API_KEY,
-	// 			outputsize: "full",
-	// 		},
-	// 	},
-	// 	modeler: APIHelper.stocksModeler,
-	// 	analyzer: APIHelper.stocksAnalyzer,
-	// });
-
-	// const dataSet = await source.run();
-
-	// console.log(dataSet.meta);
-	// console.log(dataSet.data.slice(0, 5));
-
-	const source = new APIDataSource({
-		state: {
-			// endpoint: "https://www.alphavantage.co/query",
-			endpoint: `https://buddha.com:${ process.env.PORT }/crypto`,
-			params: {
-				function: "TIME_SERIES_DAILY",
-				symbol: "RKT",
-				apikey: process.env.ALPHA_VANTAGE_API_KEY,
-				outputsize: "full",
-			},
-		},
-		modeler: APIHelper.cryptoModeler,
-		analyzer: APIHelper.cryptoAnalyzer,
-	});
-
-	const dataSet = await source.run();
-
-	console.log(dataSet.meta);
-	console.log(dataSet.data.slice(0, 5));
 }
 
 main();

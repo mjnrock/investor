@@ -35,15 +35,16 @@ export class APIDataSource extends DataSource {
 	}
 
 	async run() {
+		//STUB: Deal with the self-signed certificate
 		const cert = await fs.readFile("./certs/kiszka.crt", "utf8");
 		const axiosInstance = axios.create({
 			httpsAgent: new https.Agent({
 				ca: cert,
 			}),
 		});
-		const urlWithParams = `${ this.state.endpoint }?${ queryString.stringify(this.state.params) }`;
 
 		try {
+			const urlWithParams = `${ this.state.endpoint }?${ queryString.stringify(this.state.params) }`;
 			const response = await axiosInstance.get(urlWithParams, this.config);
 			let nextData,
 				nextMeta;
@@ -56,12 +57,12 @@ export class APIDataSource extends DataSource {
 				nextMeta = this.analyzer(response.data);
 			}
 
-			const dataSet = new DataSet({
+			const next = new DataSet({
 				data: nextData,
 				meta: nextMeta,
 			});
 
-			return dataSet;
+			return next;
 		} catch(error) {
 			console.error("Error fetching data from API:", error);
 			throw error;
