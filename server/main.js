@@ -100,7 +100,7 @@ export async function main() {
 	circuit.connectSuccess(apiCrypto);
 
 	const result = await circuit.run();
-	console.log(86, result);
+	console.log(86, circuit.status);
 
 	/**
 	 * IDEA: NEXT STEPS
