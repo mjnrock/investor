@@ -68,6 +68,29 @@ export async function main() {
 	await setup();
 
 	console.log(ModNode)
+
+	/**
+	 * IDEA: NEXT STEPS
+	 * Everything below can be done with the Node/Circuit paradigm.
+	 * Since a Circuit is a Node, it should handle input/output, also.
+	 * 
+	 * Below is a POC ETL process for the data
+	 * 1.	Query the API for the data
+	 * 2.	Save the raw data into file(s)
+	 * 3.	Process the raw data into a normalized DataSet format
+	 * 4.	Save the normalized data into file(s)
+	 * 6.	Iterate TechnicalIndicators over each DataSet (stocks/cryptos)
+	 * 7.	Save the TechnicalIndicator results into respective file(s) for the symbol
+	 * 9.	Create Plotly objects for each symbol and TechnicalIndicator
+	 * 
+	 * 10a.	Convert the file system format into MongoDB format
+	 * 10b.	Store the MongoDB format into the database
+	 * 
+	 * 11.	Create a WebSocket server
+	 * 12.	Connect the WebSocket server to the client
+	 * 13.	When the client requests a symbol, send the Data/Plotly object
+	 * 14.	When the client requests a TechnicalIndicator, send the Data/Plotly object
+	 */
 }
 
 main();
