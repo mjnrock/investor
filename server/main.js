@@ -7,7 +7,7 @@ import https from "https";
 import path, { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
-import ETLModule from "./modules/etl/package.js";
+import ModNode from "./modules/node/package.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -67,7 +67,7 @@ export async function setup() {
 export async function main() {
 	await setup();
 
-	console.log(ETLModule)
+	console.log(ModNode)
 }
 
 main();
