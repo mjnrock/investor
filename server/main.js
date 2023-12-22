@@ -12,6 +12,8 @@ import Sandbox from "./sandbox/sandbox.js";
 import { FileDataSource } from "./lib/FileDataSource.js";
 import { mapper as apiDataMapper } from "./lib/transformAPIResponse.js";
 import DataSet from "./lib/DataSet.js";
+import APIDataSource from "./lib/APIDataSource.js";
+import APIHelper from "./lib/APIHelper.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -28,10 +30,22 @@ export async function setup() {
 
 	app.use(cors());
 
-	app.get("/", (req, res) => {
-		res.json({
-			message: "Hello World!",
-		})
+	//STUB: Replicate AlphaVantage API for testing
+	app.get("/crypto", (req, res) => {
+		const filePath = path.join(__dirname, "./data/cryptos/BTC.raw.json");
+
+		fs.readFile(filePath, "utf8")
+			.then(file => {
+				res.json(JSON.parse(file));
+			});
+	});
+	app.get("/stock", (req, res) => {
+		const filePath = path.join(__dirname, "./data/stocks/RKT.raw.json");
+
+		fs.readFile(filePath, "utf8")
+			.then(file => {
+				res.json(JSON.parse(file));
+			});
 	});
 
 	const httpsServer = https.createServer(credentials, app);
@@ -40,20 +54,47 @@ export async function setup() {
 	});
 };
 export async function main() {
-	// await setup();
+	await setup();
 
-	// Sandbox(__dirname);
+	// const source = new APIDataSource({
+	// 	state: {
+	// 		// endpoint: "https://www.alphavantage.co/query",
+	// 		endpoint: `https://buddha.com:${ process.env.PORT }/stock`,
+	// 		params: {
+	// 			function: "TIME_SERIES_DAILY",
+	// 			symbol: "RKT",
+	// 			apikey: process.env.ALPHA_VANTAGE_API_KEY,
+	// 			outputsize: "full",
+	// 		},
+	// 	},
+	// 	modeler: APIHelper.stocksModeler,
+	// 	analyzer: APIHelper.stocksAnalyzer,
+	// });
 
-	const source = new FileDataSource({
+	// const dataSet = await source.run();
+
+	// console.log(dataSet.meta);
+	// console.log(dataSet.data.slice(0, 5));
+
+	const source = new APIDataSource({
 		state: {
-			path: path.join(__dirname, "data", "stocks"),
-			file: `RKT.json`,
+			// endpoint: "https://www.alphavantage.co/query",
+			endpoint: `https://buddha.com:${ process.env.PORT }/crypto`,
+			params: {
+				function: "TIME_SERIES_DAILY",
+				symbol: "RKT",
+				apikey: process.env.ALPHA_VANTAGE_API_KEY,
+				outputsize: "full",
+			},
 		},
+		modeler: APIHelper.cryptoModeler,
+		analyzer: APIHelper.cryptoAnalyzer,
 	});
 
-	const dataSet = await source.fetchData();
+	const dataSet = await source.run();
 
-	console.log(dataSet.getRows(true).slice(0, 10));
+	console.log(dataSet.meta);
+	console.log(dataSet.data.slice(0, 5));
 }
 
 main();

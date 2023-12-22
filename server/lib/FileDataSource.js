@@ -1,8 +1,14 @@
 import fs from "fs/promises";
-import { DataSource } from "./DataSource.js";
-import { DataSet } from "./DataSet.js"; // Import DataSet class
 import path from "path";
 
+import { DataSource } from "./DataSource.js";
+import { DataSet } from "./DataSet.js";
+import deepcopy from "deepcopy";
+
+/**
+ * This currently assumes that the file is a JSON file,
+ * created from `DataSet.ToJson`.
+ */
 export class FileDataSource extends DataSource {
 	static RootPath = process.cwd();
 
@@ -24,20 +30,31 @@ export class FileDataSource extends DataSource {
 		};
 	}
 
-	async fetchData() {
+	static Create({ state = {}, config = {}, modeler = null, analyzer = null } = {}) {
+		return new FileDataSource({ state, config, modeler, analyzer });
+	}
+	static Copy(self) {
+		return new FileDataSource(deepcopy(self));
+	}
+
+	async run() {
 		const filePath = path.join(this.state.path, this.state.file);
 		const fileData = await fs.readFile(filePath, this.state.encoding);
-		const fileObj = JSON.parse(fileData); // Assuming fileData is a JSONified DataSet
+		const fileObj = JSON.parse(fileData);
 
 		const dataSet = new DataSet(fileObj);
 
-		const modeledData = this.applyModeler(dataSet.getRecords());
-		const analyzedMeta = this.analyzeData(dataSet);
+		const modeledData = this.runModeler(dataSet.getRecords());
+		const analyzedMeta = this.runAnalyzer(dataSet);
 
-		return DataSet.Create({
+		const next = DataSet.Create({
 			meta: analyzedMeta,
 			data: modeledData,
 		});
+
+		this.cache = next;
+
+		return next;
 	}
 }
 
