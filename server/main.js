@@ -77,6 +77,47 @@ export async function main() {
 	const pipeline = await CryptoProcessTechnicalIndicators({
 		symbols: [
 			"BTC",
+			"ETH",
+		],
+		indicators: [
+			{
+				fn: "sma",
+				cols: [
+					[ "close" ],
+					[ "close" ],
+					[ "close" ],
+					[ "close" ],
+					[ "close" ],
+					[ "close" ],
+				],
+				args: [
+					[ 7 ],
+					[ 14 ],
+					[ 28 ],
+					[ 56 ],
+					[ 112 ],
+					[ 224 ],
+				],
+			},
+			{
+				fn: "ema",
+				cols: [
+					[ "close" ],
+					[ "close" ],
+					[ "close" ],
+					[ "close" ],
+					[ "close" ],
+					[ "close" ],
+				],
+				args: [
+					[ 7 ],
+					[ 14 ],
+					[ 28 ],
+					[ 56 ],
+					[ 112 ],
+					[ 224 ],
+				],
+			},
 		],
 		delay: 0,
 	});

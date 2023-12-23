@@ -2,7 +2,7 @@ import ModNode from "../../modules/node/package.js";
 
 export async function main({
 	symbols = [],
-	delay = 1000,
+	indicators = [],
 	context = {},
 }) {
 	const fsCryptoDataSet = ModNode.Node.Create(ModNode.DataSource.FileDataSource.Create({
@@ -13,28 +13,7 @@ export async function main({
 	}));
 	const taIndicators = ModNode.Node.Create(ModNode.TechnicalAnalysis.ProcessTechnicalIndicators.Create({
 		state: {
-			indicators: [
-				{
-					fn: "sma",
-					cols: [
-						[ "open" ],
-						[ "close" ],
-					],
-					args: [
-						[ 7 ],
-						[ 10 ],
-					],
-				},
-				{
-					fn: "stoch",
-					cols: [
-						[ "high", "low", "close" ],
-					],
-					args: [
-						[ 7, 3, 3 ],
-					],
-				},
-			],
+			indicators,
 		},
 	}));
 	const saveTaIndicators = ModNode.Node.Create(async (input, context = {}) => {
@@ -78,10 +57,7 @@ export async function main({
 		saveTaIndicators,
 	);
 
-	const wait = async (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
 	for(const symbol of symbols) {
-		await wait(delay);
 		await pipeline.run({
 			variables: {
 				SYMBOL: symbol,
