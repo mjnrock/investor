@@ -1,5 +1,5 @@
-import ModNode from "../../../modules/node/package.js";
-import APIHelper from "../../../modules/node/data-source/APIHelper.js";
+import ModNode from "../../modules/node/package.js";
+import APIHelper from "../../modules/node/data-source/APIHelper.js";
 
 export async function main({
 	symbols = [],

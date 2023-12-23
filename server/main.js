@@ -7,8 +7,8 @@ import https from "https";
 import path, { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
-import { main as CryptoFetchNormalizeSave } from "./data/pipelines/cryptos/FetchNormalizeSave.crypto.js";
-import { main as StockFetchNormalizeSave } from "./data/pipelines/stocks/FetchNormalizeSave.stock.js";
+import { main as CryptoFetchNormalizeSave } from "./data/pipelines/FetchNormalizeSave.crypto.js";
+import { main as StockFetchNormalizeSave } from "./data/pipelines/FetchNormalizeSave.stock.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
