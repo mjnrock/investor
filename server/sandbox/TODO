@@ -1,5 +1,0 @@
-The general idea so far is that there are processing functions that perform 1:Many work on a list of symbols.
-Because the ETL processing will be rate-limited, be sure to maintain delay functionality in the processing functions.
-
-☐ Normalize the API data into formal structures
-☐ Standardize indicator data structures
