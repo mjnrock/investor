@@ -3,6 +3,7 @@ import path from "path";
 import deepcopy from "deepcopy";
 
 import { DataDestination } from "./DataDestination.js";
+import DataSet from "../data-set/DataSet.js";
 
 export class FileDataDestination extends DataDestination {
 	static RootPath = process.cwd();
@@ -33,10 +34,7 @@ export class FileDataDestination extends DataDestination {
 	}
 
 	async run(input, { variables } = {}) {
-		if(this.validator && !this.runValidator(input)) {
-			throw new Error("Data validation failed");
-		}
-
+		// Create file name and pathing
 		let fileName = this.state.file;
 		if(variables) {
 			for(const variable in variables) {
@@ -45,9 +43,26 @@ export class FileDataDestination extends DataDestination {
 		}
 		const filePath = path.join(this.state.path, fileName);
 
-		const transformedData = this.runTransformer(input);
-		const fileData = JSON.stringify(transformedData);
+		const validateAndTransform = (data) => {
+			if(this.validator && !this.runValidator(data)) {
+				throw new Error("Data validation failed");
+			}
 
+			return this.runTransformer(data);
+		};
+
+		// Check if the file is a Collection of DataSets, or just a single DataSet
+		let transformedData;
+		if(Array.isArray(input) && input[ 0 ] instanceof DataSet) {
+			// DataSet Collection (Array of DataSets)
+			transformedData = input.map(dataSet => validateAndTransform(dataSet));
+		} else {
+			// Single DataSet
+			transformedData = validateAndTransform(input);
+		}
+
+		// Actually write the file
+		const fileData = JSON.stringify(transformedData);
 		await fs.writeFile(filePath, fileData, this.state.encoding);
 
 		return transformedData;

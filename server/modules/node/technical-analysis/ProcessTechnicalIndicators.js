@@ -54,7 +54,10 @@ export class ProcessTechnicalIndicators {
 					}));
 
 					//STUB: Partial stub, crypto specific -- abstract this kind of thing
-					let nextMeta = { ...input.meta };
+					let nextMeta = {
+						...input.meta,
+						symbol: input.meta.digitalCurrencyCode,
+					};
 					delete nextMeta.information;
 					delete nextMeta.digitalCurrencyName;
 					delete nextMeta.marketName;
@@ -75,10 +78,6 @@ export class ProcessTechnicalIndicators {
 					console.error(`Error processing ${ indicatorName }:`, error);
 				}
 			}
-		}
-
-		for(const dataSet of results) {
-			console.log(dataSet.meta)
 		}
 
 		return results;
