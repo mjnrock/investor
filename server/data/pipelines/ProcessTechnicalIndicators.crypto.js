@@ -49,24 +49,29 @@ export async function main({
 				await node.run(indicatorData[ indicatorName ], context);
 			}
 		}
+
+		return input;
 	});
 
-	const pipeline = ModNode.Pipeline.Create(
-		fsCryptoDataSet,
-		taIndicators,
-		saveTaIndicators,
-	);
-
+	const pipelines = {};
 	for(const symbol of symbols) {
+		const pipeline = ModNode.Pipeline.Create(
+			fsCryptoDataSet,
+			taIndicators,
+			saveTaIndicators,
+		);
+
 		await pipeline.run({
 			variables: {
 				SYMBOL: symbol,
 			},
 			...context,
 		});
+
+		pipelines[ symbol ] = pipeline.cache;
 	}
 
-	return pipeline;
+	return pipelines;
 };
 
 export default main;

@@ -5,6 +5,7 @@ export class Circuit extends Node {
 		super(fn);
 
 		this.nodes = new Map();
+		this.cache = [];
 	}
 
 	static Create(fn) {
@@ -75,12 +76,12 @@ export class Circuit extends Node {
 			for(const node of self.successNodes) {
 				lastOutput = await node.run(currentInput, self.context);
 				currentInput = lastOutput; // Output of one node is the input to the next
+				self.cache.push({ type: 'success', node: node.id, output: lastOutput }); // Store each output
 			}
 
 			// After successful execution of all success nodes
 			self.status = Node.EnumStatusType.SUCCESS;
-			self.lastResult = lastOutput; // Final output from the success node chain
-			self.emit(Node.EnumStatusType.SUCCESS, self.lastResult);
+			self.emit(Node.EnumStatusType.SUCCESS, lastOutput);
 		} catch(error) {
 			// In case of an error, execute the failure nodes
 			let currentError = error;
@@ -90,6 +91,7 @@ export class Circuit extends Node {
 				try {
 					lastErrorOutput = await node.run(currentError, self.context);
 					currentError = lastErrorOutput; // Output of one failure node is the input to the next
+					self.cache.push({ type: 'failure', node: node.id, output: lastErrorOutput }); // Store each error output
 				} catch(innerError) {
 					currentError = innerError; // If a failure node fails, continue with the next
 				}
@@ -97,11 +99,10 @@ export class Circuit extends Node {
 
 			// After executing failure nodes (regardless of whether they succeeded or failed)
 			self.status = Node.EnumStatusType.FAILED;
-			self.lastResult = currentError; // Final error or output from the failure node chain
-			self.emit(Node.EnumStatusType.FAILED, self.lastResult);
+			self.emit(Node.EnumStatusType.FAILED, currentError);
 		}
 
-		return self.lastResult;
+		return self.cache; // Return the history of results instead of last result
 	}
 
 	/**

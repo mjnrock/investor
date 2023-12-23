@@ -122,6 +122,8 @@ export async function main() {
 		delay: 0,
 	});
 
+	console.log(987654, pipeline);
+
 
 	// const pipeline = await CryptoFetchNormalizeSave({
 	// 	symbols: [

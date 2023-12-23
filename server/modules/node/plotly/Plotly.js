@@ -58,7 +58,7 @@ export class Plotly {
 	}
 
 	// Update method to create a new Plotly instance with transformed data
-	update(transformer, traceArray) {
+	createChart(transformer, traceArray) {
 		return transformer(this, traceArray);
 	}
 }
