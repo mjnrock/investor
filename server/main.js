@@ -10,6 +10,8 @@ import { fileURLToPath } from "url";
 import { main as CryptoFetchNormalizeSave } from "./data/pipelines/FetchNormalizeSave.crypto.js";
 import { main as StockFetchNormalizeSave } from "./data/pipelines/FetchNormalizeSave.stock.js";
 
+import "./data/pipelines/ProcessTechnicalIndicators.crypto.js";
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export async function setup() {
@@ -60,8 +62,12 @@ export async function setup() {
 	});
 	//STUB: END
 
-	const httpsServer = https.createServer(credentials, app);
-	httpsServer.listen(process.env.PORT, () => {
+	// const httpsServer = https.createServer(credentials, app);
+	// httpsServer.listen(process.env.PORT, () => {
+	// 	console.log(`[${ Date.now() }]: Server is running on port: ${ process.env.PORT }`);
+	// });
+
+	const server = app.listen(process.env.PORT, () => {
 		console.log(`[${ Date.now() }]: Server is running on port: ${ process.env.PORT }`);
 	});
 };
@@ -75,12 +81,12 @@ export async function main() {
 	// 	],
 	// 	delay: 1000,
 	// });
-	const pipeline = await StockFetchNormalizeSave({
-		symbols: [
-			"UNG",
-		],
-		delay: 1000,
-	});
+	// const pipeline = await StockFetchNormalizeSave({
+	// 	symbols: [
+	// 		"UNG",
+	// 	],
+	// 	delay: 1000,
+	// });
 
 	/**
 	 * IDEA: NEXT STEPS
