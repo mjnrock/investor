@@ -37,8 +37,19 @@ export class FileDataSource extends DataSource {
 		return new FileDataSource(deepcopy(self));
 	}
 
-	async run() {
-		const filePath = path.join(this.state.path, this.state.file);
+
+	async run(input, { variables } = {}) {
+		if(this.validator && !this.runValidator(input)) {
+			throw new Error("Data validation failed");
+		}
+
+		let fileName = this.state.file;
+		if(variables) {
+			for(const variable in variables) {
+				fileName = fileName.replace(`{{${ variable }}}`, variables[ variable ]);
+			}
+		}
+		const filePath = path.join(this.state.path, fileName);
 		const fileData = await fs.readFile(filePath, this.state.encoding);
 		const fileObj = JSON.parse(fileData);
 

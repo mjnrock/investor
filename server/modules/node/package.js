@@ -7,6 +7,7 @@ import DataSource from "./data-source/package.js";
 import DataDestination from "./data-destination/package.js";
 import Database from "./database/package.js";
 import Plotly from "./plotly/package.js";
+import TechnicalAnalysis from "./technical-analysis/package.js";
 
 export default {
 	Node,
@@ -18,4 +19,5 @@ export default {
 	DataDestination,
 	Database,
 	Plotly,
+	TechnicalAnalysis,
 };

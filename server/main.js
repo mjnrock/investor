@@ -9,8 +9,7 @@ import { fileURLToPath } from "url";
 
 import { main as CryptoFetchNormalizeSave } from "./data/pipelines/FetchNormalizeSave.crypto.js";
 import { main as StockFetchNormalizeSave } from "./data/pipelines/FetchNormalizeSave.stock.js";
-
-import "./data/pipelines/ProcessTechnicalIndicators.crypto.js";
+import { main as CryptoProcessTechnicalIndicators } from "./data/pipelines/ProcessTechnicalIndicators.crypto.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -74,6 +73,14 @@ export async function setup() {
 
 export async function main() {
 	await setup();
+
+	const pipeline = await CryptoProcessTechnicalIndicators({
+		symbols: [
+			"BTC",
+		],
+		delay: 0,
+	});
+
 
 	// const pipeline = await CryptoFetchNormalizeSave({
 	// 	symbols: [
