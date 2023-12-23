@@ -25,20 +25,18 @@ export async function main({
 						[ 10 ],
 					],
 				},
-				// {
-				// 	fn: "stoch",
-				// 	cols: [
-				// 		[ "high", "low", "close" ],
-				// 	],
-				// 	args: [
-				// 		[ 7, 3, 3 ],
-				// 	],
-				// },
+				{
+					fn: "stoch",
+					cols: [
+						[ "high", "low", "close" ],
+					],
+					args: [
+						[ 7, 3, 3 ],
+					],
+				},
 			],
 		},
 	}));
-
-	console.log()
 
 	const pipeline = ModNode.Pipeline.Create(
 		fsCryptoDataSet,

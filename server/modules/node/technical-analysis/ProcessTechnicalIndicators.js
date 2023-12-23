@@ -1,4 +1,5 @@
 import tulind from "tulind";
+import { DataSet } from "../data-set/DataSet.js";
 
 export class ProcessTechnicalIndicators {
 	constructor ({ state = {} } = {}) {
@@ -52,9 +53,16 @@ export class ProcessTechnicalIndicators {
 						value
 					}));
 
-					results.push({
+					//STUB: Partial stub, crypto specific -- abstract this kind of thing
+					let nextMeta = { ...input.meta };
+					delete nextMeta.information;
+					delete nextMeta.digitalCurrencyName;
+					delete nextMeta.marketName;
+					delete nextMeta.lastRefreshed;
+
+					results.push(DataSet.Create({
 						meta: {
-							...input.meta,
+							...nextMeta,
 							technicalAnalysis: {
 								fn: indicatorName,
 								cols: colSet,
@@ -62,15 +70,16 @@ export class ProcessTechnicalIndicators {
 							},
 						},
 						data: resultData
-					});
+					}));
 				} catch(error) {
 					console.error(`Error processing ${ indicatorName }:`, error);
 				}
 			}
 		}
 
-		console.log(JSON.stringify(results.map(result => result.meta)));
-		console.log(results.map(result => result.data.slice(0, 5)));
+		for(const dataSet of results) {
+			console.log(dataSet.meta)
+		}
 
 		return results;
 	}
