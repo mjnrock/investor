@@ -7,9 +7,8 @@ import https from "https";
 import path, { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
-import ModNode from "./modules/node/package.js";
-
-import APIHelper from "./modules/node/data-source/APIHelper.js";
+import { main as CryptoFetchNormalizeSave } from "./data/pipelines/cryptos/FetchNormalizeSave.js";
+import { main as StockFetchNormalizeSave } from "./data/pipelines/stocks/FetchNormalizeSave.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -66,41 +65,22 @@ export async function setup() {
 		console.log(`[${ Date.now() }]: Server is running on port: ${ process.env.PORT }`);
 	});
 };
+
 export async function main() {
 	await setup();
 
-	// console.log(ModNode)
-
-	const circuit = new ModNode.Circuit();
-	const apiCrypto = new ModNode.Node(ModNode.DataSource.APIDataSource.Create({
-		state: {
-			endpoint: `https://buddha.com:${ process.env.PORT }/crypto`,
-		},
-		config: {
-			rawResponse: true,
-		},
-	}));
-	const saveRawCryptoFile = new ModNode.Node(ModNode.DataDestination.FileDataDestination.Create({
-		state: {
-			path: "./data/cryptos",
-			file: `$TEST.raw.json`,
-		},
-	}));
-	const cryptoDataSet = new ModNode.Node(async input => ModNode.DataSet.DataSet.TransformToDataSet(input, APIHelper.cryptoModeler, APIHelper.cryptoAnalyzer));
-	const saveDataSetCryptoFile = new ModNode.Node(ModNode.DataDestination.FileDataDestination.Create({
-		state: {
-			path: "./data/cryptos",
-			file: `$TEST.json`,
-		},
-	}));
-
-	cryptoDataSet.connectSuccess(saveDataSetCryptoFile);
-	saveRawCryptoFile.connectSuccess(cryptoDataSet);
-	apiCrypto.connectSuccess(saveRawCryptoFile);
-	circuit.connectSuccess(apiCrypto);
-
-	const result = await circuit.run();
-	console.log(86, circuit.status);
+	// const pipeline = await CryptoFetchNormalizeSave({
+	// 	symbols: [
+	// 		"BTC",
+	// 	],
+	// 	delay: 1000,
+	// });
+	const pipeline = await StockFetchNormalizeSave({
+		symbols: [
+			"UNG",
+		],
+		delay: 1000,
+	});
 
 	/**
 	 * IDEA: NEXT STEPS

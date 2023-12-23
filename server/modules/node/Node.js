@@ -1,3 +1,4 @@
+import { v4 as uuid } from "uuid";
 import EventEmitter from "events";
 
 export class Node extends EventEmitter {
@@ -11,6 +12,8 @@ export class Node extends EventEmitter {
 	constructor (fn) {
 		super();
 
+		this.id = uuid();
+
 		if(typeof fn === "function" || (typeof fn === "object" && typeof fn.run === "function")) {
 			this.fn = fn;
 		} else {
@@ -23,6 +26,10 @@ export class Node extends EventEmitter {
 		this.status = Node.EnumStatusType.PENDING;
 		this.lastResult = null;
 		this.context = {};
+	}
+
+	static Create(fn) {
+		return new Node(fn);
 	}
 
 	async run(input = {}) {

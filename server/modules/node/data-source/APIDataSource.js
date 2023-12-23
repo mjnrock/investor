@@ -34,7 +34,7 @@ export class APIDataSource extends DataSource {
 		return new APIDataSource(deepcopy(self));
 	}
 
-	async run() {
+	async run(input, { variables } = {}) {
 		//STUB: Deal with the self-signed certificate
 		const cert = await fs.readFile("./certs/kiszka.crt", "utf8");
 		const axiosInstance = axios.create({
@@ -44,8 +44,19 @@ export class APIDataSource extends DataSource {
 		});
 
 		try {
-			const urlWithParams = `${ this.state.endpoint }?${ queryString.stringify(this.state.params) }`;
-			const response = await axiosInstance.get(urlWithParams, this.config);
+			let urlWithParams = `${ this.state.endpoint }?${ queryString.stringify(this.state.params) }`;
+			if(variables) {
+				for(const variable in variables) {
+					// {{${ variable }}}, but URL encoded
+					urlWithParams = urlWithParams.replace(`%7B%7B${ variable }%7D%7D`, variables[ variable ]);
+				}
+			}
+
+			const response = await axios.get(urlWithParams, this.config);
+
+			if(!response.data || response.data[ "Error Message" ]) {
+				throw new Error("Invalid response from API");
+			}
 
 			if(this.config.rawResponse) {
 				return response.data;

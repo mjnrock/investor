@@ -32,13 +32,20 @@ export class FileDataDestination extends DataDestination {
 		return new FileDataDestination(deepcopy(self));
 	}
 
-	async run(data) {
-		if(this.validator && !this.runValidator(data)) {
+	async run(input, { variables } = {}) {
+		if(this.validator && !this.runValidator(input)) {
 			throw new Error("Data validation failed");
 		}
 
-		const transformedData = this.runTransformer(data);
-		const filePath = path.join(this.state.path, this.state.file);
+		let fileName = this.state.file;
+		if(variables) {
+			for(const variable in variables) {
+				fileName = fileName.replace(`{{${ variable }}}`, variables[ variable ]);
+			}
+		}
+		const filePath = path.join(this.state.path, fileName);
+
+		const transformedData = this.runTransformer(input);
 		const fileData = JSON.stringify(transformedData);
 
 		await fs.writeFile(filePath, fileData, this.state.encoding);
