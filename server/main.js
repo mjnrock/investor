@@ -8,6 +8,8 @@ import { fileURLToPath } from "url";
 
 import { router as cryptoRouter } from "./routes/crypto.js";
 
+import "./scraper.js";
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export async function setup() {
@@ -33,7 +35,7 @@ export async function setup() {
 };
 
 export async function main() {
-	await setup();
+	// await setup();
 }
 
 main();
