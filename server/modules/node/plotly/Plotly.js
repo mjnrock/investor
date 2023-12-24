@@ -10,6 +10,15 @@ export class Plotly {
 		this.config = config;  // Plotly config object
 	}
 
+	toSchema() {
+		return {
+			data: this.data,
+			layout: this.layout,
+			config: this.config,
+		};
+
+	}
+
 	static Create({ source, data = [], layout = {}, config = {} } = {}) {
 		return new Plotly({ source, data, layout, config });
 	}
@@ -23,10 +32,10 @@ export class Plotly {
 	}
 
 	// Static method for Bar Chart transformation
-	static ToBarChart(plotly, traceArray) {
+	static ToBarChart(plotly, traceArrays = []) {
 		const dataSet = plotly.source;
 		const records = dataSet.getRecords(); // Assumes DataSet is in RECORD mode
-		const traces = traceArray.map(trace => ({
+		const traces = traceArrays.map(trace => ({
 			x: records.map(record => record[ trace[ 0 ] ]),
 			y: records.map(record => record[ trace[ 1 ] ]),
 			type: "bar"
@@ -40,10 +49,10 @@ export class Plotly {
 	}
 
 	// Static method for Line Chart transformation
-	static ToLineChart(plotly, traceArray) {
+	static ToLineChart(plotly, traceArrays = []) {
 		const dataSet = plotly.source;
 		const records = dataSet.getRecords(); // Assumes DataSet is in RECORD mode
-		const traces = traceArray.map(trace => ({
+		const traces = traceArrays.map(trace => ({
 			x: records.map(record => record[ trace[ 0 ] ]),
 			y: records.map(record => record[ trace[ 1 ] ]),
 			type: "scatter",
@@ -58,8 +67,8 @@ export class Plotly {
 	}
 
 	// Update method to create a new Plotly instance with transformed data
-	createChart(transformer, traceArray) {
-		return transformer(this, traceArray);
+	createChart(transformer, traceArrays) {
+		return transformer(this, traceArrays);
 	}
 }
 

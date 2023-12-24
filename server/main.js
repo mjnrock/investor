@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 import { main as CryptoFetchNormalizeSave } from "./data/pipelines/FetchNormalizeSave.crypto.js";
 import { main as StockFetchNormalizeSave } from "./data/pipelines/FetchNormalizeSave.stock.js";
 import { main as CryptoProcessTechnicalIndicators } from "./data/pipelines/ProcessTechnicalIndicators.crypto.js";
+import { main as CryptoPlotlyChart } from "./data/pipelines/PlotlyChart.crypto.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -74,79 +75,13 @@ export async function setup() {
 export async function main() {
 	await setup();
 
-	const pipelineResult = await CryptoProcessTechnicalIndicators({
-		symbols: [
-			"BTC",
-			"ETH",
-		],
-		indicators: [
-			{
-				fn: "sma",
-				cols: [ [ "close" ], [ "close" ], [ "close" ], [ "close" ], [ "close" ] ],
-				args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
-			},
-			{
-				fn: "ema",
-				cols: [ [ "close" ], [ "close" ], [ "close" ], [ "close" ], [ "close" ] ],
-				args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
-			},
-			{
-				fn: "rsi",
-				cols: [ [ "close" ], [ "close" ], [ "close" ], [ "close" ], [ "close" ] ],
-				args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
-			},
-			{
-				fn: "macd",
-				cols: [ [ "close" ], [ "close" ], [ "close" ], [ "close" ], [ "close" ] ],
-				args: [ [ 7, 11, 5 ], [ 12, 19, 8 ], [ 12, 26, 9 ], [ 20, 33, 14 ], [ 33, 53, 22 ] ]  // Baseline: 12, 26, 9
-			},
-			// {
-			// 	fn: "bollinger",
-			// 	cols: [ [ "close" ], [ "close" ], [ "close" ], [ "close" ], [ "close" ] ],
-			// 	args: [ [ 8, 2 ], [ 13, 2 ], [ 20, 2 ], [ 32, 2 ], [ 52, 2 ] ]  // Baseline: 20, 2
-			// },
-			// {
-			// 	fn: "stoch",
-			// 	cols: [ [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ] ],
-			// 	args: [ [ 5, 3, 3 ], [ 9, 3, 3 ], [ 14, 3, 3 ], [ 23, 3, 3 ], [ 37, 3, 3 ] ]  // Baseline: 14, 3, 3
-			// },
-			// {
-			// 	fn: "willr",
-			// 	cols: [ [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ] ],
-			// 	args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
-			// },
-			// {
-			// 	fn: "adx",
-			// 	cols: [ [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ] ],
-			// 	args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
-			// },
-			// {
-			// 	fn: "atr",
-			// 	cols: [ [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ] ],
-			// 	args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
-			// },
-			// {
-			// 	fn: "cci",
-			// 	cols: [ [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ] ],
-			// 	args: [ [ 8 ], [ 13 ], [ 20 ], [ 32 ], [ 52 ] ]  // Baseline: 20
-			// }
-		],
-		delay: 0,
+	const pipelineResult = await CryptoPlotlyChart({
+		fileName: "BTC.json",
+		chartType: "line",
+		traceArrays: [ [ "date", "close" ] ]
 	});
 
-
-	// const pipeline = await CryptoFetchNormalizeSave({
-	// 	symbols: [
-	// 		"BTC",
-	// 	],
-	// 	delay: 1000,
-	// });
-	// const pipeline = await StockFetchNormalizeSave({
-	// 	symbols: [
-	// 		"UNG",
-	// 	],
-	// 	delay: 1000,
-	// });
+	// console.log(pipelineResult);
 
 	/**
 	 * IDEA: NEXT STEPS
