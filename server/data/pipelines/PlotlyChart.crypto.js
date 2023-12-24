@@ -1,10 +1,9 @@
 import ModNode from "../../modules/node/package.js";
-import fs from "fs/promises";
 
 export async function main({
 	fileName = "",      // Specify the file name
-	chartType = "bar",  // "bar" or "line"
-	traceArrays = []     // Array of traces for the chart
+	chartType,		  	// "bar", "line", etc.
+	traceArrays		    // Array of traces for the chart
 }) {
 	// Step 1: Load the File
 	const loadFile = ModNode.Node.Create(ModNode.DataSource.FileDataSource.Create({
@@ -51,11 +50,10 @@ export async function main({
 	// Run the pipeline and handle the results
 	const result = await pipeline.run();
 
+	// Calculate the schema
 	const schema = result[ result.length - 1 ].output.toSchema();
 
-	fs.writeFile(`./TEST.json`, JSON.stringify(schema, null, 2));
-
-	return result;
+	return schema;
 };
 
 export default main;

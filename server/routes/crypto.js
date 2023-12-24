@@ -3,8 +3,7 @@ import express from "express";
 import fs from "fs/promises";
 import path from "path";
 
-import { DataSet } from "../modules/node/data-set/DataSet.js";
-import { Plotly } from "../modules/node/plotly/Plotly.js";
+import { main as PlotlyChartPipeline } from "../data/pipelines/PlotlyChart.crypto.js";
 
 const dataSetToMetaObject = (dataSet) => {
 	const obj = {
@@ -31,36 +30,15 @@ export const router = async (__dirname) => {
 		const indicatorName = req?.query?.ti?.toLowerCase();
 		const chartType = req?.query?.chartType?.toLowerCase() || "bar";
 
-		let fileName = `${ symbol }.json`;
-		let filePath = path.join(__dirname, "./data/cryptos", fileName);
-
-		if(indicatorName) {
-			fileName = `${ symbol }.${ indicatorName }.json`;
-			filePath = path.join(__dirname, "./data/cryptos", fileName);
-		}
+		let fileName = `${ symbol }${ indicatorName ? `.${ indicatorName }` : '' }.json`;
 
 		try {
-			const file = await fs.readFile(filePath, "utf8");
-			let fileObj = JSON.parse(file);
+			const schema = await PlotlyChartPipeline({
+				fileName,
+				chartType,
+			});
 
-			let dataSet = new DataSet(fileObj);
-			let plotly = Plotly.Create({ source: dataSet });
-
-			switch(chartType) {
-				case "bar":
-					plotly = Plotly.ToBarChart(plotly, [ [ "date", "close" ] ]);
-					break;
-				case "line":
-					plotly = Plotly.ToLineChart(plotly, [ [ "date", "close" ] ]);
-					break;
-				case "candlestick":
-					plotly = Plotly.ToCandlestickChart(plotly, [ [ "date", "open" ], [ "date", "high" ], [ "date", "low" ], [ "date", "close" ] ]);
-					break;
-				default:
-					throw new Error("Unsupported chart type");
-			}
-
-			res.status(200).json(plotly.toSchema());
+			res.status(200).json(schema);
 		} catch(error) {
 			res.status(404).send(`Chart file not found for symbol: ${ symbol }`);
 		}

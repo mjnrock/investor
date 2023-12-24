@@ -31,7 +31,7 @@ export class Plotly {
 		});
 	}
 
-	static ToBarChart(plotly, traceArrays = []) {
+	static ToBarChart(plotly, traceArrays = [ [ "date", "close" ] ]) {
 		const dataSet = plotly.source;
 		const records = dataSet.getRecords();
 		const traces = traceArrays.map(trace => ({
@@ -47,7 +47,7 @@ export class Plotly {
 		});
 	}
 
-	static ToLineChart(plotly, traceArrays = []) {
+	static ToLineChart(plotly, traceArrays = [ [ "date", "close" ] ]) {
 		const dataSet = plotly.source;
 		const records = dataSet.getRecords();
 		const traces = traceArrays.map(trace => ({
@@ -64,22 +64,24 @@ export class Plotly {
 		});
 	}
 
-	static ToCandlestickChart(plotly) {
+	static ToCandlestickChart(plotly, traceArrays = [ [ "date", "open" ], [ "date", "high" ], [ "date", "low" ], [ "date", "close" ] ]) {
 		const dataSet = plotly.source;
 		const records = dataSet.getRecords();
 
-		const trace = {
-			x: records.map(record => record.date),
-			open: records.map(record => record.open),
-			high: records.map(record => record.high),
-			low: records.map(record => record.low),
-			close: records.map(record => record.close),
+		// Dynamically generate trace based on traceArrays
+		const trace = traceArrays.reduce((acc, array) => {
+			const [ xField, yField ] = array;
+			acc[ xField ] = records.map(record => record[ xField ]);
+			acc[ yField ] = records.map(record => record[ yField ]);
+
+			return acc;
+		}, {
 			type: "candlestick",
-			name: dataSet.meta.digitalCurrencyName,
-		};
+			x: records.map(record => record.date),
+		});
 
 		const layout = {
-			title: `${ dataSet.meta.digitalCurrencyName } Candlestick Chart`,
+			title: dataSet.meta.symbol,
 			xaxis: {
 				title: "Date",
 				type: "date"
@@ -95,6 +97,7 @@ export class Plotly {
 			layout: layout
 		});
 	}
+
 
 	// Update method to create a new Plotly instance with transformed data
 	createChart(transformer, traceArrays) {
