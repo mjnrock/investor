@@ -5,21 +5,19 @@ export async function main({
 	chartType,		  	// "bar", "line", etc.
 	traceArrays		    // Array of traces for the chart
 }) {
-	// Step 1: Load the File
 	const loadFile = ModNode.Node.Create(ModNode.DataSource.FileDataSource.Create({
 		state: {
 			path: "./data/cryptos",
 			file: fileName,
 		},
 	}));
-
-	// Step 2: Convert to DataSet
-	const toDataSet = ModNode.Node.Create(async (input, context = {}) => {
-		return new ModNode.DataSet.DataSet(input);
-	});
-
-	// Step 3: Create a Plotly Chart
 	const createChart = ModNode.Node.Create(async (input, context = {}) => {
+		if(Array.isArray(input)) {
+			//STUB: Just return the first one for now
+			//TODO: Implement a selection mechanism to decide which to return
+			input = input[ 0 ];
+		}
+
 		let plotly = ModNode.Plotly.Plotly.Create({ source: input });
 
 		switch(chartType) {
@@ -36,14 +34,12 @@ export async function main({
 				throw new Error("Unsupported chart type");
 		}
 
-		// Here you can further process the plotly object, like saving or rendering the chart
 		return plotly;
 	});
 
 	// Construct the pipeline
 	const pipeline = ModNode.Pipeline.Create(
 		loadFile,
-		toDataSet,
 		createChart
 	);
 

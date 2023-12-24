@@ -5,10 +5,6 @@ import deepcopy from "deepcopy";
 import { DataSource } from "./DataSource.js";
 import { DataSet } from "../data-set/DataSet.js";
 
-/**
- * This currently assumes that the file is a JSON file,
- * created from `DataSet.ToJson`.
- */
 export class FileDataSource extends DataSource {
 	static RootPath = process.cwd();
 
@@ -33,10 +29,10 @@ export class FileDataSource extends DataSource {
 	static Create({ state = {}, config = {}, modeler = null, analyzer = null } = {}) {
 		return new FileDataSource({ state, config, modeler, analyzer });
 	}
+
 	static Copy(self) {
 		return new FileDataSource(deepcopy(self));
 	}
-
 
 	async run(input, config) {
 		const { variables } = config;
@@ -52,9 +48,17 @@ export class FileDataSource extends DataSource {
 		}
 		const filePath = path.join(this.state.path, fileName);
 		const fileData = await fs.readFile(filePath, this.state.encoding);
-		const fileObj = JSON.parse(fileData);
+		const fileContent = JSON.parse(fileData);
 
-		const dataSet = new DataSet(fileObj);
+		if(Array.isArray(fileContent)) {
+			return this.processMultipleDataSets(fileContent);
+		} else {
+			return this.processSingleDataSet(fileContent);
+		}
+	}
+
+	processSingleDataSet(dataSetObj) {
+		const dataSet = new DataSet(dataSetObj);
 
 		const modeledData = this.runModeler(dataSet.getRecords());
 		const analyzedMeta = this.runAnalyzer(dataSet);
@@ -65,8 +69,11 @@ export class FileDataSource extends DataSource {
 		});
 
 		this.cache = next;
-
 		return next;
+	}
+
+	processMultipleDataSets(dataSetArray) {
+		return dataSetArray.map(dataSetObj => this.processSingleDataSet(dataSetObj));
 	}
 }
 

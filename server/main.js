@@ -36,14 +36,6 @@ export async function setup() {
 
 export async function main() {
 	await setup();
-
-	// const pipelineResult = await CryptoPlotlyChart({
-	// 	fileName: "BTC.json",
-	// 	chartType: "line",
-	// 	traceArrays: [ [ "date", "close" ] ]
-	// });
-
-	// console.log(pipelineResult);
 }
 
 main();
@@ -63,7 +55,7 @@ main();
  * 4.	Save the normalized data into file(s)
  * 6.	Iterate TechnicalIndicators over each DataSet (stocks/cryptos)
  * 7.	Save the TechnicalIndicator results into respective file(s) for the symbol
- * 9.	Create Plotly objects for each symbol and TechnicalIndicator
+ * 9.	Create Plotly objects for each symbol and TechnicalIndicatora
  * 
  * 10a.	Convert the file system format into MongoDB format
  * 10b.	Store the MongoDB format into the database

@@ -3,6 +3,7 @@ import express from "express";
 import fs from "fs/promises";
 import path from "path";
 
+import { INDICATOR_OUTPUT_COLUMNS } from "../modules/node/technical-analysis/TAHelper.js";
 import { main as PlotlyChartPipeline } from "../data/pipelines/PlotlyChart.crypto.js";
 
 const dataSetToMetaObject = (dataSet) => {
@@ -33,10 +34,17 @@ export const router = async (__dirname) => {
 		let fileName = `${ symbol }${ indicatorName ? `.${ indicatorName }` : '' }.json`;
 
 		try {
-			const schema = await PlotlyChartPipeline({
-				fileName,
-				chartType,
-			});
+			let options = { fileName, chartType };
+
+			// Check if an indicator is requested and valid
+			if(indicatorName && INDICATOR_OUTPUT_COLUMNS[ indicatorName ]) {
+				options.traceArrays = [[
+					"date",											// x-axis
+					...INDICATOR_OUTPUT_COLUMNS[ indicatorName ],	// y-axis 1
+				]];
+			}
+
+			const schema = await PlotlyChartPipeline(options);
 
 			res.status(200).json(schema);
 		} catch(error) {
