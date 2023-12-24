@@ -1,8 +1,8 @@
 import queryString from "query-string";
-
 import { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { PlotlyChart } from "../components/PlotlyChart.jsx";
+
+import { PlotlyChart } from "../components/PlotlyChart";
 
 export function CryptoChart() {
 	const [ schema, setSchema ] = useState(null);
@@ -12,6 +12,8 @@ export function CryptoChart() {
 	useEffect(() => {
 		// Construct query string from searchParams, adding chartType
 		const qpString = queryString.stringify({ ...Object.fromEntries(searchParams), chartType });
+
+		console.log(qpString);
 
 		const url = `https://kiszka.com:3801/crypto/chart/${ symbol }` + (qpString ? `?${ qpString }` : "");
 		fetch(url)
@@ -23,12 +25,15 @@ export function CryptoChart() {
 		return "Loading...";
 	}
 
+	// Unique key for forcing re-render
+	const chartKey = `${ symbol }-${ chartType }-${ queryString.stringify(Object.fromEntries(searchParams)) }`;
+
 	return (
 		<div>
 			<h1>{ symbol.toUpperCase() } Chart</h1>
-			<PlotlyChart schema={ schema } />
+			<PlotlyChart key={ chartKey } schema={ schema } />
 		</div>
 	);
-}
+};
 
-export default CryptoChart;
+export default CryptoChart

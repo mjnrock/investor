@@ -3,7 +3,8 @@ import ModNode from "../../modules/node/package.js";
 export async function main({
 	fileName = "",      // Specify the file name
 	chartType,		  	// "bar", "line", etc.
-	traceArrays		    // Array of traces for the chart
+	traceArrays,		// Array of traces for the chart
+	index = 0,			// Index of the data to use, if needed
 }) {
 	const loadFile = ModNode.Node.Create(ModNode.DataSource.FileDataSource.Create({
 		state: {
@@ -13,9 +14,7 @@ export async function main({
 	}));
 	const createChart = ModNode.Node.Create(async (input, context = {}) => {
 		if(Array.isArray(input)) {
-			//STUB: Just return the first one for now
-			//TODO: Implement a selection mechanism to decide which to return
-			input = input[ 0 ];
+			input = input[ index ];
 		}
 
 		let plotly = ModNode.Plotly.Plotly.Create({ source: input });

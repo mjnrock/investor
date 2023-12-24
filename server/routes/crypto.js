@@ -34,14 +34,18 @@ export const router = async (__dirname) => {
 		let fileName = `${ symbol }${ indicatorName ? `.${ indicatorName }` : '' }.json`;
 
 		try {
-			let options = { fileName, chartType };
+			let options = {
+				fileName,
+				chartType,
+				index: req?.query?.index ? parseInt(req?.query?.index) : 0,
+			};
 
 			// Check if an indicator is requested and valid
 			if(indicatorName && INDICATOR_OUTPUT_COLUMNS[ indicatorName ]) {
-				options.traceArrays = [[
+				options.traceArrays = [ [
 					"date",											// x-axis
 					...INDICATOR_OUTPUT_COLUMNS[ indicatorName ],	// y-axis 1
-				]];
+				] ];
 			}
 
 			const schema = await PlotlyChartPipeline(options);
