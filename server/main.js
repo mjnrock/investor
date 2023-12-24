@@ -1,10 +1,9 @@
 import "./dotenv.js";
 import express from "express";
-import expressWs from "express-ws";
 import cors from "cors";
 import fs from "fs/promises";
 import https from "https";
-import path, { dirname, join } from "path";
+import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 import { router as cryptoRouter } from "./routes/crypto.js";
@@ -18,7 +17,6 @@ export async function setup() {
 	const credentials = { key: privateKey, cert: certificate };
 
 	const app = express();
-	const ws = expressWs(app);
 
 	app.use(cors());
 
