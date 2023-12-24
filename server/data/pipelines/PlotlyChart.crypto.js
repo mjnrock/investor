@@ -4,7 +4,7 @@ export async function main({
 	fileName = "",      // Specify the file name
 	chartType,		  	// "bar", "line", etc.
 	traceArrays,		// Array of traces for the chart
-	index = 0,			// Index of the data to use, if needed
+	index = 0,			// If a file is an array, specify the index to use
 }) {
 	const loadFile = ModNode.Node.Create(ModNode.DataSource.FileDataSource.Create({
 		state: {
