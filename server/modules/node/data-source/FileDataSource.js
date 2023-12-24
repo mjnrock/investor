@@ -38,7 +38,8 @@ export class FileDataSource extends DataSource {
 	}
 
 
-	async run(input, { variables } = {}) {
+	async run(input, config) {
+		const { variables } = config;
 		if(this.validator && !this.runValidator(input)) {
 			throw new Error("Data validation failed");
 		}

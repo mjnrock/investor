@@ -24,7 +24,7 @@ export class Node extends EventEmitter {
 		this.successNodes = [];
 		this.failureNodes = [];
 		this.status = Node.EnumStatusType.PENDING;
-		this.lastResult = null;
+		this.cache = [];
 		this.context = {};
 	}
 
@@ -32,31 +32,23 @@ export class Node extends EventEmitter {
 		return new Node(fn);
 	}
 
-	async run(input = {}) {
+	async run(input = {}, context = {}) {
+		this.cache = [];
+		this.setContext(context);
 		this.status = Node.EnumStatusType.RUNNING;
 		this.emit(Node.EnumStatusType.RUNNING, this);
-
 		try {
-			const output = typeof this.fn === "function" ?
-				await this.fn(input, this.context) :
-				await this.fn.run(input, this.context);
-
+			const output = await (typeof this.fn === "function" ? this.fn(input, this.context) : this.fn.run(input, this.context));
 			this.status = Node.EnumStatusType.SUCCESS;
-			this.lastResult = output;
-			for(const node of this.successNodes) {
-				await node.run(output);
-			}
+			this.cache.push({ output: output, type: 'success' });
 			this.emit(Node.EnumStatusType.SUCCESS, output);
+			return output;
 		} catch(error) {
 			this.status = Node.EnumStatusType.FAILED;
-			this.lastResult = error;
-			for(const node of this.failureNodes) {
-				await node.run(error);
-			}
+			this.cache.push({ output: error, type: 'failure' });
 			this.emit(Node.EnumStatusType.FAILED, error);
+			throw error;
 		}
-
-		return this.lastResult;
 	}
 
 	connectSuccess(node) {

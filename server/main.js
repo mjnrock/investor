@@ -74,7 +74,7 @@ export async function setup() {
 export async function main() {
 	await setup();
 
-	const pipeline = await CryptoProcessTechnicalIndicators({
+	const pipelineResult = await CryptoProcessTechnicalIndicators({
 		symbols: [
 			"BTC",
 			"ETH",
@@ -121,8 +121,6 @@ export async function main() {
 		],
 		delay: 0,
 	});
-
-	console.log(987654, pipeline);
 
 
 	// const pipeline = await CryptoFetchNormalizeSave({

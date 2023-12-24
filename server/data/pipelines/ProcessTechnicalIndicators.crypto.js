@@ -34,6 +34,7 @@ export async function main({
 			return acc;
 		}, {});
 
+		let results = [];
 		// Actually save the data
 		for(const symbol in consolidatedData) {
 			const indicatorData = consolidatedData[ symbol ];
@@ -46,20 +47,27 @@ export async function main({
 					},
 				});
 
-				await node.run(indicatorData[ indicatorName ], context);
+				results.push(await node.run(indicatorData[ indicatorName ], context));
 			}
 		}
 
-		return input;
+		return results;
 	});
 
-	const pipelines = {};
+	const pipeline = ModNode.Pipeline.Create(
+		fsCryptoDataSet,
+		taIndicators,
+		saveTaIndicators,
+	);
+
+	console.log(pipeline.id)
+	console.log(fsCryptoDataSet.id)
+	console.log(taIndicators.id)
+	console.log(saveTaIndicators.id)
+
+	const pipelineResults = {};
 	for(const symbol of symbols) {
-		const pipeline = ModNode.Pipeline.Create(
-			fsCryptoDataSet,
-			taIndicators,
-			saveTaIndicators,
-		);
+		pipeline.cache = [];
 
 		await pipeline.run({
 			variables: {
@@ -68,10 +76,25 @@ export async function main({
 			...context,
 		});
 
-		pipelines[ symbol ] = pipeline.cache;
+		pipelineResults[ symbol ] = pipeline.cache;
+
+		for(let i = 0; i < pipeline.cache.length; i++) {
+			const result = pipeline.cache[ i ];
+			const { node, output } = result;
+
+			if(i === 0) {
+				console.log(node, output.meta);
+			} else if(i === 1) {
+				console.log(node, output.map(item => item.meta.technicalAnalysis))
+			} else if(i === 2) {
+				console.log(node, output.map(item => item.map(item => [ item.meta.technicalAnalysis.fn, ...item.meta.technicalAnalysis.args ])))
+			}
+		}
 	}
 
-	return pipelines;
+	console.log(pipelineResults);
+
+	return pipelineResults;
 };
 
 export default main;

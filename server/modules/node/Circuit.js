@@ -64,6 +64,7 @@ export class Circuit extends Node {
 	}
 
 	static async Run(self, context = {}, input = {}) {
+		self.cache = [];
 		self.setContext(context);
 		self.status = Node.EnumStatusType.RUNNING;
 		self.emit(Node.EnumStatusType.RUNNING, this);
@@ -91,7 +92,7 @@ export class Circuit extends Node {
 				try {
 					lastErrorOutput = await node.run(currentError, self.context);
 					currentError = lastErrorOutput; // Output of one failure node is the input to the next
-					self.cache.push({ type: 'failure', node: node.id, output: lastErrorOutput }); // Store each error output
+					self.cache.push({ type: 'failure', node: node, output: lastErrorOutput }); // Store each error output
 				} catch(innerError) {
 					currentError = innerError; // If a failure node fails, continue with the next
 				}
