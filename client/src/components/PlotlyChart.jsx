@@ -1,11 +1,11 @@
 import React from "react";
 import Plot from "react-plotly.js";
 
-export const PlotlyChart = ({ data }) => {
+export const PlotlyChart = ({ schema }) => {
 	return (
 		<Plot
-			data={ data.data }
-			layout={ data.layout }
+			data={ schema.data }
+			layout={ schema.layout }
 			useResizeHandler={ true }
 			style={ { width: "100%", height: "100%" } }
 		/>

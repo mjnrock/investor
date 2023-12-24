@@ -31,10 +31,9 @@ export class Plotly {
 		});
 	}
 
-	// Static method for Bar Chart transformation
 	static ToBarChart(plotly, traceArrays = []) {
 		const dataSet = plotly.source;
-		const records = dataSet.getRecords(); // Assumes DataSet is in RECORD mode
+		const records = dataSet.getRecords();
 		const traces = traceArrays.map(trace => ({
 			x: records.map(record => record[ trace[ 0 ] ]),
 			y: records.map(record => record[ trace[ 1 ] ]),
@@ -48,10 +47,9 @@ export class Plotly {
 		});
 	}
 
-	// Static method for Line Chart transformation
 	static ToLineChart(plotly, traceArrays = []) {
 		const dataSet = plotly.source;
-		const records = dataSet.getRecords(); // Assumes DataSet is in RECORD mode
+		const records = dataSet.getRecords();
 		const traces = traceArrays.map(trace => ({
 			x: records.map(record => record[ trace[ 0 ] ]),
 			y: records.map(record => record[ trace[ 1 ] ]),
@@ -63,6 +61,38 @@ export class Plotly {
 			source: dataSet,
 			data: traces,
 			layout: {}
+		});
+	}
+
+	static ToCandlestickChart(plotly) {
+		const dataSet = plotly.source;
+		const records = dataSet.getRecords();
+
+		const trace = {
+			x: records.map(record => record.date),
+			open: records.map(record => record.open),
+			high: records.map(record => record.high),
+			low: records.map(record => record.low),
+			close: records.map(record => record.close),
+			type: "candlestick",
+			name: dataSet.meta.digitalCurrencyName,
+		};
+
+		const layout = {
+			title: `${ dataSet.meta.digitalCurrencyName } Candlestick Chart`,
+			xaxis: {
+				title: "Date",
+				type: "date"
+			},
+			yaxis: {
+				title: "Price (in USD)",
+			}
+		};
+
+		return Plotly.Create({
+			source: dataSet,
+			data: [ trace ],
+			layout: layout
 		});
 	}
 

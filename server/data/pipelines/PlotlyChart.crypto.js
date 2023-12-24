@@ -30,6 +30,9 @@ export async function main({
 			case "line":
 				plotly = ModNode.Plotly.Plotly.ToLineChart(plotly, traceArrays);
 				break;
+			case "candlestick":
+				plotly = ModNode.Plotly.Plotly.ToCandlestickChart(plotly, traceArrays);
+				break;
 			default:
 				throw new Error("Unsupported chart type");
 		}
