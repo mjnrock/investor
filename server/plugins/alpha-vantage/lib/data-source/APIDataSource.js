@@ -121,7 +121,8 @@ export class APIDataSource extends APIDataSourceNode {
 			...params,
 		};
 
-		return super.run(params, { variables });
+		console.log(JSON.stringify(this, null, 2));
+		// return super.run(params, { variables });
 	}
 }
 

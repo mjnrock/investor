@@ -36,12 +36,12 @@ export class APIDataSource extends DataSource {
 
 	async run(input, { variables } = {}) {
 		//STUB: Deal with the self-signed certificate
-		const cert = await fs.readFile("./certs/kiszka.crt", "utf8");
-		const axiosInstance = axios.create({
-			httpsAgent: new https.Agent({
-				ca: cert,
-			}),
-		});
+		// const cert = await fs.readFile("./certs/kiszka.crt", "utf8");
+		// const axiosInstance = axios.create({
+		// 	httpsAgent: new https.Agent({
+		// 		ca: cert,
+		// 	}),
+		// });
 
 		try {
 			let urlWithParams = `${ this.state.endpoint }?${ queryString.stringify(this.state.params) }`;
@@ -52,9 +52,9 @@ export class APIDataSource extends DataSource {
 				}
 			}
 
-			// const response = await axios.get(urlWithParams, this.config);
+			const response = await axios.get(urlWithParams, this.config);
 			//STUB: Deal with the self-signed certificate
-			const response = await axiosInstance.get(urlWithParams, this.config);
+			// const response = await axiosInstance.get(urlWithParams, this.config);
 
 			if(!response.data || response.data[ "Error Message" ]) {
 				throw new Error("Invalid response from API");

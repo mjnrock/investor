@@ -12,6 +12,9 @@ export async function main({
 				symbol: "{{SYMBOL}}",
 			},
 		},
+		config: {
+			rawResponse: true,
+		},
 	}));
 	const saveRawCryptoFile = ModNode.Node.Create(ModNode.DataDestination.FileDataDestination.Create({
 		state: {
