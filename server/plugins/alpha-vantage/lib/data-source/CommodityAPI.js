@@ -14,7 +14,6 @@ export const EnumCommodityType = {
 	GLOBAL_COMMODITIES_INDEX: "ALL_COMMODITIES",
 };
 
-
 export class CommodityAPI extends APIDataSource {
 	static Modeler(data) {
 		return data[ "data" ].map(entry => ({
@@ -43,6 +42,10 @@ export class CommodityAPI extends APIDataSource {
 		this.analyzer = CommodityAPI.Analyzer;
 	}
 
+	static Create(opts = {}) {
+		return new this(opts);
+	}
+
 	setCommodity(key) {
 		const value = EnumCommodityType[ key ];
 		if(!value) {
@@ -53,7 +56,12 @@ export class CommodityAPI extends APIDataSource {
 			...this.state.params,
 			function: value
 		};
+
+		return this;
 	}
 }
 
-export default CommodityAPI;
+export default {
+	CommodityAPI,
+	EnumCommodityType,
+};

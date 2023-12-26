@@ -38,6 +38,10 @@ export class EconomyAPI extends APIDataSource {
 		this.analyzer = EconomyAPI.Analyzer;
 	}
 
+	static Create(opts = {}) {
+		return new this(opts);
+	}
+
 	setIndicator(key) {
 		const value = EnumEconomicIndicator[ key ];
 		if(!value) {
@@ -48,7 +52,12 @@ export class EconomyAPI extends APIDataSource {
 			...this.state.params,
 			function: value
 		};
+
+		return this;
 	}
 }
 
-export default EconomyAPI;
+export default {
+	EnumEconomicIndicator,
+	EconomyAPI,
+};

@@ -40,6 +40,7 @@ export const APIDefaultParams = {
 	[ EnumAPIType.FOREX ]: {
 		function: "FX_DAILY",
 		outputsize: "full",
+		from_symbol: "USD",
 	},
 	[ EnumAPIType.ECONOMY ]: {
 		interval: "quarterly",
@@ -70,6 +71,10 @@ export class APIDataSource extends APIDataSourceNode {
 		this.setOutputJson();
 	}
 
+	static Create({ apiType = EnumAPIType.CRYPTO, ...opts } = {}) {
+		return new this({ apiType, ...opts });
+	}
+
 	setAPIType(apiType = EnumAPIType.CRYPTO) {
 		if(!APIDefaultParams[ apiType ]) {
 			throw new Error(`Unknown data type: ${ apiType }`);
@@ -84,13 +89,25 @@ export class APIDataSource extends APIDataSourceNode {
 			/* Load default API key */
 			apiKey: process.env.ALPHA_VANTAGE_API_KEY,
 		};
+
+		return this;
 	}
 
 	setOutputJson() {
 		this.state.params.datatype = "json";
+
+		return this;
 	}
 	setOutputCsv() {
 		this.state.params.datatype = "csv";
+
+		return this;
+	}
+
+	setApiKey(apiKey = process.env.ALPHA_VANTAGE_API_KEY) {
+		this.state.params.apiKey = apiKey;
+
+		return this;
 	}
 
 	/**
@@ -104,8 +121,13 @@ export class APIDataSource extends APIDataSourceNode {
 			...params,
 		};
 
-		return super.run(input, { variables });
+		return super.run(params, { variables });
 	}
 }
 
-export default APIDataSource;
+export default {
+	APIDataSource,
+	APIHelper,
+	EnumAPIType,
+	APIDefaultParams,
+};

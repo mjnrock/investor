@@ -9,7 +9,7 @@ import path from "path";
 
 import { router as cryptoRouter } from "./routes/crypto.js";
 
-import { CryptoAPI } from "./plugins/alpha-vantage/node/data-source/CryptoAPI.js";
+import { CryptoAPI } from "./plugins/alpha-vantage/lib/data-source/CryptoAPI.js";
 import { FileDataDestination } from "./modules/node/data-destination/FileDataDestination.js";
 
 // import "./scraper.js";
@@ -59,6 +59,7 @@ export async function main() {
 		},
 	});
 
+	// const data = await api.setSymbol("BTC").run();	// alternative to below (parameter chaining)
 	const data = await api.run({
 		symbol: "BTC",
 	});

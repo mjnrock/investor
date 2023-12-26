@@ -1,5 +1,13 @@
 import { APIDataSource, APIHelper, EnumAPIType } from "./APIDataSource.js";
 
+export const EnumCryptoType = {
+	BITCOIN: "BTC",
+	ETHEREUM: "ETH",
+	GRAPH: "GRT",
+	STELLAR_LUMENS: "XLM",
+	TRONIX: "TRX",
+};
+
 export class CryptoAPI extends APIDataSource {
 	static Modeler(data) {
 		const timeSeries = data[ "Time Series (Digital Currency Daily)" ];
@@ -36,6 +44,22 @@ export class CryptoAPI extends APIDataSource {
 		this.modeler = CryptoAPI.Modeler;
 		this.analyzer = CryptoAPI.Analyzer;
 	}
+
+	static Create(opts = {}) {
+		return new this(opts);
+	}
+
+	setSymbol(symbol) {
+		this.state.params = {
+			...this.state.params,
+			symbol,
+		};
+
+		return this;
+	}
 };
 
-export default CryptoAPI;
+export default {
+	EnumCryptoType,
+	CryptoAPI,
+};

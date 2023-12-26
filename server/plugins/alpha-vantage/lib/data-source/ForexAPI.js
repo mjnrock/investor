@@ -1,8 +1,8 @@
 import { APIDataSource, APIHelper, EnumAPIType } from "./APIDataSource.js";
 
-export class StockAPI extends APIDataSource {
+export class ForexAPI extends APIDataSource {
 	static Modeler(data) {
-		const timeSeries = data[ "Time Series (Daily)" ];
+		const timeSeries = data[ "Time Series FX (Daily)" ];
 
 		return Object.keys(timeSeries).map(date => {
 			const dayData = timeSeries[ date ];
@@ -15,24 +15,48 @@ export class StockAPI extends APIDataSource {
 
 			return processedDayData;
 		});
-	};
+	}
+
 	static Analyzer(data) {
 		const metaData = APIHelper.processMetaData(data[ "Meta Data" ]);
 
-		metaData.sourceType = "stock";
+		metaData.sourceType = "forex";
 
 		return metaData;
-	};
+	}
 
 	constructor (opts = {}) {
 		super({
-			apiType: EnumAPIType.STOCK,
-			...opts,
+			apiType: EnumAPIType.FOREX,
+			...opts
 		});
 
-		this.modeler = StockAPI.Modeler;
-		this.analyzer = StockAPI.Analyzer;
+		this.modeler = ForexAPI.Modeler;
+		this.analyzer = ForexAPI.Analyzer;
 	}
-};
 
-export default StockAPI;
+	static Create(opts = {}) {
+		return new this(opts);
+	}
+
+	setToSymbol(symbol) {
+		this.state.params = {
+			...this.state.params,
+			to_symbol: symbol,
+		};
+
+		return this;
+	}
+	setFromSymbol(symbol) {
+		this.state.params = {
+			...this.state.params,
+			from_symbol: symbol,
+		};
+
+		return this;
+	}
+}
+
+export default {
+	ForexAPI,
+};
