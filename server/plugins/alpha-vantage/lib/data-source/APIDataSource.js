@@ -87,7 +87,7 @@ export class APIDataSource extends APIDataSourceNode {
 			...APIDefaultParams[ apiType ],
 
 			/* Load default API key */
-			apiKey: process.env.ALPHA_VANTAGE_API_KEY,
+			apikey: process.env.ALPHA_VANTAGE_API_KEY,
 		};
 
 		return this;
@@ -104,8 +104,8 @@ export class APIDataSource extends APIDataSourceNode {
 		return this;
 	}
 
-	setApiKey(apiKey = process.env.ALPHA_VANTAGE_API_KEY) {
-		this.state.params.apiKey = apiKey;
+	setApiKey(apikey = process.env.ALPHA_VANTAGE_API_KEY) {
+		this.state.params.apikey = apikey;
 
 		return this;
 	}
@@ -121,8 +121,7 @@ export class APIDataSource extends APIDataSourceNode {
 			...params,
 		};
 
-		console.log(JSON.stringify(this, null, 2));
-		// return super.run(params, { variables });
+		return await super.run({}, { variables });
 	}
 }
 

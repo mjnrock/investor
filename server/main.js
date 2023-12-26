@@ -67,11 +67,12 @@ export async function main() {
 	// });
 
 	const pipeline = await FetchNormalizeSavePipeline({
-		symbols: [ "BTC", "ETH", "GRT", "XLM", "TRX" ],
+		// symbols: [ "BTC" ],
+		symbols: [ "ETH", "GRT", "XLM", "TRX", ],
 		delay: 1000,
 	});
 
-	console.log(pipeline)
+	console.log(pipeline.status);
 
 	// const destination = new FileDataDestination({
 	// 	state: {
