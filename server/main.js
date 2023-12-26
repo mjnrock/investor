@@ -9,11 +9,7 @@ import path from "path";
 
 import { router as cryptoRouter } from "./routes/crypto.js";
 
-import { CryptoAPI } from "./plugins/alpha-vantage/lib/data-source/CryptoAPI.js";
-import { FileDataDestination } from "./modules/node/data-destination/FileDataDestination.js";
-
-import { main as CryptoFetchNormalizeSavePipeline } from "./plugins/alpha-vantage/data/pipelines/FetchNormalizeSave.crypto.js";
-import { main as StockFetchNormalizeSavePipeline } from "./plugins/alpha-vantage/data/pipelines/FetchNormalizeSave.stock.js";
+import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 
 // import "./scraper.js";
 
@@ -67,18 +63,17 @@ export async function main() {
 	// 	symbol: "BTC",
 	// });
 
-	// const pipeline = await CryptoFetchNormalizeSavePipeline({
+	// const cryptoPipeline = await ModAlphaVantage.Pipelines.Crypto.FetchNormalizeSave({
 	// 	// symbols: [ "BTC" ],
 	// 	symbols: [ "ETH", "GRT", "XLM", "TRX", ],
 	// 	delay: 1000,
 	// });
+	// const stockPipeline = await ModAlphaVantage.Pipelines.Stock.FetchNormalizeSave({
+	// 	symbols: [ "AAPL", "RKT", "VIG", "SPY", "UNG", ],
+	// 	delay: 1000,
+	// });
 
-	const pipeline = await StockFetchNormalizeSavePipeline({
-		symbols: [ "AAPL", "RKT", "VIG", "SPY", "UNG", ],
-		delay: 1000,
-	});
-
-	console.log(pipeline.status);
+	// console.log(pipeline.status);
 
 	// const destination = new FileDataDestination({
 	// 	state: {
