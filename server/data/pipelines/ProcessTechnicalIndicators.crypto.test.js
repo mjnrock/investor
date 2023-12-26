@@ -1,6 +1,21 @@
-import { CryptoProcessTechnicalIndicators } from "../pipelines/ProcessTechnicalIndicators.crypto.js";
+import { main as CryptoProcessTechnicalIndicators } from "./ProcessTechnicalIndicators.crypto.js";
 
-const pipelineResult = await CryptoProcessTechnicalIndicators({
+const GR = 1.618; // Golden Ratio
+
+// Function to generate scaled arguments
+const scaleArgs = (baseline, count) => {
+	let args = [ baseline ];
+	for(let i = 1; i < count; i++) {
+		if(i < 4) {
+			args.unshift(Math.round(baseline / Math.pow(GR, i)));
+		} else {
+			args.push(Math.round(baseline * Math.pow(GR, i - 1)));
+		}
+	}
+	return args;
+};
+
+const indicatorsConfig = {
 	symbols: [
 		"BTC",
 		"ETH",
@@ -8,54 +23,51 @@ const pipelineResult = await CryptoProcessTechnicalIndicators({
 	indicators: [
 		{
 			fn: "sma",
-			cols: [ [ "close" ], [ "close" ], [ "close" ], [ "close" ], [ "close" ] ],
-			args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
+			cols: new Array(9).fill([ "close" ]),
+			args: scaleArgs(14, 9).map(period => [ period ])
 		},
 		{
 			fn: "ema",
-			cols: [ [ "close" ], [ "close" ], [ "close" ], [ "close" ], [ "close" ] ],
-			args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
+			cols: new Array(9).fill([ "close" ]),
+			args: scaleArgs(14, 9).map(period => [ period ])
 		},
 		{
 			fn: "rsi",
-			cols: [ [ "close" ], [ "close" ], [ "close" ], [ "close" ], [ "close" ] ],
-			args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
+			cols: new Array(9).fill([ "close" ]),
+			args: scaleArgs(14, 9).map(period => [ period ])
 		},
 		{
 			fn: "macd",
-			cols: [ [ "close" ], [ "close" ], [ "close" ], [ "close" ], [ "close" ] ],
-			args: [ [ 7, 11, 5 ], [ 12, 19, 8 ], [ 12, 26, 9 ], [ 20, 33, 14 ], [ 33, 53, 22 ] ]  // Baseline: 12, 26, 9
+			cols: new Array(9).fill([ "close" ]),
+			args: scaleArgs(12, 9).map(fastPeriod => [ fastPeriod, 26, 9 ]) // Keeping other values constant
 		},
-		// {
-		// 	fn: "bollinger",
-		// 	cols: [ [ "close" ], [ "close" ], [ "close" ], [ "close" ], [ "close" ] ],
-		// 	args: [ [ 8, 2 ], [ 13, 2 ], [ 20, 2 ], [ 32, 2 ], [ 52, 2 ] ]  // Baseline: 20, 2
-		// },
-		// {
-		// 	fn: "stoch",
-		// 	cols: [ [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ] ],
-		// 	args: [ [ 5, 3, 3 ], [ 9, 3, 3 ], [ 14, 3, 3 ], [ 23, 3, 3 ], [ 37, 3, 3 ] ]  // Baseline: 14, 3, 3
-		// },
-		// {
-		// 	fn: "willr",
-		// 	cols: [ [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ] ],
-		// 	args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
-		// },
-		// {
-		// 	fn: "adx",
-		// 	cols: [ [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ] ],
-		// 	args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
-		// },
-		// {
-		// 	fn: "atr",
-		// 	cols: [ [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ] ],
-		// 	args: [ [ 5 ], [ 9 ], [ 14 ], [ 23 ], [ 37 ] ]  // Baseline: 14
-		// },
-		// {
-		// 	fn: "cci",
-		// 	cols: [ [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ], [ "high", "low", "close" ] ],
-		// 	args: [ [ 8 ], [ 13 ], [ 20 ], [ 32 ], [ 52 ] ]  // Baseline: 20
-		// }
+		{
+			fn: "stoch",
+			cols: new Array(9).fill([ "high", "low", "close" ]),
+			args: scaleArgs(14, 9).map(period => [ period, 3, 3 ]) // Keeping other values constant
+		},
+		{
+			fn: "stochrsi",
+			cols: new Array(9).fill([ "close" ]),
+			args: scaleArgs(14, 9).map(period => [ period ])
+		},
+		{
+			fn: "stddev",
+			cols: new Array(9).fill([ "close" ]),
+			args: scaleArgs(14, 9).map(period => [ period ]) // Keeping deviation constant
+		},
+		{
+			fn: "roc",
+			cols: new Array(9).fill([ "close" ]),
+			args: scaleArgs(14, 9).map(period => [ period ])
+		},
+		{
+			fn: "rocr",
+			cols: new Array(9).fill([ "close" ]),
+			args: scaleArgs(14, 9).map(period => [ period ])
+		},
 	],
-	delay: 0,
-});
+	delay: 0
+};
+
+const pipelineResult = await CryptoProcessTechnicalIndicators(indicatorsConfig);

@@ -8,7 +8,10 @@ import { fileURLToPath } from "url";
 
 import { router as cryptoRouter } from "./routes/crypto.js";
 
-import "./scraper.js";
+// import "./scraper.js";
+
+import "./data/pipelines/ProcessTechnicalIndicators.crypto.test.js";
+// import { main as ProcessTechnicalIndicatorsPipeline } from "./data/pipelines/ProcessTechnicalIndicators.crypto.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -35,7 +38,9 @@ export async function setup() {
 };
 
 export async function main() {
-	// await setup();
+	await setup();
+
+
 }
 
 main();

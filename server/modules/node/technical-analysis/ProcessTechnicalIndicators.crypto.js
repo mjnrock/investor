@@ -16,6 +16,9 @@ export class ProcessTechnicalIndicators {
 	}
 
 	async run(input, { } = {}) {
+		// Sort ascending by date, as the `startIndex` below assumes the data is sorted thus
+		input.data.sort((a, b) => new Date(a.date) - new Date(b.date));
+
 		const indicators = this.state.indicators;
 
 		const processIndicator = async (indicatorName, inputs, args) => {
@@ -78,7 +81,8 @@ export class ProcessTechnicalIndicators {
 								args: argSet
 							},
 						},
-						data: resultData
+						// Sort the data descending by date, so that more recent data is first (query optimization)
+						data: resultData.sort((a, b) => new Date(b.date) - new Date(a.date)),
 					}));
 				} catch(error) {
 					console.error(`Error processing ${ indicatorName }:`, error);
