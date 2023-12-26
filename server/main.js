@@ -5,12 +5,16 @@ import fs from "fs/promises";
 import https from "https";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import path from "path";
 
 import { router as cryptoRouter } from "./routes/crypto.js";
 
+import { CryptoAPI } from "./plugins/alpha-vantage/node/data-source/CryptoAPI.js";
+import { FileDataDestination } from "./modules/node/data-destination/FileDataDestination.js";
+
 // import "./scraper.js";
 
-import "./data/pipelines/ProcessTechnicalIndicators.crypto.test.js";
+// import "./data/pipelines/ProcessTechnicalIndicators.crypto.test.js";
 // import { main as ProcessTechnicalIndicatorsPipeline } from "./data/pipelines/ProcessTechnicalIndicators.crypto.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -27,6 +31,15 @@ export async function setup() {
 
 	app.use("/crypto", await cryptoRouter(__dirname));
 
+	app.get("/mock", (req, res) => {
+		const filePath = path.join(__dirname, "./data/cryptos/BTC.raw.json");
+
+		fs.readFile(filePath, "utf8")
+			.then(file => {
+				res.json(JSON.parse(file));
+			});
+	});
+
 	const httpsServer = https.createServer(credentials, app);
 	httpsServer.listen(process.env.PORT, () => {
 		console.log(`[${ Date.now() }]: Server is running on port: ${ process.env.PORT }`);
@@ -40,7 +53,25 @@ export async function setup() {
 export async function main() {
 	await setup();
 
+	const api = new CryptoAPI({
+		state: {
+			endpoint: "https://kiszka.com:3801/mock",
+		},
+	});
 
+	const data = await api.run({
+		symbol: "BTC",
+	});
+
+	// const destination = new FileDataDestination({
+	// 	state: {
+	// 		file: "TESSST.json",
+	// 	},
+	// });
+
+	// await destination.run(data);
+
+	console.log(data);
 }
 
 main();

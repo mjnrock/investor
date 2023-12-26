@@ -52,7 +52,9 @@ export class APIDataSource extends DataSource {
 				}
 			}
 
-			const response = await axios.get(urlWithParams, this.config);
+			// const response = await axios.get(urlWithParams, this.config);
+			//STUB: Deal with the self-signed certificate
+			const response = await axiosInstance.get(urlWithParams, this.config);
 
 			if(!response.data || response.data[ "Error Message" ]) {
 				throw new Error("Invalid response from API");
