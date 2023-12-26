@@ -12,6 +12,8 @@ import { router as cryptoRouter } from "./routes/crypto.js";
 import { CryptoAPI } from "./plugins/alpha-vantage/lib/data-source/CryptoAPI.js";
 import { FileDataDestination } from "./modules/node/data-destination/FileDataDestination.js";
 
+import { main as FetchNormalizeSavePipeline } from "./plugins/alpha-vantage/data/pipelines/FetchNormalizeSave.crypto.js";
+
 // import "./scraper.js";
 
 // import "./data/pipelines/ProcessTechnicalIndicators.crypto.test.js";
@@ -53,16 +55,23 @@ export async function setup() {
 export async function main() {
 	await setup();
 
-	const api = new CryptoAPI({
-		state: {
-			endpoint: "https://kiszka.com:3801/mock",
-		},
+	// const api = new CryptoAPI({
+	// 	state: {
+	// 		endpoint: "https://kiszka.com:3801/mock",
+	// 	},
+	// });
+
+	// // const data = await api.setSymbol("BTC").run();	// alternative to below (parameter chaining)
+	// const data = await api.run({
+	// 	symbol: "BTC",
+	// });
+
+	const pipeline = await FetchNormalizeSavePipeline({
+		symbols: [ "BTC", "ETH", "GRT", "XLM", "TRX" ],
+		delay: 1000,
 	});
 
-	// const data = await api.setSymbol("BTC").run();	// alternative to below (parameter chaining)
-	const data = await api.run({
-		symbol: "BTC",
-	});
+	console.log(pipeline)
 
 	// const destination = new FileDataDestination({
 	// 	state: {
@@ -71,8 +80,6 @@ export async function main() {
 	// });
 
 	// await destination.run(data);
-
-	console.log(data);
 }
 
 main();

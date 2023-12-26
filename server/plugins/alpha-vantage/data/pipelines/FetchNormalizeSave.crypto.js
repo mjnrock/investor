@@ -1,6 +1,5 @@
-import ModNode from "../../modules/node/package.js";
+import ModNode from "../../../../modules/node/package.js";
 import ModAlphaVantage from "../../lib/package.js";
-import APIHelper from "../../modules/node/data-source/APIHelper.js";
 
 export async function main({
 	symbols = [],
@@ -20,7 +19,11 @@ export async function main({
 			file: `{{SYMBOL}}.raw.json`,
 		},
 	}));
-	const cryptoDataSet = ModNode.Node.Create(async input => ModNode.DataSet.DataSet.TransformToDataSet(input, APIHelper.cryptoModeler, APIHelper.cryptoAnalyzer));
+	const cryptoDataSet = ModNode.Node.Create(async input => ModNode.DataSet.DataSet.TransformToDataSet(
+		input,
+		ModAlphaVantage.DataSource.CryptoAPI.CryptoAPI.Modeler,
+		ModAlphaVantage.DataSource.CryptoAPI.CryptoAPI.Analyzer,
+	));
 	const saveDataSetCryptoFile = ModNode.Node.Create(ModNode.DataDestination.FileDataDestination.Create({
 		state: {
 			path: "./data/cryptos",
