@@ -1,4 +1,4 @@
-import { APIDataSource, APIHelper, EnumAPIType, APIDefaultParams } from "./APIDataSource.js";
+import { APIDataSource, APIHelper, EnumAPIType } from "./APIDataSource.js";
 
 export class StockAPI extends APIDataSource {
 	static Modeler(data) {
