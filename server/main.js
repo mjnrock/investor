@@ -12,7 +12,8 @@ import { router as cryptoRouter } from "./routes/crypto.js";
 import { CryptoAPI } from "./plugins/alpha-vantage/lib/data-source/CryptoAPI.js";
 import { FileDataDestination } from "./modules/node/data-destination/FileDataDestination.js";
 
-import { main as FetchNormalizeSavePipeline } from "./plugins/alpha-vantage/data/pipelines/FetchNormalizeSave.crypto.js";
+import { main as CryptoFetchNormalizeSavePipeline } from "./plugins/alpha-vantage/data/pipelines/FetchNormalizeSave.crypto.js";
+import { main as StockFetchNormalizeSavePipeline } from "./plugins/alpha-vantage/data/pipelines/FetchNormalizeSave.stock.js";
 
 // import "./scraper.js";
 
@@ -66,9 +67,14 @@ export async function main() {
 	// 	symbol: "BTC",
 	// });
 
-	const pipeline = await FetchNormalizeSavePipeline({
-		// symbols: [ "BTC" ],
-		symbols: [ "ETH", "GRT", "XLM", "TRX", ],
+	// const pipeline = await CryptoFetchNormalizeSavePipeline({
+	// 	// symbols: [ "BTC" ],
+	// 	symbols: [ "ETH", "GRT", "XLM", "TRX", ],
+	// 	delay: 1000,
+	// });
+
+	const pipeline = await StockFetchNormalizeSavePipeline({
+		symbols: [ "AAPL", "RKT", "VIG", "SPY", "UNG", ],
 		delay: 1000,
 	});
 
