@@ -78,6 +78,10 @@ export class Circuit extends Node {
 				lastOutput = await node.run(currentInput, self.context);
 				currentInput = lastOutput; // Output of one node is the input to the next
 				self.cache.push({ type: 'success', node: node.id, output: lastOutput }); // Store each output
+
+				if(node.status === Node.EnumStatusType.FAILED) {
+					throw new Error("Circuit failed.");
+				}
 			}
 
 			// After successful execution of all success nodes

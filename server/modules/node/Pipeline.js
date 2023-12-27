@@ -32,6 +32,10 @@ export class Pipeline extends Circuit {
 				const output = await node.run(currentInput, this.context);
 				this.cache[ index ] = { node: node.id, output: output };  // Store the result in the cache
 				currentInput = output;  // Output of one node is the input to the next
+
+				if(node.status === Node.EnumStatusType.FAILED) {
+					throw new Error("Pipeline failed.");
+				}
 			} catch(error) {
 				this.status = Node.EnumStatusType.FAILED;
 				this.cache[ index ] = { node: node.id, error: error };  // Store the error in the cache
