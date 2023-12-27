@@ -1,4 +1,4 @@
-import ModNode from "../../modules/node/package.js";
+import ModNode from "../../modules/node/lib/package.js";
 
 export async function main({
 	fileName = "",      // Specify the file name

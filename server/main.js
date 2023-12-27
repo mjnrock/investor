@@ -9,7 +9,7 @@ import path from "path";
 
 import { router as cryptoRouter } from "./routes/crypto.js";
 
-import ModNode from "./modules/node/package.js";
+import ModNode from "./modules/node/lib/package.js";
 import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 
 // import "./scraper.js";
