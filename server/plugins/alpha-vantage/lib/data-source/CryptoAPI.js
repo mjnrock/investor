@@ -9,6 +9,8 @@ export const EnumCryptoType = {
 };
 
 export class CryptoAPI extends APIDataSource {
+	static EnumCryptoType = EnumCryptoType;
+
 	static Modeler(data) {
 		const timeSeries = data[ "Time Series (Digital Currency Daily)" ];
 
@@ -59,7 +61,4 @@ export class CryptoAPI extends APIDataSource {
 	}
 };
 
-export default {
-	EnumCryptoType,
-	CryptoAPI,
-};
+export default CryptoAPI;

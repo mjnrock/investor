@@ -15,6 +15,8 @@ export const EnumCommodityType = {
 };
 
 export class CommodityAPI extends APIDataSource {
+	static EnumCommodityType = EnumCommodityType;
+
 	static Modeler(data) {
 		return data[ "data" ].map(entry => ({
 			date: entry.date,
@@ -61,7 +63,4 @@ export class CommodityAPI extends APIDataSource {
 	}
 }
 
-export default {
-	CommodityAPI,
-	EnumCommodityType,
-};
+export default CommodityAPI;

@@ -14,6 +14,8 @@ export const EnumEconomicIndicator = {
 };
 
 export class EconomyAPI extends APIDataSource {
+	static EnumEconomicIndicator
+
 	static Modeler(data) {
 		return data[ "data" ].map(entry => ({
 			date: entry.date,
@@ -57,7 +59,4 @@ export class EconomyAPI extends APIDataSource {
 	}
 }
 
-export default {
-	EnumEconomicIndicator,
-	EconomyAPI,
-};
+export default EconomyAPI;

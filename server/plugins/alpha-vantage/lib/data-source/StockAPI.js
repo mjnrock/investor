@@ -48,6 +48,4 @@ export class StockAPI extends APIDataSource {
 	}
 };
 
-export default {
-	StockAPI,
-};
+export default StockAPI;

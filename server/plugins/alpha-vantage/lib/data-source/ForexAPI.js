@@ -57,6 +57,4 @@ export class ForexAPI extends APIDataSource {
 	}
 }
 
-export default {
-	ForexAPI,
-};
+export default ForexAPI;

@@ -57,6 +57,8 @@ export const APIDefaultParams = {
 
 export class APIDataSource extends APIDataSourceNode {
 	static EnumAPIType = EnumAPIType;
+	static APIDefaultParams = APIDefaultParams;
+	static APIHelper = APIHelper;
 
 	constructor ({ state = {}, apiType = EnumAPIType.CRYPTO, ...opts } = {}) {
 		super({
@@ -125,9 +127,4 @@ export class APIDataSource extends APIDataSourceNode {
 	}
 }
 
-export default {
-	APIDataSource,
-	APIHelper,
-	EnumAPIType,
-	APIDefaultParams,
-};
+export default APIDataSource;
