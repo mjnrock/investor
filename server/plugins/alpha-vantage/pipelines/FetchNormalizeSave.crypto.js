@@ -2,7 +2,7 @@ import ModNode from "../../../modules/node/package.js";
 import LibAlphaVantage from "../lib/package.js";
 
 export async function main({ symbols = [], delay = 1000, context = {} }) {
-	const pipeline = ModNode.Pipelines.pipelineFactory([
+	const pipeline = ModNode.Pipelines.Factory([
 		LibAlphaVantage.DataSource.CryptoAPI.Create({
 			state: {
 				params: {

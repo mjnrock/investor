@@ -16,6 +16,7 @@ import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 
 import { main as PlotlyChartPipeline } from "./plugins/plotly/pipelines/PlotlyChart.js";
 import { main as ProcessGoldenRatioCoreIndicatorsPipeline } from "./plugins/technical-analysis/pipelines/ProcessGoldenRatioCoreIndicators.js";
+import LoadNewsSaveArticle from "./pipelines/LoadNewsSaveArticle.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -53,38 +54,47 @@ export async function setup() {
 export async function main() {
 	await setup();
 
-	await ProcessGoldenRatioCoreIndicatorsPipeline({
-		type: "cryptos",
-		symbols: [
-			"BTC",
-			"ETH",
-			"GRT",
-			"XLM",
-			"TRX",
-		],
-	});
-	await ProcessGoldenRatioCoreIndicatorsPipeline({
-		type: "stocks",
-		symbols: [
-			"AAPL",
-			"RKT",
-			"VIG",
-			"SPY",
-			"UNG",
-		],
-	});
+	// await ModAlphaVantage.Pipelines.News.FetchSave({
+	// 	symbols: [
+	// 		"AAPL",
+	// 	],
+	// 	delay: 1000,
+	// });
 
-	console.log(await PlotlyChartPipeline({
-		type: "cryptos",
-		fileName: "BTC.json",
-		chartType: "candlestick",
-		traceArrays: [
-			[
-				"date",											// x-axis
-				"close",										// y-axis
-			],
-		],
-	}));
+	await LoadNewsSaveArticle();
+
+	// await ProcessGoldenRatioCoreIndicatorsPipeline({
+	// 	type: "cryptos",
+	// 	symbols: [
+	// 		"BTC",
+	// 		"ETH",
+	// 		"GRT",
+	// 		"XLM",
+	// 		"TRX",
+	// 	],
+	// });
+	// await ProcessGoldenRatioCoreIndicatorsPipeline({
+	// 	type: "stocks",
+	// 	symbols: [
+	// 		"AAPL",
+	// 		"RKT",
+	// 		"VIG",
+	// 		"SPY",
+	// 		"UNG",
+	// 	],
+	// });
+
+	// console.log(await PlotlyChartPipeline({
+	// 	type: "cryptos",
+	// 	fileName: "BTC.json",
+	// 	chartType: "candlestick",
+	// 	traceArrays: [
+	// 		[
+	// 			"date",											// x-axis
+	// 			"close",										// y-axis
+	// 		],
+	// 	],
+	// }));
 
 	// const api = new CryptoAPI({
 	// 	state: {
@@ -116,6 +126,8 @@ export async function main() {
 	// });
 
 	// await destination.run(data);
+
+	process.exit(0);
 }
 
 main();
