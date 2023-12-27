@@ -9,11 +9,12 @@ import path from "path";
 
 import { router as cryptoRouter } from "./routes/crypto.js";
 
+import ModNode from "./modules/node/package.js";
 import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 
 // import "./scraper.js";
 
-// import "./data/pipelines/ProcessTechnicalIndicators.crypto.test.js";
+import "./data/pipelines/ProcessTechnicalIndicators.crypto.test.js";
 // import { main as ProcessTechnicalIndicatorsPipeline } from "./data/pipelines/ProcessTechnicalIndicators.crypto.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
