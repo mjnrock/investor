@@ -1,7 +1,7 @@
 import { pipelineFactory } from "./pipelineFactory.js";
 
-import ModNode from "../../../../modules/node/lib/package.js";
-import ModAlphaVantage from "../../lib/package.js";
+import ModNode from "../../../modules/node/lib/package.js";
+import ModAlphaVantage from "../lib/package.js";
 
 export async function main({ symbols = [], delay = 1000, context = {} }) {
 	const pipeline = pipelineFactory([

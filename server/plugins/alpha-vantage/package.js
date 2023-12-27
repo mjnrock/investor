@@ -1,4 +1,4 @@
-import Pipelines from "./data/pipelines/package.js";
+import Pipelines from "./pipelines/package.js";
 import Lib from "./lib/package.js";
 
 export default {
