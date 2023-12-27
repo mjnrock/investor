@@ -1,5 +1,5 @@
 import tulind from "tulind";
-import { DataSet } from "../data-set/DataSet.js";
+import { DataSet } from "../../../modules/node/lib/data-set/DataSet.js";
 
 import TAHelper from "./TAHelper.js";
 

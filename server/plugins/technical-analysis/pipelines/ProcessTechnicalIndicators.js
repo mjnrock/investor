@@ -1,5 +1,6 @@
-import { pipelineFactory } from "./pipelineFactory.js";
-import ModNode from "../lib/package.js";
+import { pipelineFactory } from "../../../modules/node/pipelines/Factory.js";
+import LibNode from "../../../modules/node/lib/package.js";
+import LibTechnicalAnalysis from "../../../plugins/technical-analysis/lib/package.js";
 
 export async function main({
 	type = "cryptos",
@@ -8,13 +9,13 @@ export async function main({
 	context = {},
 }) {
 	const pipeline = pipelineFactory([
-		ModNode.DataSource.FileDataSource.Create({
+		LibNode.DataSource.FileDataSource.Create({
 			state: {
 				path: `./data/${ type }`,
 				file: `{{SYMBOL}}.json`,
 			},
 		}),
-		ModNode.TechnicalAnalysis.ProcessTechnicalIndicators.Create({
+		LibTechnicalAnalysis.ProcessTechnicalIndicators.Create({
 			state: {
 				indicators,
 			},
@@ -43,7 +44,7 @@ export async function main({
 				const indicatorData = consolidatedData[ symbol ];
 
 				for(const indicatorName in indicatorData) {
-					const node = ModNode.DataDestination.FileDataDestination.Create({
+					const node = LibNode.DataDestination.FileDataDestination.Create({
 						state: {
 							path: `./data/${ type }/indicators`,
 							file: `${ symbol }.${ indicatorName }.json`,

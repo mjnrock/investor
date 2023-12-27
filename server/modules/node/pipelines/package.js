@@ -1,11 +1,5 @@
-import { pipelineFactory } from "./pipelineFactory.js";
-
-import ProcessTechnicalIndicators from "./ProcessTechnicalIndicators.js";
-import ProcessGoldenRatioCoreIndicators from "./ProcessGoldenRatioCoreIndicators.js";
+import { pipelineFactory } from "./Factory.js";
 
 export default {
 	pipelineFactory,
-
-	ProcessTechnicalIndicators,
-	ProcessGoldenRatioCoreIndicators,
 };
