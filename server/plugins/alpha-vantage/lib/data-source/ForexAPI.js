@@ -20,6 +20,7 @@ export class ForexAPI extends APIDataSource {
 	static Analyzer(data) {
 		const metaData = APIHelper.processMetaData(data[ "Meta Data" ]);
 
+		metaData.source = "alpha-vantage";
 		metaData.sourceType = "forex";
 
 		return metaData;

@@ -34,7 +34,7 @@ export class APIDataSource extends DataSource {
 		return new APIDataSource(deepcopy(self));
 	}
 
-	async run(input, { variables } = {}) {
+	async run(input, { method = "get", options = {}, variables } = {}) {
 		//STUB: Deal with the self-signed certificate
 		// const cert = await fs.readFile("./certs/kiszka.crt", "utf8");
 		// const axiosInstance = axios.create({
@@ -52,7 +52,10 @@ export class APIDataSource extends DataSource {
 				}
 			}
 
-			const response = await axios.get(urlWithParams, this.config);
+			const response = await axios[ method ](urlWithParams, {
+				...this.config?.options,
+				...options,
+			});
 			//STUB: Deal with the self-signed certificate
 			// const response = await axiosInstance.get(urlWithParams, this.config);
 

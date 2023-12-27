@@ -32,6 +32,7 @@ export class CryptoAPI extends APIDataSource {
 	static Analyzer(data) {
 		const metaData = APIHelper.processMetaData(data[ "Meta Data" ]);
 
+		metaData.source = "alpha-vantage";
 		metaData.sourceType = "crypto";
 
 		return metaData;

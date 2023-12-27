@@ -29,6 +29,7 @@ export class CommodityAPI extends APIDataSource {
 
 		delete metaData.data;
 
+		metaData.source = "alpha-vantage";
 		metaData.sourceType = "commodity";
 
 		return metaData;

@@ -25,8 +25,12 @@ export class EconomyAPI extends APIDataSource {
 
 	static Analyzer(data) {
 		const metaData = { ...data };
+
 		delete metaData.data;
-		metaData.sourceType = "economic_indicator";
+
+		metaData.source = "alpha-vantage";
+		metaData.sourceType = "economy";
+
 		return metaData;
 	}
 
