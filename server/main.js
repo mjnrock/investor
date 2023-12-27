@@ -52,7 +52,7 @@ export async function setup() {
 };
 
 export async function main() {
-	await setup();
+	// await setup();
 
 	// await ModAlphaVantage.Pipelines.News.FetchSave({
 	// 	symbols: [

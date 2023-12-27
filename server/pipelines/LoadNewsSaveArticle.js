@@ -32,7 +32,8 @@ export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
 
 	const node = LibScraper.UrlScraperNode.Create({
 		url: "https://www.marketwatch.com/story/the-best-performing-stock-of-the-year-rose-nearly-10-fold-while-the-second-best-averted-disaster-to-surge-1-000-in-a-wild-2023-ce26b559",
-		file: "./data/news/AAPL.html",
+		// url: "https://www.business-standard.com/companies/news/google-rejected-play-store-fee-changes-due-to-revenue-impact-epic-lawsuit-123122400905_1.html",
+		file: "./data/news/AAPL.article.json",
 	});
 
 	return await node.run({

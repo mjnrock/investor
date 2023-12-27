@@ -1,8 +1,9 @@
 import deepcopy from "deepcopy";
 import fs from "fs/promises";
 import path from "path";
-import { read } from "node-readability";
 import puppeteer from "puppeteer";
+import { Readability } from "@mozilla/readability";
+import { JSDOM } from "jsdom";
 
 export class UrlScraperNode {
 	static WeightedPool = (pool, run = true) => {
@@ -147,34 +148,27 @@ export class UrlScraperNode {
 
 			await browser.close();
 
-			read(content, { encoding: "utf-8" }, (err, readability) => {
-				if(err) {
-					console.error("Error extracting article content:", err);
-					return;
-				}
-
-				const articleContent = readability.content;
-
-				const { variables } = context;
-				if(variables) {
-					for(const variable in variables) {
-						file = file.replace(`{{${ variable }}}`, variables[ variable ]);
-					}
-				}
-
-				path.join(process.cwd(), file);
-
-				fs.writeFile(
-					file,
-					articleContent,
-				)
-					.then(() => {
-						console.log(`Article content saved to ${ file }`);
-					})
-					.catch((error) => {
-						console.error("Error saving article content:", error);
-					});
+			const doc = new JSDOM(content, {
+				contentType: "text/html",
 			});
+
+			const reader = new Readability(doc.window.document);
+			const article = reader.parse();
+
+			// Process file path with context variables
+			const { variables } = context;
+			if(variables) {
+				for(const variable in variables) {
+					file = file.replace(`{{${ variable }}}`, variables[ variable ]);
+				}
+			}
+
+			// Join the processed file path with the current working directory
+			file = path.join(process.cwd(), file);
+
+			// Saving the extracted article content to a file
+			await fs.writeFile(file, JSON.stringify(article), 'utf8');
+
 		} catch(error) {
 			console.error("Error extracting and saving article:", error);
 			throw error;
