@@ -1,33 +1,35 @@
-import ModNode from "../lib/package.js";
+import LibPlotly from "../lib/package.js";
+import ModNode from "../../../modules/node/package.js";
 
 export async function main({
+	type = "cryptos",
 	fileName = "",      // Specify the file name
 	chartType,		  	// "bar", "line", etc.
 	traceArrays,		// Array of traces for the chart
 	index = 0,			// If a file is an array, specify the index to use
 }) {
-	const loadFile = ModNode.Node.Create(ModNode.DataSource.FileDataSource.Create({
+	const loadFile = ModNode.Lib.Node.Create(ModNode.Lib.DataSource.FileDataSource.Create({
 		state: {
-			path: "./data/cryptos",
+			path: `./data/${ type }`,
 			file: fileName,
 		},
 	}));
-	const createChart = ModNode.Node.Create(async (input, context = {}) => {
+	const createChart = ModNode.Lib.Node.Create(async (input, context = {}) => {
 		if(Array.isArray(input)) {
 			input = input[ index ];
 		}
 
-		let plotly = ModNode.Plotly.Plotly.Create({ source: input });
+		let plotly = LibPlotly.Plotly.Chart.Create({ source: input });
 
 		switch(chartType) {
 			case "bar":
-				plotly = ModNode.Plotly.Plotly.ToBarChart(plotly, traceArrays);
+				plotly = LibPlotly.Plotly.Chart.ToBarChart(plotly, traceArrays);
 				break;
 			case "line":
-				plotly = ModNode.Plotly.Plotly.ToLineChart(plotly, traceArrays);
+				plotly = LibPlotly.Plotly.Chart.ToLineChart(plotly, traceArrays);
 				break;
 			case "candlestick":
-				plotly = ModNode.Plotly.Plotly.ToCandlestickChart(plotly, traceArrays);
+				plotly = LibPlotly.Plotly.Chart.ToCandlestickChart(plotly, traceArrays);
 				break;
 			default:
 				throw new Error("Unsupported chart type");
@@ -37,7 +39,7 @@ export async function main({
 	});
 
 	// Construct the pipeline
-	const pipeline = ModNode.Pipeline.Create(
+	const pipeline = ModNode.Lib.Pipeline.Create(
 		loadFile,
 		createChart
 	);

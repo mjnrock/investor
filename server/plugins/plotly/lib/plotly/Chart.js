@@ -1,8 +1,8 @@
 import deepcopy from "deepcopy";
 
-import { DataSet } from "../data-set/DataSet.js";
+import { DataSet } from "../../../../modules/node/lib/data-set/DataSet.js";
 
-export class Plotly {
+export class Chart {
 	constructor ({ source, data = [], layout = {}, config = {} } = {}) {
 		this.source = source;  // DataSet instance
 		this.data = data;      // Plotly data array
@@ -20,10 +20,10 @@ export class Plotly {
 	}
 
 	static Create({ source, data = [], layout = {}, config = {} } = {}) {
-		return new Plotly({ source, data, layout, config });
+		return new Chart({ source, data, layout, config });
 	}
 	static Copy(self) {
-		return Plotly.Create({
+		return Chart.Create({
 			source: DataSet.Copy(self.source),
 			data: deepcopy(self.data),
 			layout: deepcopy(self.layout),
@@ -40,7 +40,7 @@ export class Plotly {
 			type: "bar"
 		}));
 
-		return Plotly.Create({
+		return Chart.Create({
 			source: dataSet,
 			data: traces,
 			layout: { barmode: "group" }
@@ -57,7 +57,7 @@ export class Plotly {
 			mode: "lines+markers"
 		}));
 
-		return Plotly.Create({
+		return Chart.Create({
 			source: dataSet,
 			data: traces,
 			layout: {}
@@ -91,7 +91,7 @@ export class Plotly {
 			}
 		};
 
-		return Plotly.Create({
+		return Chart.Create({
 			source: dataSet,
 			data: [ trace ],
 			layout: layout
@@ -105,4 +105,4 @@ export class Plotly {
 	}
 }
 
-export default Plotly;
+export default Chart;

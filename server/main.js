@@ -16,6 +16,7 @@ import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 
 import { main as ProcessGoldenRatioCoreIndicatorsPipeline } from "./modules/node/pipelines/ProcessGoldenRatioCoreIndicators.js";
 // import { main as ProcessTechnicalIndicatorsPipeline } from "./modules/node/pipelines/ProcessTechnicalIndicators.js";
+import { main as PlotlyChartPipeline } from "./plugins/plotly/pipelines/PlotlyChart.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -53,26 +54,38 @@ export async function setup() {
 export async function main() {
 	await setup();
 
-	await ProcessGoldenRatioCoreIndicatorsPipeline({
+	// await ProcessGoldenRatioCoreIndicatorsPipeline({
+	// 	type: "cryptos",
+	// 	symbols: [
+	// 		"BTC",
+	// 		"ETH",
+	// 		"GRT",
+	// 		"XLM",
+	// 		"TRX",
+	// 	],
+	// });
+	// await ProcessGoldenRatioCoreIndicatorsPipeline({
+	// 	type: "stocks",
+	// 	symbols: [
+	// 		"AAPL",
+	// 		"RKT",
+	// 		"VIG",
+	// 		"SPY",
+	// 		"UNG",
+	// 	],
+	// });
+
+	console.log(await PlotlyChartPipeline({
 		type: "cryptos",
-		symbols: [
-			"BTC",
-			"ETH",
-			"GRT",
-			"XLM",
-			"TRX",
+		fileName: "BTC.json",
+		chartType: "candlestick",
+		traceArrays: [
+			[
+				"date",											// x-axis
+				"close",										// y-axis
+			],
 		],
-	});
-	await ProcessGoldenRatioCoreIndicatorsPipeline({
-		type: "stocks",
-		symbols: [
-			"AAPL",
-			"RKT",
-			"VIG",
-			"SPY",
-			"UNG",
-		],
-	});
+	}));
 
 	// const api = new CryptoAPI({
 	// 	state: {

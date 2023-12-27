@@ -1,11 +1,9 @@
-import { pipelineFactory } from "./pipelineFactory.js";
-
-import ModNode from "../../../modules/node/lib/package.js";
-import ModAlphaVantage from "../lib/package.js";
+import ModNode from "../../../modules/node/package.js";
+import LibAlphaVantage from "../lib/package.js";
 
 export async function main({ symbols = [], delay = 1000, context = {} }) {
-	const pipeline = pipelineFactory([
-		ModAlphaVantage.DataSource.StockAPI.Create({
+	const pipeline = ModNode.Pipelines.pipelineFactory([
+		LibAlphaVantage.DataSource.StockAPI.Create({
 			state: {
 				params: {
 					symbol: "{{SYMBOL}}",
@@ -15,18 +13,18 @@ export async function main({ symbols = [], delay = 1000, context = {} }) {
 				rawResponse: true,
 			},
 		}),
-		ModNode.DataDestination.FileDataDestination.Create({
+		ModNode.Lib.DataDestination.FileDataDestination.Create({
 			state: {
 				path: "./data/stocks",
 				file: `{{SYMBOL}}.raw.json`,
 			},
 		}),
-		async input => ModNode.DataSet.DataSet.TransformToDataSet(
+		async input => ModNode.Lib.DataSet.DataSet.TransformToDataSet(
 			input,
-			ModAlphaVantage.DataSource.StockAPI.Modeler,
-			ModAlphaVantage.DataSource.StockAPI.Analyzer,
+			LibAlphaVantage.DataSource.StockAPI.Modeler,
+			LibAlphaVantage.DataSource.StockAPI.Analyzer,
 		),
-		ModNode.DataDestination.FileDataDestination.Create({
+		ModNode.Lib.DataDestination.FileDataDestination.Create({
 			state: {
 				path: "./data/stocks",
 				file: `{{SYMBOL}}.json`,

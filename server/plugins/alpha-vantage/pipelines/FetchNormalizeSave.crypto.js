@@ -1,11 +1,9 @@
-import { pipelineFactory } from "./pipelineFactory.js";
-
-import ModNode from "../../../modules/node/lib/package.js";
-import ModAlphaVantage from "../lib/package.js";
+import ModNode from "../../../modules/node/package.js";
+import LibAlphaVantage from "../lib/package.js";
 
 export async function main({ symbols = [], delay = 1000, context = {} }) {
-	const pipeline = pipelineFactory([
-		ModAlphaVantage.DataSource.CryptoAPI.Create({
+	const pipeline = ModNode.Pipelines.pipelineFactory([
+		LibAlphaVantage.DataSource.CryptoAPI.Create({
 			state: {
 				params: {
 					symbol: "{{SYMBOL}}",
@@ -15,18 +13,18 @@ export async function main({ symbols = [], delay = 1000, context = {} }) {
 				rawResponse: true,
 			},
 		}),
-		ModNode.DataDestination.FileDataDestination.Create({
+		ModNode.Lib.DataDestination.FileDataDestination.Create({
 			state: {
 				path: "./data/cryptos",
 				file: `{{SYMBOL}}.raw.json`,
 			},
 		}),
-		async input => ModNode.DataSet.DataSet.TransformToDataSet(
+		async input => ModNode.Lib.DataSet.DataSet.TransformToDataSet(
 			input,
-			ModAlphaVantage.DataSource.CryptoAPI.Modeler,
-			ModAlphaVantage.DataSource.CryptoAPI.Analyzer,
+			LibAlphaVantage.DataSource.CryptoAPI.Modeler,
+			LibAlphaVantage.DataSource.CryptoAPI.Analyzer,
 		),
-		ModNode.DataDestination.FileDataDestination.Create({
+		ModNode.Lib.DataDestination.FileDataDestination.Create({
 			state: {
 				path: "./data/cryptos",
 				file: `{{SYMBOL}}.json`,
