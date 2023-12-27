@@ -1,4 +1,4 @@
-import { pipelineFactory } from "../../../modules/node/pipelines/Factory.js";
+import { Factory } from "../../../modules/node/pipelines/Factory.js";
 import LibNode from "../../../modules/node/lib/package.js";
 import LibTechnicalAnalysis from "../../../plugins/technical-analysis/lib/package.js";
 
@@ -8,7 +8,7 @@ export async function main({
 	indicators = [],
 	context = {},
 }) {
-	const pipeline = pipelineFactory([
+	const pipeline = Factory([
 		LibNode.DataSource.FileDataSource.Create({
 			state: {
 				path: `./data/${ type }`,

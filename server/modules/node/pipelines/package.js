@@ -1,5 +1,5 @@
-import { pipelineFactory } from "./Factory.js";
+import { Factory } from "./Factory.js";
 
 export default {
-	pipelineFactory,
+	Factory,
 };
