@@ -44,7 +44,7 @@ export async function main({
 				for(const indicatorName in indicatorData) {
 					const node = ModNode.DataDestination.FileDataDestination.Create({
 						state: {
-							path: "./data/cryptos",
+							path: "./data/cryptos/indicators",
 							file: `${ symbol }.${ indicatorName }.json`,
 						},
 					});

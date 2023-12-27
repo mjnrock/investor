@@ -1,4 +1,4 @@
-import ModNode from "../../../../modules/node/package.js";
+import ModNode from "../../modules/node/package.js";
 
 // Helper to create a node from a class or function
 export const createNode = (item) => {
