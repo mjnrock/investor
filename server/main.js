@@ -14,8 +14,8 @@ import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 
 // import "./scraper.js";
 
-import { main as ProcessGoldenRatioCoreIndicatorsPipeline } from "./data/pipelines/ProcessGoldenRatioCoreIndicators.js";
-// import { main as ProcessTechnicalIndicatorsPipeline } from "./data/pipelines/ProcessTechnicalIndicators.js";
+import { main as ProcessGoldenRatioCoreIndicatorsPipeline } from "./modules/node/pipelines/ProcessGoldenRatioCoreIndicators.js";
+// import { main as ProcessTechnicalIndicatorsPipeline } from "./modules/node/pipelines/ProcessTechnicalIndicators.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -53,16 +53,16 @@ export async function setup() {
 export async function main() {
 	await setup();
 
-	// await ProcessGoldenRatioCoreIndicatorsPipeline({
-	// 	type: "cryptos",
-	// 	symbols: [
-	// 		"BTC",
-	// 		"ETH",
-	// 		"GRT",
-	// 		"XLM",
-	// 		"TRX",
-	// 	],
-	// });
+	await ProcessGoldenRatioCoreIndicatorsPipeline({
+		type: "cryptos",
+		symbols: [
+			"BTC",
+			"ETH",
+			"GRT",
+			"XLM",
+			"TRX",
+		],
+	});
 	await ProcessGoldenRatioCoreIndicatorsPipeline({
 		type: "stocks",
 		symbols: [

@@ -1,4 +1,4 @@
-import { APIDataSource as APIDataSourceNode } from "../../../../modules/node/data-source/APIDataSource.js";
+import { APIDataSource as APIDataSourceNode } from "../../../../modules/node/lib/data-source/APIDataSource.js";
 
 export const APIHelper = {
 	camelCase(str) {

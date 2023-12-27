@@ -1,5 +1,5 @@
 import { pipelineFactory } from "./pipelineFactory.js";
-import ModNode from "../../modules/node/lib/package.js";
+import ModNode from "../lib/package.js";
 
 export async function main({
 	type = "cryptos",

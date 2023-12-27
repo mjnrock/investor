@@ -4,7 +4,7 @@ import fs from "fs/promises";
 import path from "path";
 
 import { INDICATOR_OUTPUT_COLUMNS } from "../modules/node/lib/technical-analysis/TAHelper.js";
-import { main as PlotlyChartPipeline } from "../data/pipelines/PlotlyChart.crypto.js";
+import { main as PlotlyChartPipeline } from "../modules/node/pipelines/PlotlyChart.crypto.js";
 
 const dataSetToMetaObject = (dataSet) => {
 	const obj = {
