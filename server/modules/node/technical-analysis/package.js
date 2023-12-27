@@ -1,4 +1,4 @@
-import { ProcessTechnicalIndicators } from "./ProcessTechnicalIndicators.crypto.js";
+import { ProcessTechnicalIndicators } from "./ProcessTechnicalIndicators.js";
 
 export default {
 	ProcessTechnicalIndicators,

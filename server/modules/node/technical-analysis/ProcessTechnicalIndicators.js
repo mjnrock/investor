@@ -62,15 +62,12 @@ export class ProcessTechnicalIndicators {
 						return resultEntry;
 					});
 
-					//STUB: Partial stub, crypto specific -- abstract this kind of thing
 					let nextMeta = {
 						...input.meta,
-						symbol: input.meta.digitalCurrencyCode,
+						symbol: input.meta.symbol
+							?? input.meta.fromSymbol
+							?? input.meta.digitalCurrencyCode,
 					};
-					delete nextMeta.information;
-					delete nextMeta.digitalCurrencyName;
-					delete nextMeta.marketName;
-					delete nextMeta.lastRefreshed;
 
 					results.push(DataSet.Create({
 						meta: {
