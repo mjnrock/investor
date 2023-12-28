@@ -5,9 +5,6 @@ import puppeteer from "puppeteer";
 import ModNode from "../modules/node/package.js";
 import LibScraper from "../plugins/scraper/lib/package.js"
 
-//TODO: This is just a quick POC, need to really flesh out how this would work (init with func, exec with (/.run) args?)
-// import { ThreadPool } from "../modules/multi-threading/ThreadPool.js";
-
 export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
 	const results = [];
 	for(const symbol of symbols) {
@@ -36,13 +33,14 @@ export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
 					// Conditionally skip if file exists
 					const fileName = path.join(process.cwd(), `./data/news/content/${ symbol }-${ uuid }.article`);
 					if(await fs.access(fileName).then(() => true).catch(() => false)) {
-						console.log("Skipping:", fileName)
+						console.log("Skipping:", `${ symbol }-${ uuid }`)
 						continue;
 					} else {
 						++i;
 
 						const node = LibScraper.UrlScraperNode.Create();
 
+						console.log("Extracting:", `${ symbol }-${ uuid }`)
 						const article = await node.extract({ url }, { browser });
 
 						await fs.writeFile(fileName, JSON.stringify(article), "utf8");
