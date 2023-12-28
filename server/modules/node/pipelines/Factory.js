@@ -15,9 +15,9 @@ export const createPipeline = (items) => {
 };
 
 // Pipeline structure creation factory
-export const Factory = (config) => {
+export const Factory = (config, ...args) => {
 	const structure = config.map(item => Array.isArray(item) ? createPipeline(item) : createNode(item));
 	return createPipeline(structure);
 };
 
-export default Factory;
+export default Factory

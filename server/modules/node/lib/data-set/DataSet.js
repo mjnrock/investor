@@ -1,3 +1,4 @@
+import { v4 as uuid } from "uuid";
 import deepcopy from "deepcopy";
 
 export class DataSet {
@@ -7,7 +8,8 @@ export class DataSet {
 		COLUMN: "column",
 	};
 
-	constructor ({ meta = {}, data = [] } = {}) {
+	constructor ({ meta = {}, data = [], id } = {}) {
+		this.id = id ?? uuid();
 		this.meta = {
 			type: DataSet.EnumRecordType.RECORD,
 			headers: [],

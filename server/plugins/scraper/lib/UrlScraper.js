@@ -169,6 +169,7 @@ export class UrlScraperNode {
 			// Saving the extracted article content to a file
 			await fs.writeFile(file, JSON.stringify(article), 'utf8');
 
+			return article;
 		} catch(error) {
 			console.error("Error extracting and saving article:", error);
 			throw error;

@@ -1,9 +1,11 @@
+import { v4 as uuid } from "uuid";
 import { APIDataSource, APIHelper, EnumAPIType } from "./APIDataSource.js";
 
 export class NewsAPI extends APIDataSource {
 	static Modeler(data) {
 		const feed = data.feed;
 		return feed.map(article => ({
+			uuid: uuid(),
 			title: article.title,
 			url: article.url,
 			timePublished: article.time_published,

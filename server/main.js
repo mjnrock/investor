@@ -61,7 +61,11 @@ export async function main() {
 	// 	delay: 1000,
 	// });
 
-	await LoadNewsSaveArticle();
+	await LoadNewsSaveArticle({
+		symbols: [
+			"AAPL",
+		],
+	});
 
 	// await ProcessGoldenRatioCoreIndicatorsPipeline({
 	// 	type: "cryptos",
