@@ -1,5 +1,12 @@
+import fs from "fs/promises";
+import path from "path";
+import puppeteer from "puppeteer";
+
 import ModNode from "../modules/node/package.js";
 import LibScraper from "../plugins/scraper/lib/package.js"
+
+//TODO: This is just a quick POC, need to really flesh out how this would work (init with func, exec with (/.run) args?)
+// import { ThreadPool } from "../modules/multi-threading/ThreadPool.js";
 
 export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
 	const results = [];
@@ -8,26 +15,48 @@ export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
 			ModNode.Lib.DataSource.FileDataSource.Create({
 				state: {
 					path: "./data/news",
-					file: `${ symbol }.test.json`,
+					file: `${ symbol }.json`,
 				},
 			}),
 			async (input) => {
-				const { meta, data } = input;
+				const browser = await puppeteer.launch();
 
+				const { data } = input;
+
+				const articles = [];
+
+				let i = 0;
 				for(const record of data) {
+					if(i > 5) {
+						break;
+					}
+
 					const { uuid, url } = record;
 
-					const node = LibScraper.UrlScraperNode.Create({
-						url,
-						file: `./data/news/content/${ symbol }-${ uuid }.article`,
-					});
+					// Conditionally skip if file exists
+					const fileName = path.join(process.cwd(), `./data/news/content/${ symbol }-${ uuid }.article`);
+					if(await fs.access(fileName).then(() => true).catch(() => false)) {
+						console.log("Skipping:", fileName)
+						continue;
+					} else {
+						++i;
 
-					const article = await node.run({
-						...context,
-					});
+						const node = LibScraper.UrlScraperNode.Create();
+
+						const article = await node.extract({ url }, { browser });
+
+						await fs.writeFile(fileName, JSON.stringify(article), "utf8");
+
+						articles.push({
+							uuid,
+							article,
+						});
+					}
 				}
 
-				return input;
+				await browser.close();
+
+				return articles;
 			},
 		]);
 

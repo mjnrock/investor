@@ -131,13 +131,10 @@ export class UrlScraperNode {
 		return UrlScraperNode.WeightedPool(this.headers, true);
 	}
 
-	/**
-	 * Returns the readable content of the article at the given URL.
-	 */
-	async extractAndSaveArticle({ url, file, allowDesktop, allowMobile } = {}, context = {}) {
+	async extract({ url, allowDesktop, allowMobile } = {}, { browser, ...context } = {}) {
 		try {
-			const browser = await puppeteer.launch();
-			const page = await browser.newPage();
+			const internalBrowser = browser ?? await puppeteer.launch();
+			const page = await internalBrowser.newPage();
 
 			await page.setUserAgent(this.getRandomUserAgent(allowDesktop, allowMobile));
 			await page.setExtraHTTPHeaders(this.getRandomHeader());
@@ -146,7 +143,11 @@ export class UrlScraperNode {
 
 			const content = await page.content();
 
-			await browser.close();
+			page.close();
+
+			if(!browser) {
+				await internalBrowser.close();
+			}
 
 			const doc = new JSDOM(content, {
 				contentType: "text/html",
@@ -154,6 +155,16 @@ export class UrlScraperNode {
 
 			const reader = new Readability(doc.window.document);
 			const article = reader.parse();
+
+			return article;
+		} catch(error) {
+			console.error("Error extracting and saving article:", error);
+			throw error;
+		}
+	}
+	async extractAndSaveArticle({ url, file, allowDesktop, allowMobile } = {}, context = {}) {
+		try {
+			const article = await this.extract({ url, allowDesktop, allowMobile }, context);
 
 			// Process file path with context variables
 			const { variables } = context;
@@ -186,8 +197,12 @@ export class UrlScraperNode {
 			...input,
 		};
 
-		if(!url || !file) {
-			throw new Error("URL and output file name must be provided.");
+		if(!url) {
+			throw new Error("URL must be provided.");
+		}
+
+		if(!file) {
+			return await this.extract({ url, allowDesktop, allowMobile }, context);
 		}
 
 		return await this.extractAndSaveArticle({ url, file, allowDesktop, allowMobile }, context);
