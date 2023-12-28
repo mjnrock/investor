@@ -12,6 +12,8 @@ import { router as cryptoRouter } from "./routes/crypto.js";
 import ModNode from "./modules/node/lib/package.js";
 import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 
+import { ParallelRecord } from "./modules/multi-threading/ParallelRecord.js";
+
 // import "./scraper.js";
 
 import { main as PlotlyChartPipeline } from "./plugins/plotly/pipelines/PlotlyChart.js";
@@ -54,6 +56,23 @@ export async function setup() {
 export async function main() {
 	// await setup();
 
+	async function test() {
+		const parallelRecord = new ParallelRecord(4);
+		const result = await parallelRecord.process([
+			{ value: 1 },
+			{ value: 2 },
+			{ value: 3 },
+			{ value: 4 },
+			{ value: 5 },
+		]);
+
+		console.log(result);
+
+		parallelRecord.terminateWorkers(); // Don't forget to terminate workers
+	}
+
+	test();
+
 	// await ModAlphaVantage.Pipelines.News.FetchSave({
 	// 	symbols: [
 	// 		"AAPL",
@@ -61,11 +80,11 @@ export async function main() {
 	// 	delay: 1000,
 	// });
 
-	await LoadNewsSaveArticle({
-		symbols: [
-			"AAPL",
-		],
-	});
+	// await LoadNewsSaveArticle({
+	// 	symbols: [
+	// 		"AAPL",
+	// 	],
+	// });
 
 	// await ProcessGoldenRatioCoreIndicatorsPipeline({
 	// 	type: "cryptos",
