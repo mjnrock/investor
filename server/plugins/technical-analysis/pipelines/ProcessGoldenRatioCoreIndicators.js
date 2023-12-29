@@ -1,5 +1,9 @@
 import { main as ProcessTechnicalIndicators } from "./ProcessTechnicalIndicators.js";
 
+/**
+ * More or less a convenience bundle to do the main ones
+ * with common parameters
+ */
 export async function main({
 	type,
 	symbols,

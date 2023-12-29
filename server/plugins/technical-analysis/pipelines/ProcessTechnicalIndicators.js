@@ -87,8 +87,6 @@ export async function main({
 		// }
 	}
 
-	console.log(pipelineResults);
-
 	return pipelineResults;
 };
 

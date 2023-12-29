@@ -83,20 +83,48 @@ export async function main() {
 	// 	],
 	// });
 
-	await ModTechnicalAnalysis.Pipelines.ProcessTechnicalIndicators({
-		type: "cryptos",
-		symbols: [
-			"BTC",
-			// "ETH",
-		],
-	});
-	await ModTechnicalAnalysis.Pipelines.ProcessTechnicalIndicators({
-		type: "stocks",
-		symbols: [
-			"AAPL",
-			"RKT",
-		],
-	});
+	// await ModTechnicalAnalysis.Pipelines.ProcessTechnicalIndicators({
+	// 	type: "cryptos",
+	// 	symbols: [
+	// 		"BTC",
+	// 		// "ETH",
+	// 	],
+	// 	indicators: [
+	// 		{
+	// 			fn: "sma",
+	// 			cols: [ [ "close" ] ],
+	// 			args: [ [ 20 ] ],
+	// 		},
+	// 	],
+	// });
+	// await ModTechnicalAnalysis.Pipelines.ProcessTechnicalIndicators({
+	// 	type: "stocks",
+	// 	symbols: [
+	// 		"AAPL",
+	// 		"RKT",
+	// 	],
+	// 	indicators: [
+	// 		{
+	// 			fn: "sma",
+	// 			cols: [ [ "close" ] ],
+	// 			args: [ [ 20 ] ],
+	// 		},
+	// 	],
+	// });
+	// await ModTechnicalAnalysis.Pipelines.ProcessGoldenRatioCoreIndicators({
+	// 	type: "cryptos",
+	// 	symbols: [
+	// 		"BTC",
+	// 		// "ETH",
+	// 	],
+	// });
+	// await ModTechnicalAnalysis.Pipelines.ProcessGoldenRatioCoreIndicators({
+	// 	type: "stocks",
+	// 	symbols: [
+	// 		"AAPL",
+	// 		"RKT",
+	// 	],
+	// });
 
 	// console.log(await PlotlyChartPipeline({
 	// 	type: "cryptos",
