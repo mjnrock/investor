@@ -12,6 +12,7 @@ import { router as cryptoRouter } from "./routes/crypto.js";
 import ModNode from "./modules/node/lib/package.js";
 import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 import ModTechnicalAnalysis from "./plugins/technical-analysis/package.js";
+import ModPlotly from "./plugins/plotly/package.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -126,9 +127,9 @@ export async function main() {
 	// 	],
 	// });
 
-	// console.log(await PlotlyChartPipeline({
+	// console.log(await ModPlotly.Pipelines.PlotlyChart({
 	// 	type: "cryptos",
-	// 	fileName: "BTC.json",
+	// 	fileName: "BTC.ds",
 	// 	chartType: "candlestick",
 	// 	traceArrays: [
 	// 		[
@@ -137,37 +138,6 @@ export async function main() {
 	// 		],
 	// 	],
 	// }));
-
-	// const api = new CryptoAPI({
-	// 	state: {
-	// 		endpoint: "https://kiszka.com:3801/mock",
-	// 	},
-	// });
-
-	// // const data = await api.setSymbol("BTC").run();	// alternative to below (parameter chaining)
-	// const data = await api.run({
-	// 	symbol: "BTC",
-	// });
-
-	// const cryptoPipeline = await ModAlphaVantage.Pipelines.Crypto.FetchNormalizeSave({
-	// 	// symbols: [ "BTC" ],
-	// 	symbols: [ "ETH", "GRT", "XLM", "TRX", ],
-	// 	delay: 1000,
-	// });
-	// const stockPipeline = await ModAlphaVantage.Pipelines.Stock.FetchNormalizeSave({
-	// 	symbols: [ "AAPL", "RKT", "VIG", "SPY", "UNG", ],
-	// 	delay: 1000,
-	// });
-
-	// console.log(pipeline.status);
-
-	// const destination = new FileDataDestination({
-	// 	state: {
-	// 		file: "TESSST.json",
-	// 	},
-	// });
-
-	// await destination.run(data);
 
 	process.exit(0);
 }
