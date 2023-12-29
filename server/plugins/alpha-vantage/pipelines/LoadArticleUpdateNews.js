@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 
-import ModNode from "../modules/node/package.js";
+import ModNode from "../../../modules/node/package.js";
 
 export async function LoadArticleUpdateNews({ symbols = [], context = {} } = {}) {
 	const results = [];
