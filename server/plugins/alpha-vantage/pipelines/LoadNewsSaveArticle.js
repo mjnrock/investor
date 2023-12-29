@@ -18,34 +18,35 @@ export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
 			async (input) => {
 				const browser = await puppeteer.launch();
 
+				const { data } = input;
+
 				const articles = [];
 
 				let testStop = 0;
-				for(let i = 0; i < input.length; i++) {
+				for(let i = 0; i < data.length; i++) {
 					if(testStop > 1) {
 						break;
 					}
 
-					const record = input[ i ];
+					const record = data[ i ];
 					const { uuid, url } = record;
 
 					const fileName = path.join(process.cwd(), `./data/news/content/${ symbol }-${ uuid }.article`);
 					if(await fs.access(fileName).then(() => true).catch(() => false)) {
-						console.log(`[${ i }/${ input.length }]: Skipping ${ symbol }-${ uuid }`);
+						console.log(`[${ i }/${ data.length }]: Skipping ${ symbol }-${ uuid }`);
 						continue;
 					} else {
 						++testStop;
-						console.log(input[ i ])
-						// const node = LibScraper.UrlScraperNode.Create();
+						const node = LibScraper.UrlScraperNode.Create();
 
-						// console.log(`[${ i }/${ input.length }]: Extracting ${ symbol }-${ uuid }`);
-						// const article = await node.extract({ url }, { browser });
+						console.log(`[${ i }/${ data.length }]: Extracting ${ symbol }-${ uuid }`);
+						const article = await node.extract({ url }, { browser });
 
-						// await fs.writeFile(fileName, JSON.stringify(article), "utf8");
+						await fs.writeFile(fileName, JSON.stringify(article), "utf8");
 
 						articles.push({
 							uuid,
-							// article,
+							article,
 						});
 					}
 				}

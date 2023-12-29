@@ -60,11 +60,11 @@ export async function main() {
 	// 	delay: 1000,
 	// });
 
-	await LoadNewsSaveArticle({
-		symbols: [
-			"AAPL",
-		],
-	});
+	// await LoadNewsSaveArticle({
+	// 	symbols: [
+	// 		"AAPL",
+	// 	],
+	// });
 	// await LoadArticleUpdateNews({
 	// 	symbols: [
 	// 		"AAPL",

@@ -11,7 +11,7 @@ export async function LoadArticleUpdateNews({ symbols = [], context = {} } = {})
 			ModNode.Lib.DataSource.FileDataSource.Create({
 				state: {
 					path: "./data/news",
-					file: `${ symbol }.news.ds`,
+					file: `${ symbol }.news`,
 				},
 			}),
 			async (input) => {
@@ -34,7 +34,11 @@ export async function LoadArticleUpdateNews({ symbols = [], context = {} } = {})
 					}
 				}
 
-				return data;
+				return ModNode.Lib.DataSet.DataSet.Create({
+					id: input.id,
+					meta: input.meta,
+					data,
+				});
 			},
 			ModNode.Lib.DataDestination.FileDataDestination.Create({
 				state: {
