@@ -15,6 +15,7 @@ import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 import { main as PlotlyChartPipeline } from "./plugins/plotly/pipelines/PlotlyChart.js";
 import { main as ProcessGoldenRatioCoreIndicatorsPipeline } from "./plugins/technical-analysis/pipelines/ProcessGoldenRatioCoreIndicators.js";
 import LoadNewsSaveArticle from "./pipelines/LoadNewsSaveArticle.js";
+import LoadArticleUpdateNews from "./pipelines/LoadArticleUpdateNews.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -59,7 +60,12 @@ export async function main() {
 	// 	delay: 1000,
 	// });
 
-	await LoadNewsSaveArticle({
+	// await LoadNewsSaveArticle({
+	// 	symbols: [
+	// 		"AAPL",
+	// 	],
+	// });
+	await LoadArticleUpdateNews({
 		symbols: [
 			"AAPL",
 		],

@@ -23,7 +23,7 @@ export class ThreadPool {
                     let fn = eval('(' + ${ this.fn } + ')');
                     const result = await fn(message.record);
 
-                    console.log("Worker-${ i }:", result);
+                    //console.log("Worker-${ i }:", result);
                     parentPort.postMessage({ result, index: message.index });
                 });
             `;

@@ -11,67 +11,57 @@ const FN = async function (record) {
 };
 
 
-const records = [
-	{ data: "Hello world" },
-	{ data: "Another record" },
-	{ data: "Yet another record" },
-	{ data: "Yet another record 2" },
-	{ data: "Yet another record 3" },
-	{ data: "Hello world" },
-	{ data: "Another record" },
-	{ data: "Yet another record" },
-	{ data: "Yet another record 2" },
-	{ data: "Yet another record 3" },
-	{ data: "Hello world" },
-	{ data: "Another record" },
-	{ data: "Yet another record" },
-	{ data: "Yet another record 2" },
-	{ data: "Yet another record 3" },
-	{ data: "Hello world" },
-	{ data: "Another record" },
-	{ data: "Yet another record" },
-	{ data: "Yet another record 2" },
-	{ data: "Yet another record 3" },
-	{ data: "Hello world" },
-	{ data: "Another record" },
-	{ data: "Yet another record" },
-	{ data: "Yet another record 2" },
-	{ data: "Yet another record 3" },
-];
+//NOTE: I'm not convinced that this class works correctly yet
+const records = [];
+const max = 100000;
+for(let i = 0; i < max; ++i) {
+	records.push({
+		$index: i,
+	});
+}
 
-const pool1 = new ThreadPool(1, FN);
-const pool2 = new ThreadPool(2, FN);
-const pool4 = new ThreadPool(4, FN);
-const pool8 = new ThreadPool(8, FN);
-
+const pool = new ThreadPool(4, FN);
 console.time("Pool");
-pool1.process(records)
+pool.process(records)
 	.finally(() => {
 		console.timeEnd("Pool");
 
-		pool1.terminate();
+		pool.terminate();
 	});
 
-console.time(`Pool2`);
-pool2.process(records)
-	.finally(() => {
-		console.timeEnd(`Pool2`);
+// const pool1 = new ThreadPool(1, FN);
+// const pool2 = new ThreadPool(2, FN);
+// const pool4 = new ThreadPool(4, FN);
+// const pool8 = new ThreadPool(8, FN);
 
-		pool2.terminate();
-	});
+// console.time("Pool");
+// pool1.process(records)
+// 	.finally(() => {
+// 		console.timeEnd("Pool");
 
-console.time(`Pool4`);
-pool4.process(records)
-	.finally(() => {
-		console.timeEnd(`Pool4`);
+// 		pool1.terminate();
+// 	});
 
-		pool4.terminate();
-	});
+// console.time(`Pool2`);
+// pool2.process(records)
+// 	.finally(() => {
+// 		console.timeEnd(`Pool2`);
 
-console.time(`Pool8`);
-pool8.process(records)
-	.finally(() => {
-		console.timeEnd(`Pool8`);
+// 		pool2.terminate();
+// 	});
 
-		pool8.terminate();
-	});
+// console.time(`Pool4`);
+// pool4.process(records)
+// 	.finally(() => {
+// 		console.timeEnd(`Pool4`);
+
+// 		pool4.terminate();
+// 	});
+
+// console.time(`Pool8`);
+// pool8.process(records)
+// 	.finally(() => {
+// 		console.timeEnd(`Pool8`);
+
+// 		pool8.terminate();
+// 	});

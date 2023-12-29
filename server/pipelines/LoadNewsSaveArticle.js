@@ -22,25 +22,24 @@ export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
 
 				const articles = [];
 
-				let i = 0;
-				for(const record of data) {
-					if(i > 5) {
+				let testStop = 0;
+				for(let i = 0; i < data.length; i++) {
+					if(testStop > 3) {
 						break;
 					}
 
+					const record = data[ i ];
 					const { uuid, url } = record;
 
-					// Conditionally skip if file exists
 					const fileName = path.join(process.cwd(), `./data/news/content/${ symbol }-${ uuid }.article`);
 					if(await fs.access(fileName).then(() => true).catch(() => false)) {
-						console.log("Skipping:", `${ symbol }-${ uuid }`)
+						console.log(`[${ i }/${ data.length }]: Skipping ${ symbol }-${ uuid }`);
 						continue;
 					} else {
-						++i;
-
+						++testStop;
 						const node = LibScraper.UrlScraperNode.Create();
 
-						console.log("Extracting:", `${ symbol }-${ uuid }`)
+						console.log(`[${ i }/${ data.length }]: Extracting ${ symbol }-${ uuid }`);
 						const article = await node.extract({ url }, { browser });
 
 						await fs.writeFile(fileName, JSON.stringify(article), "utf8");
@@ -54,7 +53,7 @@ export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
 
 				await browser.close();
 
-				return articles;
+				return { input, articles };
 			},
 		]);
 
@@ -64,43 +63,6 @@ export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
 	}
 
 	return results;
-
-	// 	ModNode.Lib.DataSource.FileDataSource.Create({
-	// 		state: {
-	// 			path: "./data/news",
-	// 			file: `{{SYMBOL}}.json`,
-	// 		},
-	// 	}),
-	// 	LibScraper.UrlScraperNode.Create({
-	// 		state: {
-	// 			url: "https://www.marketwatch.com/story/the-best-performing-stock-of-the-year-rose-nearly-10-fold-while-the-second-best-averted-disaster-to-surge-1-000-in-a-wild-2023-ce26b559",
-	// 			file: "./data/news/{{SYMBOL}}.html",
-	// 		},
-	// 	}),
-	// ]);
-
-	// const pipelineResults = {};
-
-	// for(const symbol of symbols) {
-	// 	const result = await pipeline.run({
-	// 		variables: { SYMBOL: symbol },
-	// 		...context,
-	// 	});
-
-	// 	pipelineResults[ symbol ] = result;
-	// }
-
-	// return pipelineResults;
-
-	// const node = LibScraper.UrlScraperNode.Create({
-	// 	url: "https://www.marketwatch.com/story/the-best-performing-stock-of-the-year-rose-nearly-10-fold-while-the-second-best-averted-disaster-to-surge-1-000-in-a-wild-2023-ce26b559",
-	// 	// url: "https://www.business-standard.com/companies/news/google-rejected-play-store-fee-changes-due-to-revenue-impact-epic-lawsuit-123122400905_1.html",
-	// 	file: "./data/news/AAPL.article.json",
-	// });
-
-	// return await node.run({
-	// 	...context,
-	// });
 };
 
 export default LoadNewsSaveArticle;
