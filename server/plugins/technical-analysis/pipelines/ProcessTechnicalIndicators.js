@@ -12,7 +12,7 @@ export async function main({
 		LibNode.DataSource.FileDataSource.Create({
 			state: {
 				path: `./data/${ type }`,
-				file: `{{SYMBOL}}.json`,
+				file: `{{SYMBOL}}.ds`,
 			},
 		}),
 		LibTechnicalAnalysis.ProcessTechnicalIndicators.Create({
@@ -47,7 +47,7 @@ export async function main({
 					const node = LibNode.DataDestination.FileDataDestination.Create({
 						state: {
 							path: `./data/${ type }/indicators`,
-							file: `${ symbol }.${ indicatorName }.json`,
+							file: `${ symbol }.${ indicatorName }.dsp`,
 						},
 					});
 

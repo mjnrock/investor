@@ -5,7 +5,7 @@ import puppeteer from "puppeteer";
 import ModNode from "../../../modules/node/package.js";
 import LibScraper from "../../scraper/lib/package.js"
 
-export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
+export async function main({ symbols = [], context = {} } = {}) {
 	const results = [];
 	for(const symbol of symbols) {
 		const pipeline = ModNode.Pipelines.Factory([
@@ -66,4 +66,4 @@ export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
 	return results;
 };
 
-export default LoadNewsSaveArticle;
+export default main;

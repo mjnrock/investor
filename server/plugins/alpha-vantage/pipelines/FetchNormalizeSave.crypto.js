@@ -36,10 +36,15 @@ export async function main({ symbols = [], delay = 1000, context = {} }) {
 
 	for(const symbol of symbols) {
 		await wait(delay);
-		await pipeline.run({
-			variables: { SYMBOL: symbol },
-			...context,
-		});
+
+		try {
+			await pipeline.run({
+				variables: { SYMBOL: symbol },
+				...context,
+			});
+		} catch(e) {
+			console.log(e);
+		}
 	}
 
 	return pipeline;

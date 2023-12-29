@@ -3,7 +3,7 @@ import path from "path";
 
 import ModNode from "../../../modules/node/package.js";
 
-export async function LoadArticleUpdateNews({ symbols = [], context = {} } = {}) {
+export async function main({ symbols = [], context = {} } = {}) {
 	const results = [];
 
 	for(const symbol of symbols) {
@@ -55,4 +55,4 @@ export async function LoadArticleUpdateNews({ symbols = [], context = {} } = {})
 	return results;
 };
 
-export default LoadArticleUpdateNews;
+export default main;

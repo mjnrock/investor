@@ -11,11 +11,7 @@ import { router as cryptoRouter } from "./routes/crypto.js";
 
 import ModNode from "./modules/node/lib/package.js";
 import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
-
-import { main as PlotlyChartPipeline } from "./plugins/plotly/pipelines/PlotlyChart.js";
-import { main as ProcessGoldenRatioCoreIndicatorsPipeline } from "./plugins/technical-analysis/pipelines/ProcessGoldenRatioCoreIndicators.js";
-import LoadNewsSaveArticle from "./plugins/alpha-vantage/pipelines/LoadNewsSaveArticle.js";
-import LoadArticleUpdateNews from "./plugins/alpha-vantage/pipelines/LoadArticleUpdateNews.js";
+import ModTechnicalAnalysis from "./plugins/technical-analysis/package.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -53,27 +49,21 @@ export async function setup() {
 export async function main() {
 	// await setup();
 
-	await ModAlphaVantage.Pipelines.Crypto.FetchNormalizeSave({
-		symbols: [
-			"BTC",
-			"ETH",
-			"GRT",
-			"XLM",
-			"TRX",
-		],
-		delay: 1000,
-	});
+	// await ModAlphaVantage.Pipelines.Crypto.FetchNormalizeSave({
+	// 	symbols: [
+	// 		"BTC",
+	// 		// "ETH",
+	// 	],
+	// 	delay: 1000,
+	// });
 
-	await ModAlphaVantage.Pipelines.Stock.FetchNormalizeSave({
-		symbols: [
-			"AAPL",
-			"RKT",
-			"VIG",
-			"SPY",
-			"UNG",
-		],
-		delay: 1000,
-	});
+	// await ModAlphaVantage.Pipelines.Stock.FetchNormalizeSave({
+	// 	symbols: [
+	// 		"AAPL",
+	// 		"RKT",
+	// 	],
+	// 	delay: 1000,
+	// });
 
 	// await ModAlphaVantage.Pipelines.News.FetchSave({
 	// 	symbols: [
@@ -93,26 +83,20 @@ export async function main() {
 	// 	],
 	// });
 
-	// await ProcessGoldenRatioCoreIndicatorsPipeline({
-	// 	type: "cryptos",
-	// 	symbols: [
-	// 		"BTC",
-	// 		"ETH",
-	// 		"GRT",
-	// 		"XLM",
-	// 		"TRX",
-	// 	],
-	// });
-	// await ProcessGoldenRatioCoreIndicatorsPipeline({
-	// 	type: "stocks",
-	// 	symbols: [
-	// 		"AAPL",
-	// 		"RKT",
-	// 		"VIG",
-	// 		"SPY",
-	// 		"UNG",
-	// 	],
-	// });
+	await ModTechnicalAnalysis.Pipelines.ProcessTechnicalIndicators({
+		type: "cryptos",
+		symbols: [
+			"BTC",
+			// "ETH",
+		],
+	});
+	await ModTechnicalAnalysis.Pipelines.ProcessTechnicalIndicators({
+		type: "stocks",
+		symbols: [
+			"AAPL",
+			"RKT",
+		],
+	});
 
 	// console.log(await PlotlyChartPipeline({
 	// 	type: "cryptos",
