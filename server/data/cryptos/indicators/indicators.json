@@ -1,0 +1,11 @@
+[
+  "BTC.ema.dsp",
+  "BTC.macd.dsp",
+  "BTC.roc.dsp",
+  "BTC.rocr.dsp",
+  "BTC.rsi.dsp",
+  "BTC.sma.dsp",
+  "BTC.stddev.dsp",
+  "BTC.stoch.dsp",
+  "BTC.stochrsi.dsp"
+]

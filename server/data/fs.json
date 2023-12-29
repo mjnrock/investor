@@ -1,0 +1,476 @@
+[
+	{
+		"id": "b6191a88-bebe-4fb6-9690-a0e23ae1108d",
+		"type": "directory",
+		"pid": null,
+		"name": "$example"
+	},
+	{
+		"id": "17a219e0-46ee-4595-aeb5-b562f944fde0",
+		"type": "file",
+		"pid": "b6191a88-bebe-4fb6-9690-a0e23ae1108d",
+		"name": "$example.json"
+	},
+	{
+		"id": "1e27a86c-18ff-46fd-96f5-a9eb6c7f569c",
+		"type": "file",
+		"pid": "b6191a88-bebe-4fb6-9690-a0e23ae1108d",
+		"name": "Stock and Crypto DataSet"
+	},
+	{
+		"id": "52fca4f1-29b7-4800-b7f4-e98008f554fe",
+		"type": "directory",
+		"pid": null,
+		"name": "cryptos"
+	},
+	{
+		"id": "d3b599e7-190a-48bb-9633-4579e063c9c7",
+		"type": "file",
+		"pid": "52fca4f1-29b7-4800-b7f4-e98008f554fe",
+		"name": "BTC.ds"
+	},
+	{
+		"id": "978c4f6f-e745-48a6-b15c-ea8edbe967b5",
+		"type": "file",
+		"pid": "52fca4f1-29b7-4800-b7f4-e98008f554fe",
+		"name": "BTC.raw"
+	},
+	{
+		"id": "e5cb1426-bda2-4c92-a46c-85e55af349f5",
+		"type": "file",
+		"pid": "52fca4f1-29b7-4800-b7f4-e98008f554fe",
+		"name": "cryptos.json"
+	},
+	{
+		"id": "c80880e1-42e3-4a12-9c97-fd743e8e654e",
+		"type": "directory",
+		"pid": "52fca4f1-29b7-4800-b7f4-e98008f554fe",
+		"name": "indicators"
+	},
+	{
+		"id": "9f847da7-975a-4f1f-9d44-4eddc7d8cacd",
+		"type": "file",
+		"pid": "c80880e1-42e3-4a12-9c97-fd743e8e654e",
+		"name": "BTC.ema.dsp"
+	},
+	{
+		"id": "44d079f7-b227-42cc-ac5f-406182a6c0d3",
+		"type": "file",
+		"pid": "c80880e1-42e3-4a12-9c97-fd743e8e654e",
+		"name": "BTC.macd.dsp"
+	},
+	{
+		"id": "1e5faeb2-9322-40fb-aa72-3c515936ba41",
+		"type": "file",
+		"pid": "c80880e1-42e3-4a12-9c97-fd743e8e654e",
+		"name": "BTC.roc.dsp"
+	},
+	{
+		"id": "6b63bf1e-4f37-4cab-9dcf-cf247174ba0b",
+		"type": "file",
+		"pid": "c80880e1-42e3-4a12-9c97-fd743e8e654e",
+		"name": "BTC.rocr.dsp"
+	},
+	{
+		"id": "57234004-8b32-4832-ab7b-8609410a8421",
+		"type": "file",
+		"pid": "c80880e1-42e3-4a12-9c97-fd743e8e654e",
+		"name": "BTC.rsi.dsp"
+	},
+	{
+		"id": "ac05b4c5-e5e5-4b87-afec-9981123016a0",
+		"type": "file",
+		"pid": "c80880e1-42e3-4a12-9c97-fd743e8e654e",
+		"name": "BTC.sma.dsp"
+	},
+	{
+		"id": "620668f4-8075-46ff-9b1d-44d9b876a77b",
+		"type": "file",
+		"pid": "c80880e1-42e3-4a12-9c97-fd743e8e654e",
+		"name": "BTC.stddev.dsp"
+	},
+	{
+		"id": "9de1b246-1886-4830-a7f2-c71f1291d8b6",
+		"type": "file",
+		"pid": "c80880e1-42e3-4a12-9c97-fd743e8e654e",
+		"name": "BTC.stoch.dsp"
+	},
+	{
+		"id": "ab84db72-f3ab-4a09-977b-53f9674cbe14",
+		"type": "file",
+		"pid": "c80880e1-42e3-4a12-9c97-fd743e8e654e",
+		"name": "BTC.stochrsi.dsp"
+	},
+	{
+		"id": "d7ca2b5c-3459-4ba9-8035-5cfe3cf89cd9",
+		"type": "file",
+		"pid": "c80880e1-42e3-4a12-9c97-fd743e8e654e",
+		"name": "indicators.json"
+	},
+	{
+		"id": "58465d8a-bd3c-4389-82e6-441665af2774",
+		"type": "file",
+		"pid": null,
+		"name": "data.json"
+	},
+	{
+		"id": "c2b71e91-ccec-4b34-9400-4c3f5d110e53",
+		"type": "directory",
+		"pid": null,
+		"name": "news"
+	},
+	{
+		"id": "d041738a-4bb3-4ed4-af4f-1396852ea4d1",
+		"type": "file",
+		"pid": "c2b71e91-ccec-4b34-9400-4c3f5d110e53",
+		"name": "AAPL.news"
+	},
+	{
+		"id": "343392b4-b08a-4d7f-9ae6-6ac5fda7e33e",
+		"type": "file",
+		"pid": "c2b71e91-ccec-4b34-9400-4c3f5d110e53",
+		"name": "AAPL.news.ds"
+	},
+	{
+		"id": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"type": "directory",
+		"pid": "c2b71e91-ccec-4b34-9400-4c3f5d110e53",
+		"name": "content"
+	},
+	{
+		"id": "6be22fae-24ea-4faa-9f19-04d5317268da",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-03de958e-354b-44a6-8147-a46006a67ca9.article"
+	},
+	{
+		"id": "e8ce0df7-ef4b-4c04-acbc-24b30aff3ac5",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-062927ff-e9ff-4fe4-a199-edec1caf864f.article"
+	},
+	{
+		"id": "fca2d4c9-ee68-4a5e-ae6a-681ad8056b19",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-07abb5ba-8e46-445e-8e0c-13055273bd27.article"
+	},
+	{
+		"id": "1d833fac-6c3a-4db7-abad-8945a7207e56",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-1602f20e-c7e3-4f60-9345-446be82d2c44.article"
+	},
+	{
+		"id": "f7942077-9a8b-4490-a429-f8dacd6e3a4e",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-1d8af79e-3a1a-4242-afd8-41a8a6689468.article"
+	},
+	{
+		"id": "c3671847-5c0f-4399-a5cc-f42806706d2c",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-264011ab-a240-437a-9276-112651b53e88.article"
+	},
+	{
+		"id": "d8027fb6-6f6c-4a07-ada8-1bab39183cbc",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-323c833c-4c3e-4464-857a-3701ffa53c0f.article"
+	},
+	{
+		"id": "6ed80295-28b7-4426-be09-b5181555b643",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-3feea939-85c2-4245-bfb7-640881047193.article"
+	},
+	{
+		"id": "2a1bb8f0-011b-4d12-9df9-cbec087e98c0",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-427d0905-8d29-43a5-9088-b33a32b4f45e.article"
+	},
+	{
+		"id": "d92e4c1a-759e-4904-aef3-7ea59fcc71a2",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-491d1673-79ec-46d9-a43c-d77f44e7bf74.article"
+	},
+	{
+		"id": "ee172421-620e-45fd-8958-2b254bce60b6",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-554f1b71-60e0-403a-96a0-74466f6bb880.article"
+	},
+	{
+		"id": "d2202027-871c-4592-9161-325dd8f64dee",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-68c96754-9b26-4edb-8578-afde6ebef5a1.article"
+	},
+	{
+		"id": "d3d42eb9-2693-4ce6-b0cd-69694595a340",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-6b27059e-b501-46b4-9377-850f569796f6.article"
+	},
+	{
+		"id": "a0bb74e8-a4b2-4a07-b0f9-e3c2b4e887a2",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-6dd1fb06-0955-4afb-90fc-b966e5dd5610.article"
+	},
+	{
+		"id": "b4eb5155-3e87-4a49-9340-46a84da00c12",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-6e892ade-a263-4f70-a4f3-882ae811d2d4.article"
+	},
+	{
+		"id": "5d2a467f-a78a-4f7c-a762-facac588e130",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-80465898-5fef-4c37-86d6-e0b616d9228e.article"
+	},
+	{
+		"id": "d86f22c6-de54-4e0f-b1d1-eb61bd480c7b",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-860dee5d-a58a-4d1e-88dc-c4465c0148ef.article"
+	},
+	{
+		"id": "3b81cd43-ba8b-4625-84a2-569e81b81d4b",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-93a9330b-4e98-4028-8adc-3026d4df201d.article"
+	},
+	{
+		"id": "45d945a8-60e4-49af-96a3-7feda2340cac",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-b3f55a2c-c4c2-461d-8e75-04ab42d62d91.article"
+	},
+	{
+		"id": "45e5dc5f-827c-4b1c-b00b-c5993a9b812a",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-c04c93b1-0abf-473b-b222-3276afeb5374.article"
+	},
+	{
+		"id": "2c3bd63a-59a7-40af-9f85-437e98085894",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-c0b9b56e-2d76-42ad-8a71-c0e80fad9a10.article"
+	},
+	{
+		"id": "7cdbe8e4-2eba-438f-b187-5679dd7686e2",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-ccf1f480-5b5b-4383-92c5-e09a3549b779.article"
+	},
+	{
+		"id": "674f2db4-2d8d-4a6e-8d8d-fcdba1d8ac65",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-d571d858-1582-4f14-b88a-246567edc4e2.article"
+	},
+	{
+		"id": "07d7d9ea-4918-4402-87f9-f247833029b9",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-dbee9e7a-f027-4266-8e4b-495ec8bed056.article"
+	},
+	{
+		"id": "bd517869-9048-436d-b29a-ea7a0b9c41b4",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-edfc877a-bba4-4d2b-b9c2-74beeda9b422.article"
+	},
+	{
+		"id": "36f41824-bb20-4248-8388-861738a0c55c",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-f751079d-87d1-4caa-9822-2340c481c292.article"
+	},
+	{
+		"id": "c3ae5d17-6877-49f9-b45b-8b8e3a72ca07",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "AAPL-fb4d6050-1de9-4b75-9b86-0c2316d70aac.article"
+	},
+	{
+		"id": "549d3440-80dc-4b24-93c7-7afd9728c084",
+		"type": "file",
+		"pid": "abeed20a-2c1c-4668-822a-02438de4a123",
+		"name": "content.json"
+	},
+	{
+		"id": "9bfdc9c2-022c-4005-8602-47d2d2de58d5",
+		"type": "file",
+		"pid": "c2b71e91-ccec-4b34-9400-4c3f5d110e53",
+		"name": "news.json"
+	},
+	{
+		"id": "35843820-129e-490e-bd05-4bac4517e805",
+		"type": "file",
+		"pid": null,
+		"name": "query.js"
+	},
+	{
+		"id": "2e1d584e-d0c7-4e65-bf1c-4412236d99f4",
+		"type": "directory",
+		"pid": null,
+		"name": "stocks"
+	},
+	{
+		"id": "33db2555-a2f5-455a-b1fb-337a0b4b665c",
+		"type": "file",
+		"pid": "2e1d584e-d0c7-4e65-bf1c-4412236d99f4",
+		"name": "AAPL.ds"
+	},
+	{
+		"id": "7a749aea-1054-4d43-a640-021c35f50e33",
+		"type": "file",
+		"pid": "2e1d584e-d0c7-4e65-bf1c-4412236d99f4",
+		"name": "AAPL.raw"
+	},
+	{
+		"id": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"type": "directory",
+		"pid": "2e1d584e-d0c7-4e65-bf1c-4412236d99f4",
+		"name": "indicators"
+	},
+	{
+		"id": "47819ef0-c708-474a-a79f-3c562644ab8a",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "AAPL.ema.dsp"
+	},
+	{
+		"id": "2d2db577-e8d0-41b9-ac86-699df52c0d3f",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "AAPL.macd.dsp"
+	},
+	{
+		"id": "63e98830-c8dc-4939-8e6d-c93bf344720b",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "AAPL.roc.dsp"
+	},
+	{
+		"id": "6cc2ad01-2a3b-4ec7-abff-ee28ef3c58fc",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "AAPL.rocr.dsp"
+	},
+	{
+		"id": "2d5fea19-7c96-403e-8a79-302e6d0beff6",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "AAPL.rsi.dsp"
+	},
+	{
+		"id": "521df7da-14f6-4692-ad73-7062f242b8f1",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "AAPL.sma.dsp"
+	},
+	{
+		"id": "04cc537d-90de-4023-a69e-8f023478ef76",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "AAPL.stddev.dsp"
+	},
+	{
+		"id": "c8067b43-9ddf-4ad8-978f-f2af6ae0319e",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "AAPL.stoch.dsp"
+	},
+	{
+		"id": "d270896b-2e43-4c9f-8fd3-07ad29d8ed19",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "AAPL.stochrsi.dsp"
+	},
+	{
+		"id": "2b14cafc-0670-45f9-a9af-423317576109",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "indicators.json"
+	},
+	{
+		"id": "4334bec5-6811-4e08-9492-6787693b5825",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "RKT.ema.dsp"
+	},
+	{
+		"id": "90c44557-9fe9-4beb-8501-7f49f905fd25",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "RKT.macd.dsp"
+	},
+	{
+		"id": "f42ec30a-3e81-4081-a006-0fb443212505",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "RKT.roc.dsp"
+	},
+	{
+		"id": "34b94bc8-680b-4233-8ac6-c92b5b62adbf",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "RKT.rocr.dsp"
+	},
+	{
+		"id": "c97b5e9b-f188-4582-bef2-d328de9e4074",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "RKT.rsi.dsp"
+	},
+	{
+		"id": "44b8ad8d-2dbd-4037-a49d-7b6f3343269f",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "RKT.sma.dsp"
+	},
+	{
+		"id": "cde5f751-a38a-41cc-bea0-495344b78f94",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "RKT.stddev.dsp"
+	},
+	{
+		"id": "e6405586-9aff-42f9-9b0b-d563e15fcf19",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "RKT.stoch.dsp"
+	},
+	{
+		"id": "0d13210f-ae80-4a40-ae7c-0afc64a71e81",
+		"type": "file",
+		"pid": "59ee0490-b824-469b-8e20-d99fac342b77",
+		"name": "RKT.stochrsi.dsp"
+	},
+	{
+		"id": "949254a6-ab32-4b29-ac68-504120892d8d",
+		"type": "file",
+		"pid": "2e1d584e-d0c7-4e65-bf1c-4412236d99f4",
+		"name": "RKT.ds"
+	},
+	{
+		"id": "13f5a0ca-b9fc-4933-b197-2019c8dbcf0e",
+		"type": "file",
+		"pid": "2e1d584e-d0c7-4e65-bf1c-4412236d99f4",
+		"name": "RKT.raw"
+	},
+	{
+		"id": "9b62da7e-785a-4fd5-a77b-2c2956aefbbb",
+		"type": "file",
+		"pid": "2e1d584e-d0c7-4e65-bf1c-4412236d99f4",
+		"name": "stocks.json"
+	}
+]
