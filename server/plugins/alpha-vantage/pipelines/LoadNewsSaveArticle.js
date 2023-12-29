@@ -15,6 +15,7 @@ export async function LoadNewsSaveArticle({ symbols = [], context = {} } = {}) {
 					file: `${ symbol }.news`,
 				},
 			}),
+			/* Extract the text */
 			async (input) => {
 				const browser = await puppeteer.launch();
 

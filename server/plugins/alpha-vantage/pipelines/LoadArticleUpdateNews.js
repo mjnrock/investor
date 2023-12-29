@@ -14,6 +14,7 @@ export async function LoadArticleUpdateNews({ symbols = [], context = {} } = {})
 					file: `${ symbol }.news`,
 				},
 			}),
+			/* Merge the associated .article files into the news data */
 			async (input) => {
 				const { data } = input;
 
@@ -21,8 +22,6 @@ export async function LoadArticleUpdateNews({ symbols = [], context = {} } = {})
 					const record = data[ i ];
 					const { uuid } = record;
 					const articleFileName = path.join(process.cwd(), `./data/news/content/${ symbol }-${ uuid }.article`);
-
-					console.log(symbol, uuid, articleFileName);
 
 					try {
 						const articleContent = await fs.readFile(articleFileName, "utf8");
