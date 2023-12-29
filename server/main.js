@@ -53,6 +53,28 @@ export async function setup() {
 export async function main() {
 	// await setup();
 
+	await ModAlphaVantage.Pipelines.Crypto.FetchNormalizeSave({
+		symbols: [
+			"BTC",
+			"ETH",
+			"GRT",
+			"XLM",
+			"TRX",
+		],
+		delay: 1000,
+	});
+
+	await ModAlphaVantage.Pipelines.Stock.FetchNormalizeSave({
+		symbols: [
+			"AAPL",
+			"RKT",
+			"VIG",
+			"SPY",
+			"UNG",
+		],
+		delay: 1000,
+	});
+
 	// await ModAlphaVantage.Pipelines.News.FetchSave({
 	// 	symbols: [
 	// 		"AAPL",

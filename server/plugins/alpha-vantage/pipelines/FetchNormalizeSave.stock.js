@@ -16,7 +16,7 @@ export async function main({ symbols = [], delay = 1000, context = {} }) {
 		ModNode.Lib.DataDestination.FileDataDestination.Create({
 			state: {
 				path: "./data/stocks",
-				file: `{{SYMBOL}}.raw.json`,
+				file: `{{SYMBOL}}.raw`,
 			},
 		}),
 		async input => ModNode.Lib.DataSet.DataSet.TransformToDataSet(
@@ -27,7 +27,7 @@ export async function main({ symbols = [], delay = 1000, context = {} }) {
 		ModNode.Lib.DataDestination.FileDataDestination.Create({
 			state: {
 				path: "./data/stocks",
-				file: `{{SYMBOL}}.json`,
+				file: `{{SYMBOL}}.ds`,
 			},
 		})
 	]);
