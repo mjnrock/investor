@@ -26,7 +26,7 @@ export async function LoadArticleUpdateNews({ symbols = [], context = {} } = {})
 						const articleContent = JSON.parse(await fs.readFile(articleFileName, "utf8"));
 						data[ i ].text = articleContent;
 					} catch(error) {
-						console.error(`Error loading article for ${ symbol }-${ uuid }:`, error.message);
+						// console.error(`Error loading article for ${ symbol }-${ uuid }:`, error.message);
 					}
 				}
 
