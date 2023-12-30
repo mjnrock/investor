@@ -67,7 +67,7 @@
 				"CryptoFetchNormalizeSave",
 				{
 					"symbols": [
-						"BTC"
+						"ETH"
 					],
 					"delay": 1000
 				}
@@ -78,7 +78,7 @@
 				{
 					"type": "crypto",
 					"symbols": [
-						"BTC"
+						"ETH"
 					],
 					"indicators": [
 						{
