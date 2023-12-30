@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 
 import { router as cryptoRouter } from "./routes/crypto.js";
+import { router as fileRouter } from "./routes/file.js";
 
 import ModNode from "./modules/node/lib/package.js";
 import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
@@ -24,31 +25,29 @@ export async function setup() {
 
 	const app = express();
 
+	app.use((req, res, next) => {
+		console.log(`[${ Date.now() }]: ${ req.method } ${ req.url }`);
+		next();
+	});
+
 	app.use(cors());
 
 	app.use("/crypto", await cryptoRouter(__dirname));
-
-	app.get("/mock", (req, res) => {
-		const filePath = path.join(__dirname, "./data/cryptos/BTC.raw.json");
-
-		fs.readFile(filePath, "utf8")
-			.then(file => {
-				res.json(JSON.parse(file));
-			});
-	});
+	app.use("/file", await fileRouter(__dirname));
 
 	const httpsServer = https.createServer(credentials, app);
 	httpsServer.listen(process.env.PORT, () => {
 		console.log(`[${ Date.now() }]: Server is running on port: ${ process.env.PORT }`);
 	});
 
+	//? HTTP server, if needed
 	// const server = app.listen(process.env.PORT, () => {
 	// 	console.log(`[${ Date.now() }]: Server is running on port: ${ process.env.PORT }`);
 	// });
 };
 
 export async function main() {
-	// await setup();
+	await setup();
 
 	// await ModAlphaVantage.Pipelines.Crypto.FetchNormalizeSave({
 	// 	symbols: [
@@ -139,7 +138,7 @@ export async function main() {
 	// 	],
 	// }));
 
-	process.exit(0);
+	// process.exit(0);
 }
 
 main();
