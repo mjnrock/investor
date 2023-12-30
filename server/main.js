@@ -7,6 +7,9 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
 
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "./swagger-output.json" assert { type: "json" };
+
 import { router as cryptoRouter } from "./routes/crypto.js";
 import { router as fileRouter } from "./routes/file.js";
 
@@ -14,9 +17,6 @@ import ModNode from "./modules/node/lib/package.js";
 import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 import ModTechnicalAnalysis from "./plugins/technical-analysis/package.js";
 import ModPlotly from "./plugins/plotly/package.js";
-
-import swaggerUi from "swagger-ui-express";
-import swaggerFile from "./swagger-output.json" assert { type: "json" };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
