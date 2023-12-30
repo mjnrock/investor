@@ -4,7 +4,7 @@ import ModNode from "../../../modules/node/package.js";
 export async function main({
 	type = "cryptos",
 	fileName = "",      // Specify the file name
-	chartType,		  	// "bar", "line", etc.
+	chartType = "bar",		  	// "bar", "line", etc.
 	traceArrays,		// Array of traces for the chart
 	index = 0,			// If a file is an array, specify the index to use
 }) {

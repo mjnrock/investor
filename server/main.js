@@ -18,7 +18,20 @@ import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 import ModTechnicalAnalysis from "./plugins/technical-analysis/package.js";
 import ModPlotly from "./plugins/plotly/package.js";
 
+import Plugins from "./plugins/package.js";
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const loadJsonFile = async (filePath) => {
+	try {
+		const absoultePath = path.resolve(__dirname, filePath);
+		const data = await fs.readFile(absoultePath, "utf8");
+		return JSON.parse(data);
+	} catch(err) {
+		console.error('Error reading the JSON file:', err);
+		return null;
+	}
+};
 
 export async function setup() {
 	const privateKey = await fs.readFile("./certs/kiszka.key", "utf8");
@@ -37,6 +50,29 @@ export async function setup() {
 
 	app.use("/crypto", await cryptoRouter(__dirname));
 	app.use("/file", await fileRouter(__dirname));
+
+	app.get("/run/:userName", async (req, res) => {
+		const { userName } = req.params;
+
+		try {
+			const profile = await loadJsonFile(`./app/config/profiles/${ userName }.profile`);
+
+			const { pipelines } = profile.config;
+			const results = [];
+			for(const pipeline of pipelines) {
+				const [ plugin, method, ...args ] = pipeline;
+
+				const fn = Plugins[ plugin ].Pipelines[ method ];
+				const result = await fn(...args);
+				results.push(result);
+			}
+
+			res.status(200).json({ results });
+		} catch(err) {
+			console.error(err);
+			res.status(500).json({ error: err });
+		}
+	});
 
 	/* Serve the Swagger UI */
 	app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));

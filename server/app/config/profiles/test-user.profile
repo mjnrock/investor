@@ -63,134 +63,28 @@
 		},
 		"pipelines": [
 			[
-				"0 */30 * * * *",
-				"crypto",
-				"alpha-vantage",
-				"FetchNormalizeSave",
-				{
-					"symbols": [
-						"BTC",
-						"ETH",
-						"GRT",
-						"XLM",
-						"TRX"
-					],
-					"delay": 1000,
-					"context": {}
-				}
-			],
-			[
-				"10 */30 * * * *",
-				"crypto",
 				"technical-analysis",
 				"ProcessTechnicalIndicators",
 				{
 					"type": "cryptos",
 					"symbols": [
-						"BTC",
-						"ETH",
-						"GRT",
-						"XLM",
-						"TRX"
+						"BTC"
 					],
-					"indicators": {
-						"BTC": [
-							[
-								"sma",
+					"indicators": [
+						{
+							"fn": "sma",
+							"cols": [
 								[
-									[
-										"close"
-									]
-								],
+									"close"
+								]
+							],
+							"args": [
 								[
-									[
-										7
-									]
+									7
 								]
 							]
-						],
-						"ETH": [
-							[
-								"sma",
-								[
-									[
-										"close"
-									]
-								],
-								[
-									[
-										7
-									]
-								]
-							]
-						]
-					},
-					"context": {}
-				}
-			],
-			[
-				"0 */30 * * * *",
-				"stock",
-				"alpha-vantage",
-				"FetchNormalizeSave",
-				{
-					"symbols": [
-						"RKT",
-						"PTON",
-						"CHWY",
-						"HE",
-						"SATS"
+						}
 					],
-					"delay": 1000,
-					"context": {}
-				}
-			],
-			[
-				"10 */30 * * * *",
-				"stock",
-				"technical-analysis",
-				"ProcessTechnicalIndicators",
-				{
-					"type": "stocks",
-					"symbols": [
-						"RKT",
-						"PTON",
-						"CHWY",
-						"HE",
-						"SATS"
-					],
-					"indicators": {
-						"BTC": [
-							[
-								"sma",
-								[
-									[
-										"close"
-									]
-								],
-								[
-									[
-										7
-									]
-								]
-							]
-						],
-						"ETH": [
-							[
-								"sma",
-								[
-									[
-										"close"
-									]
-								],
-								[
-									[
-										7
-									]
-								]
-							]
-						]
-					},
 					"context": {}
 				}
 			]

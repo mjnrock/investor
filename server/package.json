@@ -27,6 +27,7 @@
 		"uuid": "^9.0.1"
 	},
 	"scripts": {
-		"start": "node swagger-config.js && node main.js"
+		"start": "node main.js",
+		"sync": "node swagger-config.js && node main.js"
 	}
 }

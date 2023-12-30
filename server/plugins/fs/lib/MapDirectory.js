@@ -61,15 +61,15 @@ export default MapDirectory;
 
 // example usage:
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
-const mapDirectory = new MapDirectory({
-	dir: path.join(__dirname, "../../../data/stocks"),
-	// dir: __dirname,
-});
-mapDirectory.run().then(contents => {
-	console.log(contents);
-}).catch(error => {
-	console.error(`Error: ${ error }`);
-});
+// const mapDirectory = new MapDirectory({
+// 	dir: path.join(__dirname, "../../../data/stocks"),
+// 	// dir: __dirname,
+// });
+// mapDirectory.run().then(contents => {
+// 	console.log(contents);
+// }).catch(error => {
+// 	console.error(`Error: ${ error }`);
+// });

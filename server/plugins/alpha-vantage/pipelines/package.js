@@ -5,15 +5,9 @@ import { main as NewsLoadNewsSaveArticle } from "./LoadNewsSaveArticle.js";
 import { main as NewsLoadArticleUpdateNews } from "./LoadArticleUpdateNews.js";
 
 export default {
-	Crypto: {
-		FetchNormalizeSave: CryptoFetchNormalizeSave,
-	},
-	Stock: {
-		FetchNormalizeSave: StockFetchNormalizeSave,
-	},
-	News: {
-		FetchSave: NewsFetchSave,
-		LoadNewsSaveArticle: NewsLoadNewsSaveArticle,
-		LoadArticleUpdateNews: NewsLoadArticleUpdateNews,
-	},
+	CryptoFetchNormalizeSave,
+	StockFetchNormalizeSave,
+	NewsFetchSave,
+	NewsLoadNewsSaveArticle,
+	NewsLoadArticleUpdateNews,
 };

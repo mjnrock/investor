@@ -72,19 +72,6 @@ export async function main({
 		});
 
 		pipelineResults[ symbol ] = pipeline.cache;
-
-		// for(let i = 0; i < pipeline.cache.length; i++) {
-		// 	const result = pipeline.cache[ i ];
-		// 	const { node, output } = result;
-
-		// 	if(i === 0) {
-		// 		console.log(node, output.meta);
-		// 	} else if(i === 1) {
-		// 		console.log(node, output.map(item => item.meta.technicalAnalysis))
-		// 	} else if(i === 2) {
-		// 		console.log(node, output.map(item => item.map(item => [ item.meta.technicalAnalysis.fn, ...item.meta.technicalAnalysis.args ])))
-		// 	}
-		// }
 	}
 
 	return pipelineResults;
