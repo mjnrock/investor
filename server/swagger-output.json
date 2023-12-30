@@ -1,103 +1,103 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "Investor",
-    "description": "API Docs",
-    "version": "1.0.0"
-  },
-  "host": "kiszka.com:3801",
-  "basePath": "/",
-  "schemes": [
-    "https"
-  ],
-  "paths": {
-    "/ls/{fileType}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "fileType",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
-    "/chart/{fileType}/{fileName}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "fileType",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "fileName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "chartType",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "index",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
-    "/{fileType}/{fileName}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "fileType",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "fileName",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    }
-  }
+	"swagger": "2.0",
+	"info": {
+		"title": "Investor",
+		"description": "API Docs",
+		"version": "1.0.0"
+	},
+	"host": "kiszka.com:3801",
+	"basePath": "/",
+	"schemes": [
+		"https"
+	],
+	"paths": {
+		"/ls/{fileType}": {
+			"get": {
+				"description": "",
+				"parameters": [
+					{
+						"name": "fileType",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/chart/{fileType}/{fileName}": {
+			"get": {
+				"description": "",
+				"parameters": [
+					{
+						"name": "fileType",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "fileName",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "chartType",
+						"in": "query",
+						"type": "string"
+					},
+					{
+						"name": "index",
+						"in": "query",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/{fileType}/{fileName}": {
+			"get": {
+				"description": "",
+				"parameters": [
+					{
+						"name": "fileType",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "fileName",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		}
+	}
 }

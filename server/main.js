@@ -38,7 +38,8 @@ export async function setup() {
 	app.use("/crypto", await cryptoRouter(__dirname));
 	app.use("/file", await fileRouter(__dirname));
 
-	app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+	/* Serve the Swagger UI */
+	app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 	const httpsServer = https.createServer(credentials, app);
 	httpsServer.listen(process.env.PORT, () => {
