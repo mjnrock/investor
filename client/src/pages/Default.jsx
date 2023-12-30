@@ -1,23 +1,9 @@
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export function Default() {
-	const [ state, setState ] = useState({
-		"message": "Loading...",
-	});
-
-	useEffect(() => {
-		fetch("https://buddha.com:3801/")
-			.then((res) => res.json())
-			.then((data) => setState(data));
-	}, []);
-
 	return (
 		<div>
-			<h1>API</h1>
-
-			<pre>
-				{ JSON.stringify(state, null, 2) }
-			</pre>
+			<Link to="/crypto/chart/BTC/candlestick">BTC Candlestick Chart</Link>
 		</div>
 	);
 };
