@@ -16,7 +16,31 @@ export class Chart {
 			layout: this.layout,
 			config: this.config,
 		};
+	}
 
+	updateData(data) {
+		return Chart.Create({
+			source: this.source,
+			data: data,
+			layout: this.layout,
+			config: this.config,
+		});
+	}
+	updateLayout(layout) {
+		return Chart.Create({
+			source: this.source,
+			data: this.data,
+			layout: layout,
+			config: this.config,
+		});
+	}
+	updateConfig(config) {
+		return Chart.Create({
+			source: this.source,
+			data: this.data,
+			layout: this.layout,
+			config: config,
+		});
 	}
 
 	static Create({ source, data = [], layout = {}, config = {} } = {}) {

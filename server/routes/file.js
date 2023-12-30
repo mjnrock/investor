@@ -1,46 +1,88 @@
-import deepcopy from "deepcopy";
 import express from "express";
 import fs from "fs/promises";
 import path from "path";
+import { createHash } from "crypto";
 
 import { main as PlotlyChartPipeline } from "../plugins/plotly/pipelines/PlotlyChart.js";
+import DataSet from "../modules/node/lib/data-set/DataSet.js";
 
-const dataSetToMetaObject = (dataSet) => {
-	const obj = {
-		fileName: dataSet.meta.fileName,
-		meta: deepcopy(dataSet.meta),
-	};
-
-	if(dataSet.meta.technicalAnalysis) {
-		obj.ta = [
-			dataSet.meta.technicalAnalysis.fn,
-			dataSet.meta.technicalAnalysis.cols,
-			dataSet.meta.technicalAnalysis.args,
-		];
+export const modifyFileType = (fileType) => {
+	if(fileType === "crypto") {
+		return "cryptos";
+	} else if(fileType === "stock") {
+		return "stocks";
 	}
-
-	return obj;
+	// Add more transformations as needed here
+	return fileType;
 };
 
-export const router = async (__dirname) => {
+export const processDataSetFile = (fileObj, query) => {
+	const metaOnly = query?.metaOnly?.toLowerCase() === "true";
+	const dataOnly = query?.dataOnly?.toLowerCase() === "true";
+
+	if(metaOnly) {
+		return Array.isArray(fileObj) ? fileObj.map(dataSet => dataSet.meta) : fileObj.meta;
+	} else if(dataOnly) {
+		const { asRecords, asRows, asColumns } = query;
+
+		const processData = dataSet => {
+			const ds = DataSet.Create(dataSet);
+
+			if(asRecords) {
+				return ds.getRecords();
+			} else if(asRows) {
+				return ds.getRows();
+			} else if(asColumns) {
+				return ds.getColumns();
+			}
+
+			return ds.getRecords();
+		};
+
+		return Array.isArray(fileObj) ? fileObj.map(processData) : processData(fileObj);
+	}
+
+	return fileObj;
+};
+
+export const router = (__dirname) => {
 	const fileRouter = express.Router();
+
+	fileRouter.get("/ls/:fileType", async (req, res) => {
+		const { fileType } = req.params;
+		const modifiedFileType = modifyFileType(fileType);
+		const fileDirectory = path.join(__dirname, `./data/${ modifiedFileType }`);
+		const hash = createHash("sha256");
+		hash.update(fileDirectory);
+		const fileTypeHash = hash.digest("hex");
+
+		const fileName = `fs-${ fileTypeHash }.ds`;
+		const filePath = path.join(fileDirectory, fileName);
+
+		try {
+			const fileContents = await fs.readFile(filePath, "utf8");
+			const fileObj = JSON.parse(fileContents);
+			const processedData = processDataSetFile(fileObj, req.query);
+			res.status(200).json(processedData);
+		} catch(error) {
+			res.status(404).send(`File not found: ${ fileName }`);
+		}
+	});
 
 	fileRouter.get("/chart/:fileType/:fileName", async (req, res) => {
 		const { fileType, fileName } = req.params;
+		const modifiedFileType = modifyFileType(fileType);
 
-		let fileDirectory = fileType;
-
-		// Only proceed if file ends with ".ds"
 		if(!fileName.endsWith(".ds")) {
 			return res.status(400).send("Invalid file type for chart.");
 		}
 
 		try {
 			let options = {
-				fileType: fileDirectory,
+				fileType: modifiedFileType,
 				fileName,
-				chartType: req?.query?.chartType?.toLowerCase() || "bar",
-				index: req?.query?.index ? parseInt(req?.query?.index) : 0,
+				chartType: req.query.chartType?.toLowerCase() || "bar",
+				index: req.query.index ? parseInt(req.query.index) : 0,
 				traceArrays: [ [ "date", "value" ] ] // Default trace array
 			};
 
@@ -53,25 +95,14 @@ export const router = async (__dirname) => {
 
 	fileRouter.get("/:fileType/:fileName", async (req, res) => {
 		const { fileType, fileName } = req.params;
-		const metaOnly = req?.query?.metaOnly?.toLowerCase() === "true";
-
-		let fileDirectory = fileType;
-		let filePath = path.join(__dirname, `./data/${ fileDirectory }`, fileName);
+		const modifiedFileType = modifyFileType(fileType);
+		let filePath = path.join(__dirname, `./data/${ modifiedFileType }`, fileName);
 
 		try {
 			const file = await fs.readFile(filePath, "utf8");
 			let fileObj = JSON.parse(file);
-
-			if(metaOnly) {
-				if(Array.isArray(fileObj)) {
-					let metaFileData = fileObj.map(dataSetToMetaObject);
-					res.status(200).json(metaFileData);
-				} else {
-					res.status(200).json(dataSetToMetaObject(fileObj));
-				}
-			} else {
-				res.status(200).json(fileObj);
-			}
+			const processedData = processDataSetFile(fileObj, req.query);
+			res.status(200).json(processedData);
 		} catch(error) {
 			res.status(404).send(`File not found: ${ fileName }`);
 		}

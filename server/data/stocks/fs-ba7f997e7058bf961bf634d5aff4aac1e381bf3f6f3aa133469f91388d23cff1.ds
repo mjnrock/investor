@@ -1,0 +1,162 @@
+{
+	"id": "f41b202f-9437-470e-ac96-e270b2547be2",
+	"meta": {
+		"type": "record",
+		"headers": [
+			"id",
+			"type",
+			"pid",
+			"name"
+		],
+		"directory": "C:\\Users\\mjnro\\Documents\\GitHub\\investor\\server\\data\\stocks",
+		"parentId": null,
+		"hash": "ba7f997e7058bf961bf634d5aff4aac1e381bf3f6f3aa133469f91388d23cff1",
+		"created": 1703956521916
+	},
+	"data": [
+		{
+			"id": "6aa00bae-a84a-40ca-8987-7d439bb99d22",
+			"type": "file",
+			"pid": null,
+			"name": "AAPL.ds"
+		},
+		{
+			"id": "b77c6b26-1e88-4438-99b4-44a8991c5bec",
+			"type": "file",
+			"pid": null,
+			"name": "AAPL.raw"
+		},
+		{
+			"id": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"type": "dir",
+			"pid": null,
+			"name": "indicators"
+		},
+		{
+			"id": "9567c052-1fe9-405a-89f1-67e1b4ff525a",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "AAPL.ema.dsp"
+		},
+		{
+			"id": "25818f2e-4d62-4e47-abd8-b740bc7079d9",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "AAPL.macd.dsp"
+		},
+		{
+			"id": "380fe130-d2e2-4751-a874-75797a0e8758",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "AAPL.roc.dsp"
+		},
+		{
+			"id": "7ebf81c8-486a-4037-a0c4-6d067d41b15e",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "AAPL.rocr.dsp"
+		},
+		{
+			"id": "95c2c43e-dc51-430f-9c49-6a7332cd21bc",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "AAPL.rsi.dsp"
+		},
+		{
+			"id": "c6d0aeec-2f4f-478e-9c51-6b568515d348",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "AAPL.sma.dsp"
+		},
+		{
+			"id": "7c9f8689-571a-4672-b829-97b8ed66a79a",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "AAPL.stddev.dsp"
+		},
+		{
+			"id": "d701bda8-15c3-4897-8edf-57535714747d",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "AAPL.stoch.dsp"
+		},
+		{
+			"id": "426d5e8b-2d2f-47bd-8502-b5b83392e9db",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "AAPL.stochrsi.dsp"
+		},
+		{
+			"id": "e47a54b9-1aa7-40b1-8dfc-3e615b3143b3",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "indicators.json"
+		},
+		{
+			"id": "651520f7-a021-44c5-998b-b0be621f4b20",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "RKT.ema.dsp"
+		},
+		{
+			"id": "f97c19bd-4f14-44d6-acc1-fe8b2de59b00",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "RKT.macd.dsp"
+		},
+		{
+			"id": "deea905e-2e6c-49cc-8fa7-e23785f81e53",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "RKT.roc.dsp"
+		},
+		{
+			"id": "fee168b7-22fc-40ca-aafa-f771ec395d41",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "RKT.rocr.dsp"
+		},
+		{
+			"id": "1f698f60-e357-4384-a599-cdc90c5e5565",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "RKT.rsi.dsp"
+		},
+		{
+			"id": "d1b00a79-ab74-4ace-82f3-7991eefe8243",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "RKT.sma.dsp"
+		},
+		{
+			"id": "f13cc017-2122-4883-8ceb-eee0a6896a4d",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "RKT.stddev.dsp"
+		},
+		{
+			"id": "d8da2a40-9f86-48fb-9b85-aed562517b85",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "RKT.stoch.dsp"
+		},
+		{
+			"id": "13a4db26-95f5-45be-bbaf-752060494f5f",
+			"type": "file",
+			"pid": "68c4d659-ca0b-41e6-a086-f7dc7b4657f4",
+			"name": "RKT.stochrsi.dsp"
+		},
+		{
+			"id": "a65af476-eec4-446f-8dab-ae2bc5cdb0c4",
+			"type": "file",
+			"pid": null,
+			"name": "RKT.ds"
+		},
+		{
+			"id": "d4bdb3cd-a768-495a-9bfb-8a758542da8d",
+			"type": "file",
+			"pid": null,
+			"name": "RKT.raw"
+		}
+	]
+}
