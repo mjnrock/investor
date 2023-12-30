@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import puppeteer from "puppeteer";
 
-import ModNode from "../../../modules/node/package.js";
+import ModNode from "../../../../modules/node/package.js";
 import LibScraper from "../../scraper/lib/package.js"
 
 export async function main({ symbols = [], context = {} } = {}) {
@@ -11,7 +11,7 @@ export async function main({ symbols = [], context = {} } = {}) {
 		const pipeline = ModNode.Pipelines.Factory([
 			ModNode.Lib.DataSource.FileDataSource.Create({
 				state: {
-					path: "./data/news",
+					path: "./app/data/news",
 					file: `${ symbol }.news`,
 				},
 			}),
@@ -32,7 +32,7 @@ export async function main({ symbols = [], context = {} } = {}) {
 					const record = data[ i ];
 					const { uuid, url } = record;
 
-					const fileName = path.join(process.cwd(), `./data/news/content/${ symbol }-${ uuid }.article`);
+					const fileName = path.join(process.cwd(), `./app/data/news/content/${ symbol }-${ uuid }.article`);
 					if(await fs.access(fileName).then(() => true).catch(() => false)) {
 						console.log(`[${ i }/${ data.length }]: Skipping ${ symbol }-${ uuid }`);
 						continue;

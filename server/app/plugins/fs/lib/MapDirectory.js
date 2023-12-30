@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { createHash } from "crypto";
 import { fileURLToPath } from "url";
 
-import { DataSet } from "../../../modules/node/lib/data-set/DataSet.js";
+import { DataSet } from "../../../../modules/node/lib/data-set/DataSet.js";
 
 export class MapDirectory {
 	static EnumType = {
@@ -65,7 +65,7 @@ export default MapDirectory;
 // const __dirname = path.dirname(__filename);
 
 // const mapDirectory = new MapDirectory({
-// 	dir: path.join(__dirname, "../../../data/stock"),
+// 	dir: path.join(__dirname, "../../../app/data/stock"),
 // 	// dir: __dirname,
 // });
 // mapDirectory.run().then(contents => {

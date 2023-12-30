@@ -13,7 +13,7 @@
 				"plotly",
 				"PlotlyChart",
 				{
-					"type": "cryptos",
+					"type": "crypto",
 					"fileName": "BTC.ds",
 					"traceArrays": [
 						[

@@ -1,6 +1,6 @@
 import deepcopy from "deepcopy";
 
-import { DataSet } from "../../../../modules/node/lib/data-set/DataSet.js";
+import { DataSet } from "../../../../../modules/node/lib/data-set/DataSet.js";
 
 export class Chart {
 	constructor ({ source, data = [], layout = {}, config = {} } = {}) {

@@ -63,10 +63,20 @@
 		},
 		"pipelines": [
 			[
+				"alpha-vantage",
+				"CryptoFetchNormalizeSave",
+				{
+					"symbols": [
+						"BTC"
+					],
+					"delay": 1000
+				}
+			],
+			[
 				"technical-analysis",
 				"ProcessTechnicalIndicators",
 				{
-					"type": "cryptos",
+					"type": "crypto",
 					"symbols": [
 						"BTC"
 					],
@@ -76,11 +86,53 @@
 							"cols": [
 								[
 									"close"
+								],
+								[
+									"close"
+								],
+								[
+									"close"
+								],
+								[
+									"close"
+								],
+								[
+									"close"
+								],
+								[
+									"close"
+								],
+								[
+									"close"
+								],
+								[
+									"close"
 								]
 							],
 							"args": [
 								[
 									7
+								],
+								[
+									14
+								],
+								[
+									21
+								],
+								[
+									28
+								],
+								[
+									56
+								],
+								[
+									112
+								],
+								[
+									200
+								],
+								[
+									550
 								]
 							]
 						}

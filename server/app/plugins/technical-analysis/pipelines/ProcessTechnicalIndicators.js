@@ -1,6 +1,6 @@
-import { Factory } from "../../../modules/node/pipelines/Factory.js";
-import LibNode from "../../../modules/node/lib/package.js";
-import LibTechnicalAnalysis from "../../../plugins/technical-analysis/lib/package.js";
+import { Factory } from "../../../../modules/node/pipelines/Factory.js";
+import LibNode from "../../../../modules/node/lib/package.js";
+import LibTechnicalAnalysis from "../lib/package.js";
 
 export async function main({
 	type = "crypto",
@@ -11,7 +11,7 @@ export async function main({
 	const pipeline = Factory([
 		LibNode.DataSource.FileDataSource.Create({
 			state: {
-				path: `./data/${ type }`,
+				path: `./app/data/${ type }`,
 				file: `{{SYMBOL}}.ds`,
 			},
 		}),
@@ -46,7 +46,7 @@ export async function main({
 				for(const indicatorName in indicatorData) {
 					const node = LibNode.DataDestination.FileDataDestination.Create({
 						state: {
-							path: `./data/${ type }/indicators`,
+							path: `./app/data/${ type }/indicator`,
 							file: `${ symbol }.${ indicatorName }.dsp`,
 						},
 					});

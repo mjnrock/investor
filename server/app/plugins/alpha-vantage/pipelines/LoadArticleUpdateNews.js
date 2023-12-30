@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 
-import ModNode from "../../../modules/node/package.js";
+import ModNode from "../../../../modules/node/package.js";
 
 export async function main({ symbols = [], context = {} } = {}) {
 	const results = [];
@@ -10,7 +10,7 @@ export async function main({ symbols = [], context = {} } = {}) {
 		const pipeline = ModNode.Pipelines.Factory([
 			ModNode.Lib.DataSource.FileDataSource.Create({
 				state: {
-					path: "./data/news",
+					path: "./app/data/news",
 					file: `${ symbol }.news`,
 				},
 			}),
@@ -21,7 +21,7 @@ export async function main({ symbols = [], context = {} } = {}) {
 				for(let i = 0; i < data.length; i++) {
 					const record = data[ i ];
 					const { uuid } = record;
-					const articleFileName = path.join(process.cwd(), `./data/news/content/${ symbol }-${ uuid }.article`);
+					const articleFileName = path.join(process.cwd(), `./app/data/news/content/${ symbol }-${ uuid }.article`);
 
 					try {
 						const articleContent = await fs.readFile(articleFileName, "utf8");
@@ -41,7 +41,7 @@ export async function main({ symbols = [], context = {} } = {}) {
 			},
 			ModNode.Lib.DataDestination.FileDataDestination.Create({
 				state: {
-					path: "./data/news",
+					path: "./app/data/news",
 					file: `${ symbol }.news.ds`,
 				},
 			}),

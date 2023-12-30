@@ -1,4 +1,4 @@
-import ModNode from "../../../modules/node/package.js";
+import ModNode from "../../../../modules/node/package.js";
 import LibAlphaVantage from "../lib/package.js";
 
 export async function main({ symbols = [], delay = 1000, context = {} }) {
@@ -15,7 +15,7 @@ export async function main({ symbols = [], delay = 1000, context = {} }) {
 		}),
 		ModNode.Lib.DataDestination.FileDataDestination.Create({
 			state: {
-				path: "./data/crypto",
+				path: "./app/data/crypto",
 				file: `{{SYMBOL}}.raw`,
 			},
 		}),
@@ -26,7 +26,7 @@ export async function main({ symbols = [], delay = 1000, context = {} }) {
 		),
 		ModNode.Lib.DataDestination.FileDataDestination.Create({
 			state: {
-				path: "./data/crypto",
+				path: "./app/data/crypto",
 				file: `{{SYMBOL}}.ds`,
 			},
 		})

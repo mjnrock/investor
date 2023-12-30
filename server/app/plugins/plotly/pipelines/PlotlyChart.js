@@ -1,5 +1,5 @@
 import LibPlotly from "../lib/package.js";
-import ModNode from "../../../modules/node/package.js";
+import ModNode from "../../../../modules/node/package.js";
 
 export async function main({
 	type = "crypto",
@@ -10,7 +10,7 @@ export async function main({
 }) {
 	const loadFile = ModNode.Lib.Node.Create(ModNode.Lib.DataSource.FileDataSource.Create({
 		state: {
-			path: `./data/${ type }`,
+			path: `./app/data/${ type }`,
 			file: fileName,
 		},
 	}));
