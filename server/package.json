@@ -21,10 +21,12 @@
 		"node-readability": "^3.0.0",
 		"puppeteer": "^21.6.1",
 		"query-string": "^8.1.0",
+		"swagger-autogen": "^2.23.7",
+		"swagger-ui-express": "^5.0.0",
 		"tulind": "^0.8.20",
 		"uuid": "^9.0.1"
 	},
 	"scripts": {
-		"start": "node main.js"
+		"start": "node swagger-config.js && node main.js"
 	}
 }

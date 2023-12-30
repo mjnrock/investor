@@ -15,6 +15,9 @@ import ModAlphaVantage from "./plugins/alpha-vantage/package.js";
 import ModTechnicalAnalysis from "./plugins/technical-analysis/package.js";
 import ModPlotly from "./plugins/plotly/package.js";
 
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "./swagger-output.json" assert { type: "json" };
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export async function setup() {
@@ -34,6 +37,8 @@ export async function setup() {
 
 	app.use("/crypto", await cryptoRouter(__dirname));
 	app.use("/file", await fileRouter(__dirname));
+
+	app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 	const httpsServer = https.createServer(credentials, app);
 	httpsServer.listen(process.env.PORT, () => {
