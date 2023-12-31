@@ -74,7 +74,26 @@ export async function setup() {
 };
 
 export async function main() {
-	await setup();
+	try {
+		// Uncomment if setup is needed
+		// await setup();
+
+		const pipeline = Plugins.statistics.Pipelines.ProcessStatistics.Create();
+		const data = await loadJsonFile("./data/crypto/BTC.ds");
+
+		const result = await pipeline.run(data, { column: "close" });
+
+		const filePath = path.resolve("./app/data/crypto/BTC.stats");
+
+		// Ensure the directory exists
+		const dir = path.dirname(filePath);
+		await fs.mkdir(dir, { recursive: true });
+
+		// Save the result to the file
+		await fs.writeFile(filePath, JSON.stringify(result, null, 2));
+	} catch(error) {
+		console.error('Error encountered:', error);
+	}
 };
 
 main();
