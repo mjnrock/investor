@@ -47,7 +47,8 @@ export class FileDataSource extends DataSource {
 			}
 		}
 		const filePath = path.join(this.state.path, fileName);
-		const fileData = await fs.readFile(filePath, this.state.encoding);
+		console.log(path.resolve(filePath))
+		const fileData = await fs.readFile(path.resolve(filePath), this.state.encoding);
 		const fileContent = JSON.parse(fileData);
 
 		if(Array.isArray(fileContent)) {

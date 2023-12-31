@@ -7,6 +7,12 @@ import { main as PlotlyChartPipeline } from "../plugins/plotly/pipelines/PlotlyC
 import DataSet from "../../modules/node/lib/data-set/DataSet.js";
 
 export const modifyFileType = (fileType) => {
+	if(fileType === "stock:indicator") {
+		return "stock/indicator";
+	} else if(fileType === "crypto:indicator") {
+		return "crypto/indicator";
+	}
+
 	return fileType;
 };
 
@@ -65,18 +71,19 @@ export const router = (__dirname) => {
 
 	fileRouter.get("/chart/:fileType/:fileName", async (req, res) => {
 		const { fileType, fileName } = req.params;
+		const { chartType, index } = req.query;
 		const modifiedFileType = modifyFileType(fileType);
 
-		if(!fileName.endsWith(".ds")) {
+		if(!fileName.endsWith(".ds") && !fileName.endsWith(".dsp")) {
 			return res.status(400).send("Invalid file type for chart.");
 		}
 
 		try {
 			let options = {
-				fileType: modifiedFileType,
+				type: modifiedFileType,
 				fileName,
-				chartType: req.query.chartType?.toLowerCase() || "bar",
-				index: req.query.index ? parseInt(req.query.index) : 0,
+				chartType: chartType?.toLowerCase() || "bar",
+				index: index ? parseInt(index) : 0,
 				traceArrays: [ [ "date", "value" ] ] // Default trace array
 			};
 
