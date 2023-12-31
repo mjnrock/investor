@@ -52,7 +52,7 @@ export class MapDirectory {
 				data: results
 			});
 
-			let writeFilePath = path.join(dir, `fs-${ dirHash }.ds`);
+			let writeFilePath = path.join(dir, `fs.ds`);
 			await fs.writeFile(writeFilePath, DataSet.ToJson(dataSet));
 		}
 

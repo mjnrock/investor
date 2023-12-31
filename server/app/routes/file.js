@@ -57,12 +57,9 @@ export const router = (__dirname) => {
 	fileRouter.get("/ls/:fileType", async (req, res) => {
 		const { fileType } = req.params;
 		const modifiedFileType = modifyFileType(fileType);
-		const fileDirectory = path.join(__dirname, `./app/data/${ modifiedFileType }`);
-		const hash = createHash("sha256");
-		hash.update(fileDirectory);
-		const fileTypeHash = hash.digest("hex");
+		const fileDirectory = path.join(__dirname, `./data/${ modifiedFileType }`);
 
-		const fileName = `fs-${ fileTypeHash }.ds`;
+		const fileName = `fs.ds`;
 		const filePath = path.join(fileDirectory, fileName);
 
 		try {
@@ -90,8 +87,12 @@ export const router = (__dirname) => {
 				fileName,
 				chartType: chartType?.toLowerCase() || "bar",
 				index: index ? parseInt(index) : 0,
-				traceArrays: [ [ "date", "value" ] ] // Default trace array
+				traceArrays: [ [ "date", "close" ] ],
 			};
+
+			if(fileType.endsWith("indicator")) {
+				options.traceArrays = [ [ "date", "value" ] ];
+			}
 
 			const schema = await PlotlyChartPipeline(options);
 			res.status(200).json(schema);
@@ -103,7 +104,7 @@ export const router = (__dirname) => {
 	fileRouter.get("/:fileType/:fileName", async (req, res) => {
 		const { fileType, fileName } = req.params;
 		const modifiedFileType = modifyFileType(fileType);
-		let filePath = path.join(__dirname, `./app/data/${ modifiedFileType }`, fileName);
+		let filePath = path.join(__dirname, `./data/${ modifiedFileType }`, fileName);
 
 		try {
 			const file = await fs.readFile(filePath, "utf8");
