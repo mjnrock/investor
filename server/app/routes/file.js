@@ -11,6 +11,12 @@ export const modifyFileType = (fileType) => {
 		return "stock/indicator";
 	} else if(fileType === "crypto:indicator") {
 		return "crypto/indicator";
+	} else if(fileType === "forex:indicator") {
+		return "forex/indicator";
+	} else if(fileType === "commodity:indicator") {
+		return "commodity/indicator";
+	} else if(fileType === "news:article") {
+		return "news/article";
 	}
 
 	return fileType;

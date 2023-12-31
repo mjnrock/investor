@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+import CryptoDashboard from "./CryptoDashboard";
 
 export function Default() {
 	return (
 		<div>
-			<Link to="/crypto/chart/BTC/candlestick">BTC Candlestick Chart</Link>
+			<CryptoDashboard />
 		</div>
 	);
 };
