@@ -74,7 +74,22 @@ export async function setup() {
 };
 
 export async function main() {
-	await setup();
+	try {
+		// await setup();
+
+		await Plugins.statistics.Pipelines.ProcessStatistics({
+			// type: "crypto",
+			// symbol: "BTC",
+			type: "stock",
+			symbol: "AAPL",
+			periods: [ 7 ],
+			columns: [ "close" ],
+		});
+	} catch(error) {
+		console.error('Error encountered:', error);
+	}
+
+	process.exit(0);
 };
 
 main();

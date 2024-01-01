@@ -7,6 +7,18 @@ import { main as PlotlyChartPipeline } from "../plugins/plotly/pipelines/PlotlyC
 import DataSet from "../../modules/node/lib/data-set/DataSet.js";
 
 export const modifyFileType = (fileType) => {
+	if(fileType === "stock:indicator") {
+		return "stock/indicator";
+	} else if(fileType === "crypto:indicator") {
+		return "crypto/indicator";
+	} else if(fileType === "forex:indicator") {
+		return "forex/indicator";
+	} else if(fileType === "commodity:indicator") {
+		return "commodity/indicator";
+	} else if(fileType === "news:article") {
+		return "news/article";
+	}
+
 	return fileType;
 };
 
@@ -45,12 +57,9 @@ export const router = (__dirname) => {
 	fileRouter.get("/ls/:fileType", async (req, res) => {
 		const { fileType } = req.params;
 		const modifiedFileType = modifyFileType(fileType);
-		const fileDirectory = path.join(__dirname, `./app/data/${ modifiedFileType }`);
-		const hash = createHash("sha256");
-		hash.update(fileDirectory);
-		const fileTypeHash = hash.digest("hex");
+		const fileDirectory = path.join(__dirname, `./data/${ modifiedFileType }`);
 
-		const fileName = `fs-${ fileTypeHash }.ds`;
+		const fileName = `fs.ds`;
 		const filePath = path.join(fileDirectory, fileName);
 
 		try {
@@ -65,20 +74,25 @@ export const router = (__dirname) => {
 
 	fileRouter.get("/chart/:fileType/:fileName", async (req, res) => {
 		const { fileType, fileName } = req.params;
+		const { chartType, index } = req.query;
 		const modifiedFileType = modifyFileType(fileType);
 
-		if(!fileName.endsWith(".ds")) {
+		if(!fileName.endsWith(".ds") && !fileName.endsWith(".dsp")) {
 			return res.status(400).send("Invalid file type for chart.");
 		}
 
 		try {
 			let options = {
-				fileType: modifiedFileType,
+				type: modifiedFileType,
 				fileName,
-				chartType: req.query.chartType?.toLowerCase() || "bar",
-				index: req.query.index ? parseInt(req.query.index) : 0,
-				traceArrays: [ [ "date", "value" ] ] // Default trace array
+				chartType: chartType?.toLowerCase() || "bar",
+				index: index ? parseInt(index) : 0,
+				traceArrays: [ [ "date", "close" ] ],
 			};
+
+			if(fileType.endsWith("indicator")) {
+				options.traceArrays = [ [ "date", "value" ] ];
+			}
 
 			const schema = await PlotlyChartPipeline(options);
 			res.status(200).json(schema);
@@ -90,7 +104,7 @@ export const router = (__dirname) => {
 	fileRouter.get("/:fileType/:fileName", async (req, res) => {
 		const { fileType, fileName } = req.params;
 		const modifiedFileType = modifyFileType(fileType);
-		let filePath = path.join(__dirname, `./app/data/${ modifiedFileType }`, fileName);
+		let filePath = path.join(__dirname, `./data/${ modifiedFileType }`, fileName);
 
 		try {
 			const file = await fs.readFile(filePath, "utf8");

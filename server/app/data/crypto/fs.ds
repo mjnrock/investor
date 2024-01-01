@@ -1,0 +1,150 @@
+{
+	"id": "eb241fa9-bd1e-4777-b23a-badd6f837bdf",
+	"meta": {
+		"type": "record",
+		"headers": [
+			"id",
+			"type",
+			"pid",
+			"name"
+		],
+		"directory": "C:\\Users\\mjnro\\Documents\\GitHub\\investor\\server\\app\\data\\crypto",
+		"parentId": null,
+		"hash": "51584924eb59373222673ba0002fa86db7ac4fabc03322469218957046bf96e0",
+		"created": 1703988418221
+	},
+	"data": [
+		{
+			"id": "d584d2fa-9076-435b-9eab-4dc16e992bfe",
+			"type": "file",
+			"pid": null,
+			"name": "BTC.ds"
+		},
+		{
+			"id": "8fb58118-084c-49b3-b79d-6fe159f05ce0",
+			"type": "file",
+			"pid": null,
+			"name": "BTC.raw"
+		},
+		{
+			"id": "afa9bc01-11b1-44b5-8b5b-61b3c69beb13",
+			"type": "file",
+			"pid": null,
+			"name": "ETH.ds"
+		},
+		{
+			"id": "648c8970-cca0-4eb1-b337-604d4d56305a",
+			"type": "file",
+			"pid": null,
+			"name": "ETH.raw"
+		},
+		{
+			"id": "6b8a3141-a957-496c-b585-bf78c182348d",
+			"type": "file",
+			"pid": null,
+			"name": "fs-51584924eb59373222673ba0002fa86db7ac4fabc03322469218957046bf96e0.ds"
+		},
+		{
+			"id": "10cab708-b1b9-46d1-bba2-e57ca400fa41",
+			"type": "file",
+			"pid": null,
+			"name": "GRT.ds"
+		},
+		{
+			"id": "8b5e2c76-82c3-47a8-b4b9-5999cab9ad97",
+			"type": "file",
+			"pid": null,
+			"name": "GRT.raw"
+		},
+		{
+			"id": "09ece195-39fe-4539-9bee-7ba7a29fd22e",
+			"type": "dir",
+			"pid": null,
+			"name": "indicator"
+		},
+		{
+			"id": "d659c5b0-ec4b-48f2-9e56-16c73015306b",
+			"type": "file",
+			"pid": "09ece195-39fe-4539-9bee-7ba7a29fd22e",
+			"name": "BTC.ema.dsp"
+		},
+		{
+			"id": "c11098c5-48f4-4184-a44b-5e57652d8836",
+			"type": "file",
+			"pid": "09ece195-39fe-4539-9bee-7ba7a29fd22e",
+			"name": "BTC.sma.dsp"
+		},
+		{
+			"id": "081ebe25-b62d-4dab-8e1f-6ebd7f4f635d",
+			"type": "file",
+			"pid": "09ece195-39fe-4539-9bee-7ba7a29fd22e",
+			"name": "ETH.ema.dsp"
+		},
+		{
+			"id": "9aa6526b-4eb6-4341-9d9e-18ea02d24896",
+			"type": "file",
+			"pid": "09ece195-39fe-4539-9bee-7ba7a29fd22e",
+			"name": "ETH.sma.dsp"
+		},
+		{
+			"id": "0b7ad1ae-56c1-43e5-8c99-0392d3357d45",
+			"type": "file",
+			"pid": "09ece195-39fe-4539-9bee-7ba7a29fd22e",
+			"name": "GRT.ema.dsp"
+		},
+		{
+			"id": "7952c716-cebb-4845-ba23-3a82b66d93a7",
+			"type": "file",
+			"pid": "09ece195-39fe-4539-9bee-7ba7a29fd22e",
+			"name": "GRT.sma.dsp"
+		},
+		{
+			"id": "a51dce93-25ce-4996-9c60-eabe0c368dbe",
+			"type": "file",
+			"pid": "09ece195-39fe-4539-9bee-7ba7a29fd22e",
+			"name": "TRX.ema.dsp"
+		},
+		{
+			"id": "8c96d9e7-b0ef-40af-beeb-d6f151b3cdc0",
+			"type": "file",
+			"pid": "09ece195-39fe-4539-9bee-7ba7a29fd22e",
+			"name": "TRX.sma.dsp"
+		},
+		{
+			"id": "8b8539e3-e436-43b2-aa17-c0f74dc58352",
+			"type": "file",
+			"pid": "09ece195-39fe-4539-9bee-7ba7a29fd22e",
+			"name": "XLM.ema.dsp"
+		},
+		{
+			"id": "ef5ada44-ddde-4035-8a4d-5e8f8e0abcde",
+			"type": "file",
+			"pid": "09ece195-39fe-4539-9bee-7ba7a29fd22e",
+			"name": "XLM.sma.dsp"
+		},
+		{
+			"id": "9d5b86a9-ad8f-44c4-890c-ca6ec8d1fd4e",
+			"type": "file",
+			"pid": null,
+			"name": "TRX.ds"
+		},
+		{
+			"id": "f4c15a14-55f7-427f-900a-41f8e6f3c07f",
+			"type": "file",
+			"pid": null,
+			"name": "TRX.raw"
+		},
+		{
+			"id": "577ed7f1-9f93-481c-bbe6-5aadf98dbff6",
+			"type": "file",
+			"pid": null,
+			"name": "XLM.ds"
+		},
+		{
+			"id": "c514c16e-b8c0-4f13-9b96-29f260cfdffd",
+			"type": "file",
+			"pid": null,
+			"name": "XLM.raw"
+		}
+	]
+}

@@ -2,7 +2,6 @@ import fs from "fs/promises";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import { createHash } from "crypto";
-import { fileURLToPath } from "url";
 
 import { DataSet } from "../../../../modules/node/lib/data-set/DataSet.js";
 
@@ -15,6 +14,10 @@ export class MapDirectory {
 	constructor ({ dir, pid = null }) {
 		this.dir = dir;
 		this.pid = pid;
+	}
+
+	static Create({ dir, pid = null }) {
+		return new this({ dir, pid });
 	}
 
 	async run({ dir = this.dir, pid = this.pid } = {}, { hashAlgo = "sha256", isChildCall = false } = {}) {
@@ -49,7 +52,8 @@ export class MapDirectory {
 				data: results
 			});
 
-			await fs.writeFile(`fs-${ dirHash }.ds`, DataSet.ToJson(dataSet));
+			let writeFilePath = path.join(dir, `fs.ds`);
+			await fs.writeFile(writeFilePath, DataSet.ToJson(dataSet));
 		}
 
 		return results;
