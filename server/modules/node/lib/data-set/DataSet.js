@@ -176,6 +176,24 @@ export class DataSet {
 		});
 	}
 
+	getDateMap({ allArrays = false } = {}) {
+		const records = this.getRecords();
+
+		const map = {};
+		for(const record of records) {
+			const { date } = record;
+
+			if(!map[ date ]) {
+				map[ date ] = allArrays ? [ record ] : record;
+			} else if(Array.isArray(map[ date ])) {
+				map[ date ].push(record);
+			} else {
+				map[ date ] = [ map[ date ], record ];
+			}
+		}
+
+		return map;
+	}
 	getRecords() {
 		if(this.meta.type === DataSet.EnumRecordType.RECORD) {
 			return this.data;

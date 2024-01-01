@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import { ProcessStatistics } from "../lib/ProcessStatistics.js";
+import DataSet from "../../../../modules/node/lib/data-set/DataSet.js";
 
 export async function main({
 	type = "crypto",
