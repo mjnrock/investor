@@ -77,28 +77,14 @@ export async function main() {
 	try {
 		// await setup();
 
-		// const pipeline = Plugins.statistics.Lib.ProcessStatistics.Create({
-		// 	state: {
-		// 		periods: [ 7, 14, 21, 28, 56, 112, 224, 448, 996 ],
-		// 		columns: [ "open", "close", "low", "high" ],
-		// 	},
-		// });
-		// const data = await loadJsonFile("./data/crypto/BTC.ds");
-
-		// const result = await pipeline.run(data);
-
-		// const filePath = path.resolve("./app/data/crypto/BTC.stats");
-
-		// // Ensure the directory exists
-		// const dir = path.dirname(filePath);
-		// await fs.mkdir(dir, { recursive: true });
-
-		// // Save the result to the file
-		// await fs.writeFile(filePath, JSON.stringify(result));
-
+		await Plugins[ "alpha-vantage" ].Pipelines.StockFetchNormalizeSave({
+			symbols: [ "AAPL" ],
+		});
 		await Plugins.statistics.Pipelines.ProcessStatistics({
-			type: "crypto",
-			symbol: "BTC",
+			// type: "crypto",
+			// symbol: "BTC",
+			type: "stock",
+			symbol: "AAPL",
 			periods: [ 7 ],
 			columns: [ "close" ],
 		});
