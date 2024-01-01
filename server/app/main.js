@@ -75,25 +75,34 @@ export async function setup() {
 
 export async function main() {
 	try {
-		// Uncomment if setup is needed
 		// await setup();
 
-		const pipeline = Plugins.statistics.Pipelines.ProcessStatistics.Create();
-		const data = await loadJsonFile("./data/crypto/BTC.ds");
+		const result = Plugins.statistics.Pipelines.ProcessStatistics({
+			symbol: "BTC",
+			periods: [ 7, 14, 21, 28, 112, 224, 448, 996 ],
+			columns: [ "close" ],
 
-		const result = await pipeline.run(data, { column: "close" });
+			/* ~40MB per file (as records) */
+			// periods: [ 7, 14, 21, 28, 56, 112, 224, 448, 996 ],
+			// columns: [ "open", "close", "low", "high" ],
+		});
+		// const data = await loadJsonFile("./data/crypto/BTC.ds");
 
-		const filePath = path.resolve("./app/data/crypto/BTC.stats");
+		// const result = await pipeline.run(data);
 
-		// Ensure the directory exists
-		const dir = path.dirname(filePath);
-		await fs.mkdir(dir, { recursive: true });
+		// const filePath = path.resolve("./app/data/crypto/BTC.stats");
 
-		// Save the result to the file
-		await fs.writeFile(filePath, JSON.stringify(result, null, 2));
+		// // Ensure the directory exists
+		// const dir = path.dirname(filePath);
+		// await fs.mkdir(dir, { recursive: true });
+
+		// // Save the result to the file
+		// await fs.writeFile(filePath, JSON.stringify(result));
 	} catch(error) {
 		console.error('Error encountered:', error);
 	}
+
+	process.exit(0);
 };
 
 main();
