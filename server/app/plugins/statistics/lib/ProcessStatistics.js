@@ -45,24 +45,25 @@ export class ProcessStatistics {
 	}
 
 
-	async run(input, { column = this.state.columns } = {}) {
+	async run(input, { columns = this.state.columns } = {}) {
+		console.log(999, input);
 		if(!(input instanceof DataSet)) {
 			input = DataSet.Create(input);
 		}
 
-		if(Array.isArray(column)) {
-			return column
+		if(Array.isArray(columns)) {
+			return columns
 				.map(async col => await this.run(input, { column: col }))
 				.reduce(async (acc, curr) => [ ...(await acc), ...(await curr) ], []);
 		}
 
-		if(!this.validateColumn(input.meta.headers, column)) {
-			throw new Error(`Column '${ column }' not found in dataset headers.`);
+		if(!this.validateColumn(input.meta.headers, columns)) {
+			throw new Error(`Column '${ columns }' not found in dataset headers.`);
 		}
 
 		let dataSetPack = [];
 		const sortedRecords = input.getRecords().sort((a, b) => new Date(b.date) - new Date(a.date));
-		const columnData = sortedRecords.map(record => record[ column ]);
+		const columnData = sortedRecords.map(record => record[ columns ]);
 
 		for(let period of this.state.periods) {
 			let periodResults = [];
@@ -111,7 +112,7 @@ export class ProcessStatistics {
 					...input.meta,
 					statistics: {
 						period: period,
-						column: column,
+						column: columns,
 					},
 				},
 				data: periodResults

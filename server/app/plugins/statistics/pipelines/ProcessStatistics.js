@@ -1,49 +1,42 @@
+import fs from "fs/promises";
+import path from "path";
+
 import { ProcessStatistics } from "../lib/ProcessStatistics.js";
-import ModNode from "../../../../modules/node/package.js";
+
+const loadJsonFile = async (filePath) => {
+	try {
+		const absoultePath = path.resolve(process.cwd(), filePath);
+		const data = await fs.readFile(absoultePath, "utf8");
+		return JSON.parse(data);
+	} catch(err) {
+		console.error('Error reading the JSON file:', err);
+		return null;
+	}
+};
 
 export async function main({
 	type = "crypto",
 	symbol,
-	periods = [ 7, 14, 21, 28, 112, 224, 448, 996 ],
+	periods = [ 7, 14, 21 ],
 	columns = [ "close" ],
 }) {
-	const pipeline = ModNode.Pipelines.Factory([
-		ModNode.Lib.DataSource.FileDataSource.Create({
-			state: {
-				path: `./app/data/${ type }`,
-				file: `${ symbol?.toUpperCase() }.ds`
-			},
-		}),
-		ProcessStatistics.Create({
-			state: {
-				periods,
-				columns,
-			},
-		}),
-		ModNode.Lib.DataDestination.FileDataDestination.Create({
-			state: {
-				path: `./app/data/${ type }`,
-				file: `${ symbol?.toUpperCase() }.stats`,
-			},
-		}),
-	]);
 
-	const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+	const pipeline = ProcessStatistics.Create({
+		periods,
+		columns,
+	});
+	const data = await loadJsonFile(`./data/${ type }/${ symbol }.ds`);
 
-	for(const symbol of symbols) {
-		await wait(delay);
+	const result = await pipeline.run(data);
 
-		try {
-			await pipeline.run({
-				variables: { SYMBOL: symbol },
-				...context,
-			});
-		} catch(e) {
-			console.log(e);
-		}
-	}
+	const filePath = path.resolve(`./app/data/{ type }/${ symbol }.stats`);
 
-	return pipeline;
+	// Ensure the directory exists
+	const dir = path.dirname(filePath);
+	await fs.mkdir(dir, { recursive: true });
+
+	// Save the result to the file
+	await fs.writeFile(filePath, JSON.stringify(result));
 };
 
 export default main;
