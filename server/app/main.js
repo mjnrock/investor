@@ -77,9 +77,6 @@ export async function main() {
 	try {
 		// await setup();
 
-		await Plugins[ "alpha-vantage" ].Pipelines.StockFetchNormalizeSave({
-			symbols: [ "AAPL" ],
-		});
 		await Plugins.statistics.Pipelines.ProcessStatistics({
 			// type: "crypto",
 			// symbol: "BTC",
