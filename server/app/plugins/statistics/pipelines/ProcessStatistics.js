@@ -7,6 +7,8 @@ export async function main({
 	periods = [ 7, 14, 21 ],
 	columns = [ "close" ],
 }) {
+	symbol = symbol.toUpperCase();
+
 	// Load the data
 	const fileContents = await fs.readFile(`./app/data/${ type }/${ symbol }.ds`, "utf8");
 	const data = JSON.parse(fileContents);
