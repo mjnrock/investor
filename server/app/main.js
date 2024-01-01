@@ -14,6 +14,17 @@ import Plugins from "./plugins/package.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+const loadJsonFile = async (filePath) => {
+	try {
+		const absoultePath = path.resolve(__dirname, filePath);
+		const data = await fs.readFile(absoultePath, "utf8");
+		return JSON.parse(data);
+	} catch(err) {
+		console.error('Error reading the JSON file:', err);
+		return null;
+	}
+};
+
 export async function setup() {
 	const privateKey = await fs.readFile("./certs/kiszka.key", "utf8");
 	const certificate = await fs.readFile("./certs/kiszka.crt", "utf8");
@@ -66,10 +77,29 @@ export async function main() {
 	try {
 		// await setup();
 
-		const pipeline = Plugins.statistics.Pipelines.ProcessStatistics({
+		// const pipeline = Plugins.statistics.Lib.ProcessStatistics.Create({
+		// 	state: {
+		// 		periods: [ 7, 14, 21, 28, 56, 112, 224, 448, 996 ],
+		// 		columns: [ "open", "close", "low", "high" ],
+		// 	},
+		// });
+		// const data = await loadJsonFile("./data/crypto/BTC.ds");
+
+		// const result = await pipeline.run(data);
+
+		// const filePath = path.resolve("./app/data/crypto/BTC.stats");
+
+		// // Ensure the directory exists
+		// const dir = path.dirname(filePath);
+		// await fs.mkdir(dir, { recursive: true });
+
+		// // Save the result to the file
+		// await fs.writeFile(filePath, JSON.stringify(result));
+
+		await Plugins.statistics.Pipelines.ProcessStatistics({
 			type: "crypto",
 			symbol: "BTC",
-			periods: [ 7, 14, 21 ],
+			periods: [ 7 ],
 			columns: [ "close" ],
 		});
 	} catch(error) {

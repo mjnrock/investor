@@ -46,14 +46,13 @@ export class ProcessStatistics {
 
 
 	async run(input, { columns = this.state.columns } = {}) {
-		console.log(999, input);
 		if(!(input instanceof DataSet)) {
 			input = DataSet.Create(input);
 		}
 
 		if(Array.isArray(columns)) {
 			return columns
-				.map(async col => await this.run(input, { column: col }))
+				.map(async col => await this.run(input, { columns: col }))
 				.reduce(async (acc, curr) => [ ...(await acc), ...(await curr) ], []);
 		}
 
