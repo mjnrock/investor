@@ -30,13 +30,16 @@ export class ProcessStatistics {
 		};
 	}
 
+
 	calculateDelta(currentRecord, previousRecord) {
 		let delta = { date: previousRecord.date }; // Include date in delta record
-		for(let key in currentRecord) {
-			if(key !== 'date' && typeof currentRecord[ key ] === 'number' && typeof previousRecord[ key ] === 'number') {
-				delta[ key ] = currentRecord[ key ] - previousRecord[ key ];
+		Object.keys(currentRecord).forEach(key => {
+			if(key !== 'date' && typeof currentRecord[ key ] === 'number') {
+				delta[ key ] = (previousRecord[ key ] && typeof previousRecord[ key ] === 'number')
+					? currentRecord[ key ] - previousRecord[ key ]
+					: null;
 			}
-		}
+		});
 		return delta;
 	}
 
@@ -67,24 +70,38 @@ export class ProcessStatistics {
 					delta: {}  // Initialize delta as an empty object
 				};
 
-				//FIXME: This doesn't work correctly, now it compares to nothing (previously it compared the value to "close")
-
-				// For delta.previous.date
 				if(i < sortedRecords.length - 1) {
-					const previousRecord = sortedRecords[ i + 1 ];
-					currentStats.delta.previous = this.calculateDelta(currentStats, previousRecord);
+					currentStats.delta.previous = this.calculateDelta(sortedRecords[ i ], sortedRecords[ i + 1 ]);
 				}
 
-				// For delta.period.date
 				if(i + 2 * period <= sortedRecords.length) {
-					const periodStartIndex = sortedRecords.findIndex(record => record.date === currentStats.dateLower);
-					if(periodStartIndex >= 0) {
-						const periodRecord = sortedRecords[ periodStartIndex ];
-						currentStats.delta.period = this.calculateDelta(currentStats, periodRecord);
-					}
+					currentStats.delta.period = this.calculateDelta(sortedRecords[ i ], sortedRecords[ i + period - 1 ]);
 				}
 
 				periodResults.push(currentStats);
+			}
+
+			for(let i = 0; i < sortedRecords.length - period; i++) {
+				let originalRecord = sortedRecords[ i ];
+				let statsRecord = periodResults[ i ];
+
+				if(i < sortedRecords.length - 1) {
+					statsRecord.delta.previous = {
+						...statsRecord.delta.previous,
+						...this.calculateDelta(periodResults[ i ], periodResults[ i + 1 ]),
+					};
+				}
+
+				if(i + 2 * period < sortedRecords.length) {
+					statsRecord.delta.period = {
+						...statsRecord.delta.period,
+						...this.calculateDelta(periodResults[ i ], periodResults[ i + period - 1 ]),
+					};
+				}
+
+				if(i === 0) {
+					console.log(statsRecord)
+				}
 			}
 
 			dataSetPack.push(DataSet.Create({
@@ -98,10 +115,9 @@ export class ProcessStatistics {
 				data: periodResults
 			}));
 		}
+
 		return dataSetPack;
 	}
-
-
 }
 
 export default ProcessStatistics;
