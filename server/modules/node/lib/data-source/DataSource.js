@@ -36,7 +36,7 @@ export class DataSource {
 		return data;
 	}
 
-	runAnalyzer(dataSet) {
+	runAnalyzer(dataSet,) {
 		if(this.analyzer && typeof this.analyzer === "function") {
 			return this.analyzer(dataSet);
 		}

@@ -35,6 +35,10 @@ export class CryptoAPI extends APIDataSource {
 		metaData.source = "alpha-vantage";
 		metaData.sourceType = "crypto";
 
+		const timeSeries = data[ "Time Series (Digital Currency Daily)" ];
+		const dates = Object.keys(timeSeries).sort().reverse();
+		metaData.period = APIDataSource.DeterminePeriod(dates[ 0 ], dates[ 1 ]);
+
 		return metaData;
 	};
 

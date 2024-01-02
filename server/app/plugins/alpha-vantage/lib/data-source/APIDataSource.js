@@ -55,10 +55,73 @@ export const APIDefaultParams = {
 	},
 };
 
+
+export const PeriodInSeconds = {
+	minute: 60,
+	fiveMinutes: 300,
+	fifteenMinutes: 900,
+	thirtyMinutes: 1800,
+	hour: 3600,
+	twoHours: 7200,
+	fourHours: 14400,
+	sixHours: 21600,
+	eightHours: 28800,
+	twelveHours: 43200,
+	day: 86400,
+	threeDays: 259200,
+	fiveDays: 432000,
+	week: 604800
+};
+
 export class APIDataSource extends APIDataSourceNode {
 	static EnumAPIType = EnumAPIType;
 	static APIDefaultParams = APIDefaultParams;
 	static APIHelper = APIHelper;
+
+	static DeterminePeriod(date1, date2) {
+		try {
+			const date = new Date(date1);
+			const nextDate = new Date(date2);
+			const deltaSec = Math.abs((date.getTime() - nextDate.getTime()) / 1000);
+
+			if(deltaSec === PeriodInSeconds.minute) {
+				return [ 1, "minute" ];
+			} else if(deltaSec === PeriodInSeconds.fiveMinutes) {
+				return [ 5, "minute" ];
+			} else if(deltaSec === PeriodInSeconds.fifteenMinutes) {
+				return [ 15, "minute" ];
+			} else if(deltaSec === PeriodInSeconds.thirtyMinutes) {
+				return [ 30, "minute" ];
+			} else if(deltaSec === PeriodInSeconds.hour) {
+				return [ 1, "hour" ];
+			} else if(deltaSec === PeriodInSeconds.twoHours) {
+				return [ 2, "hour" ];
+			} else if(deltaSec === PeriodInSeconds.fourHours) {
+				return [ 4, "hour" ];
+			} else if(deltaSec === PeriodInSeconds.sixHours) {
+				return [ 6, "hour" ];
+			} else if(deltaSec === PeriodInSeconds.eightHours) {
+				return [ 8, "hour" ];
+			} else if(deltaSec === PeriodInSeconds.twelveHours) {
+				return [ 12, "hour" ];
+			} else if(deltaSec === PeriodInSeconds.day) {
+				return [ 1, "day" ];
+			} else if(deltaSec === PeriodInSeconds.threeDays) {
+				return [ 3, "day" ];
+			} else if(deltaSec === PeriodInSeconds.fiveDays) {
+				return [ 5, "day" ];
+			} else if(deltaSec === PeriodInSeconds.week) {
+				return [ 1, "week" ];
+			} else if(deltaSec % PeriodInSeconds.day === 0) {
+				return [ deltaSec / PeriodInSeconds.day, "day" ];
+			} else {
+				return [ deltaSec, "second" ];
+			}
+		} catch(e) {
+			console.error(e);
+			return null;
+		}
+	};
 
 	constructor ({ state = {}, apiType = EnumAPIType.CRYPTO, ...opts } = {}) {
 		super({
