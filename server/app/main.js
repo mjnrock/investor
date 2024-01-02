@@ -77,14 +77,23 @@ export async function main() {
 	try {
 		// await setup();
 
-		await Plugins.statistics.Pipelines.ProcessStatistics({
-			// type: "crypto",
-			// symbol: "BTC",
-			type: "stock",
-			symbol: "AAPL",
-			periods: [ 7 ],
-			columns: [ "close" ],
-		});
+		// await Plugins[ "alpha-vantage" ].Pipelines.CryptoFetchNormalizeSave({
+		// 	symbols: [ "BTC", "ETH", "GRT", "XLM", "TRX" ],
+		// 	delay: 1000,
+		// })
+		await Plugins[ "alpha-vantage" ].Pipelines.StockFetchNormalizeSave({
+			symbols: [ "AAPL", "MSFT", "GOOG", "AMZN", "META" ],
+			delay: 1000,
+		})
+
+		// await Plugins.statistics.Pipelines.ProcessStatistics({
+		// 	// type: "crypto",
+		// 	// symbol: "BTC",
+		// 	type: "stock",
+		// 	symbol: "AAPL",
+		// 	periods: [ 7 ],
+		// 	columns: [ "close" ],
+		// });
 	} catch(error) {
 		console.error('Error encountered:', error);
 	}

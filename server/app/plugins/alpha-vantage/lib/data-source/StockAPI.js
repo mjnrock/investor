@@ -22,6 +22,10 @@ export class StockAPI extends APIDataSource {
 		metaData.source = "alpha-vantage";
 		metaData.sourceType = "stock";
 
+		const timeSeries = data[ "Time Series (Daily)" ];
+		const dates = Object.keys(timeSeries).sort().reverse();
+		metaData.period = APIDataSource.DeterminePeriod(dates[ 0 ], dates[ 1 ]);
+
 		return metaData;
 	};
 
